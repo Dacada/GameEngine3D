@@ -1,4 +1,5 @@
 #include <engine3D_window.h>
+#include <engine3D_input.h>
 #include <engine3D_util.h>
 
 #include <GL\glew.h>
@@ -23,15 +24,12 @@ void engine3D_window_create(const int width, const int height, const char *const
 	current_title = title;
 
 	glfwMakeContextCurrent(window);
+	glfwSwapInterval(0);
 	//glfwSetWindowUserPointer(window, ???);
 	//glfwSetFramebufferSizeCallback(window, resize_callback);
-	//glfwSetKeyCallback(window, key_callback);
-	//glfwSetMouseButtonCallback(window, mouse_button_callback);
-	//glfwSetCursorPosCallback(window, cusor_position_callback);
-
-#ifdef ENGINE3D_UNLIMITED_FPS
-	glfwSwapInterval(0);
-#endif
+	glfwSetKeyCallback(window, _engine3D_input_keyCallback);
+	glfwSetMouseButtonCallback(window, _engine3D_input_mouseButtonCallback);
+	glfwSetCursorPosCallback(window, _engine3D_input_mousePositionCallback);
 
 	if (glewInit() != GLEW_OK) {
 		engine3D_util_bail("failed to initialize glew");
