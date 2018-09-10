@@ -166,6 +166,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="time_unit_tests.cpp" />
+    <ClCompile Include="vector_unit_tests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Engine3D\Engine3D.vcxproj">

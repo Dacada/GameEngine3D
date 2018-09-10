@@ -19,7 +19,7 @@ static bool mouseButtonsState[LEN_MOUSE_BUTTONS];
 static bool mouseButtonsDown[LEN_MOUSE_BUTTONS];
 static bool mouseButtonsUp[LEN_MOUSE_BUTTONS];
 
-static double lastMousePositionX, lastMousePositionY;
+static float lastMousePositionX, lastMousePositionY;
 
 void engine3d_input_update(void) {
 	for (int i = 0; i < LEN_KEYS; i++)
@@ -73,7 +73,7 @@ bool engine3d_input_getMouseUp(const int mouseButton) {
 	return mouseButtonsUp[mouseButton];
 }
 
-void engine3d_input_getMousePosition(vector2d_t *const position) {
+void engine3d_input_getMousePosition(engine3D_vector2f_t *const position) {
 	position->x = lastMousePositionX;
 	position->y = lastMousePositionY;
 }
@@ -91,6 +91,6 @@ void _engine3D_input_mouseButtonCallback(const GLFWwindow *const window, const i
 }
 
 void _engine3D_input_mousePositionCallback(const GLFWwindow *const window, const double xpos, const double ypos) {
-	lastMousePositionX = xpos;
-	lastMousePositionY = ypos;
+	lastMousePositionX = (float)xpos;
+	lastMousePositionY = (float)ypos;
 }

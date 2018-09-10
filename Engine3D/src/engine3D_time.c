@@ -23,8 +23,8 @@ double engine3D_timer_getTime(void) {
 	return cycles * frequency;
 }
 
-void engine3D_timer_sleep(double t) {
-	Sleep(t * 1000.0);
+void engine3D_timer_sleep(const double t) {
+	Sleep((DWORD)(t * 1000.0));
 }
 #endif
 
@@ -39,7 +39,7 @@ double engine3D_timer_getTime(void) {
 	return 0;
 }
 
-void engine3D_timer_sleep(double t) {
+void engine3D_timer_sleep(const double t) {
 }
 #endif
 
@@ -54,7 +54,7 @@ double engine3D_timer_getTime(void) {
 	return 0;
 }
 
-void engine3D_timer_sleep(double t) {
+void engine3D_timer_sleep(const double t) {
 }
 #endif
 

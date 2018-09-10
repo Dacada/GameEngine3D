@@ -18,9 +18,9 @@ void engine3D_game_input(void) {
 	if (engine3d_input_getMouseDown(GLFW_MOUSE_BUTTON_LEFT)) {
 		printf("We've just pressed left click.\n");
 
-		vector2d_t pos;
+		engine3D_vector2f_t pos;
 		engine3d_input_getMousePosition(&pos);
-		printf("Position: "); fprintf_vector2d(stdout, &pos); printf("\n");
+		printf("Position: "); engine3D_vector2f_fprintf(stdout, &pos); printf("\n");
 	}
 	if (engine3d_input_getMouseUp(GLFW_MOUSE_BUTTON_LEFT)) {
 		printf("We've just released left click.\n");

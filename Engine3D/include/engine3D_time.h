@@ -16,9 +16,9 @@ double engine3D_timer_getTime(void);
 double engine3D_timer_getDelta(void);
 
 // Set value of delta
-void engine3D_timer_setDelta(double d);
+void engine3D_timer_setDelta(const double d);
 
 // Sleep the current thread for the given length of time
 // Time is in the internal module's units
 // engine3D_timer_second can be used to convert from seconds
-void engine3D_timer_sleep(double t);
+void engine3D_timer_sleep(const double t);

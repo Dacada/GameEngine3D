@@ -21,7 +21,7 @@ bool engine3d_input_getMouseDown(const int mouseButton);
 
 bool engine3d_input_getMouseUp(const int mouseButton);
 
-void engine3d_input_getMousePosition(vector2d_t *const position);
+void engine3d_input_getMousePosition(engine3D_vector2f_t *const position);
 
 void _engine3D_input_keyCallback(const GLFWwindow *const window, const int key, const int scancode, const int action, const int mods);
 

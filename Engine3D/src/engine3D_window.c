@@ -27,9 +27,9 @@ void engine3D_window_create(const int width, const int height, const char *const
 	glfwSwapInterval(0);
 	//glfwSetWindowUserPointer(window, ???);
 	//glfwSetFramebufferSizeCallback(window, resize_callback);
-	glfwSetKeyCallback(window, _engine3D_input_keyCallback);
-	glfwSetMouseButtonCallback(window, _engine3D_input_mouseButtonCallback);
-	glfwSetCursorPosCallback(window, _engine3D_input_mousePositionCallback);
+	glfwSetKeyCallback(window, (GLFWkeyfun)_engine3D_input_keyCallback);
+	glfwSetMouseButtonCallback(window, (GLFWmousebuttonfun)_engine3D_input_mouseButtonCallback);
+	glfwSetCursorPosCallback(window, (GLFWcursorposfun)_engine3D_input_mousePositionCallback);
 
 	if (glewInit() != GLEW_OK) {
 		engine3D_util_bail("failed to initialize glew");
