@@ -181,3 +181,24 @@ engine3D_vector3f_t * engine3D_vector3f_divf(const engine3D_vector3f_t * const v
 int engine3D_vector3f_fprintf(FILE * stream, const engine3D_vector3f_t *const v) {
 	return fprintf(stream, "vector2d<%f,%f,%f>", v->x, v->y, v->z);
 }
+
+void engine3D_matrix4f_setIdentity(engine3d_matrix4f_t * const matrix) {
+	for (size_t i = 0; i < 4; i++) {
+		for (size_t j = 0; j < 4; j++) {
+			matrix->mat[i][j] = 0;
+		}
+		matrix->mat[i][i] = 1;
+	}
+}
+
+void engine3D_matrix4f_mul(const engine3d_matrix4f_t * const m1, const engine3d_matrix4f_t * const m2, engine3d_matrix4f_t * const r) {
+	for (size_t i = 0; i < 4; i++) {
+		for (size_t j = 0; j < 4; j++) {
+			float sum = 0;
+			for (size_t k = 0; k < 4; k++) {
+				sum += m1->mat[i][k] * m2->mat[k][j];
+			}
+			r->mat[i][j] = sum;
+		}
+	}
+}

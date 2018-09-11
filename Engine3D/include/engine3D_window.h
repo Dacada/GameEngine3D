@@ -7,16 +7,16 @@ void engine3D_window_create(const int width, const int height, const char *const
 
 // Poll events and perform the framebuffer swap.
 // If on debug mode, query for OpenGL errors.
-void engine3D_window_update();
+void engine3D_window_update(void);
 
 // True if window must be closed.
-bool engine3D_window_closeRequested();
+bool engine3D_window_closeRequested(void);
 
 // Set the ints which pointers are given to the window's current width and height.
 // NULL is an accepted value for any of the two pointers.
 void engine3D_window_getSize(int *const width, int *const height);
 
-const char *const engine3D_window_getTitle();
+const char *const engine3D_window_getTitle(void);
 
 // Terminate and destroy the window.
-void engine3D_window_destroy();
+void engine3D_window_destroy(void);

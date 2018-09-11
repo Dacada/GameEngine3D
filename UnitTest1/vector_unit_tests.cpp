@@ -270,5 +270,76 @@ public:
 		Assert::AreEqual(2.3f, r.z, 0.1f);
 	}
 
+	TEST_METHOD(Matrix4fIdentityTest) {
+		engine3d_matrix4f_t m;
+		engine3D_matrix4f_setIdentity(&m);
+
+		Assert::AreEqual(1.0f, m.mat[0][0]);
+		Assert::AreEqual(0.0f, m.mat[0][1]);
+		Assert::AreEqual(0.0f, m.mat[0][2]);
+		Assert::AreEqual(0.0f, m.mat[0][3]);
+
+		Assert::AreEqual(0.0f, m.mat[1][0]);
+		Assert::AreEqual(1.0f, m.mat[1][1]);
+		Assert::AreEqual(0.0f, m.mat[1][2]);
+		Assert::AreEqual(0.0f, m.mat[1][3]);
+
+		Assert::AreEqual(0.0f, m.mat[2][0]);
+		Assert::AreEqual(0.0f, m.mat[2][1]);
+		Assert::AreEqual(1.0f, m.mat[2][2]);
+		Assert::AreEqual(0.0f, m.mat[2][3]);
+
+		Assert::AreEqual(0.0f, m.mat[3][0]);
+		Assert::AreEqual(0.0f, m.mat[3][1]);
+		Assert::AreEqual(0.0f, m.mat[3][2]);
+		Assert::AreEqual(1.0f, m.mat[3][3]);
+	}
+
+	TEST_METHOD(Matrix4fMulTest) {
+		engine3d_matrix4f_t m1, m2, r;
+
+		m1.mat[0][0] = 3;		m2.mat[0][0] = 5;
+		m1.mat[0][1] = 8;		m2.mat[0][1] = 6;
+		m1.mat[0][2] = 7;		m2.mat[0][2] = 8;
+		m1.mat[0][3] = 5;		m2.mat[0][3] = 0;
+
+		m1.mat[1][0] = 2;		m2.mat[1][0] = 0;
+		m1.mat[1][1] = 6;		m2.mat[1][1] = 7;
+		m1.mat[1][2] = 8;		m2.mat[1][2] = 4;
+		m1.mat[1][3] = 0;		m2.mat[1][3] = 2;
+
+		m1.mat[2][0] = 9;		m2.mat[2][0] = 2;
+		m1.mat[2][1] = 6;		m2.mat[2][1] = 5;
+		m1.mat[2][2] = 4;		m2.mat[2][2] = 6;
+		m1.mat[2][3] = 6;		m2.mat[2][3] = 8;
+
+		m1.mat[3][0] = 8;		m2.mat[3][0] = 0;
+		m1.mat[3][1] = 6;		m2.mat[3][1] = 8;
+		m1.mat[3][2] = 8;		m2.mat[3][2] = 5;
+		m1.mat[3][3] = 6;		m2.mat[3][3] = 4;
+
+		engine3D_matrix4f_mul(&m1, &m2, &r);
+
+		Assert::AreEqual(29.0f, r.mat[0][0]);
+		Assert::AreEqual(149.0f, r.mat[0][1]);
+		Assert::AreEqual(123.0f, r.mat[0][2]);
+		Assert::AreEqual(92.0f, r.mat[0][3]);
+
+		Assert::AreEqual(26.0f, r.mat[1][0]);
+		Assert::AreEqual(94.0f, r.mat[1][1]);
+		Assert::AreEqual(88.0f, r.mat[1][2]);
+		Assert::AreEqual(76.0f, r.mat[1][3]);
+
+		Assert::AreEqual(53.0f, r.mat[2][0]);
+		Assert::AreEqual(164.0f, r.mat[2][1]);
+		Assert::AreEqual(150.0f, r.mat[2][2]);
+		Assert::AreEqual(68.0f, r.mat[2][3]);
+
+		Assert::AreEqual(56.0f, r.mat[3][0]);
+		Assert::AreEqual(178.0f, r.mat[3][1]);
+		Assert::AreEqual(166.0f, r.mat[3][2]);
+		Assert::AreEqual(100.0f, r.mat[3][3]);
+	}
+
 	};
 }

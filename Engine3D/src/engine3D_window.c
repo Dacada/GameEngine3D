@@ -43,7 +43,7 @@ void engine3D_window_create(const int width, const int height, const char *const
 #endif
 }
 
-void engine3D_window_update() {
+void engine3D_window_update(void) {
 #ifndef NDEBUG
 	GLenum error = glGetError();
 	engine3D_util_reportGlError(error);
@@ -53,7 +53,7 @@ void engine3D_window_update() {
 	glfwSwapBuffers(window);
 }
 
-bool engine3D_window_closeRequested() {
+bool engine3D_window_closeRequested(void) {
 	return glfwWindowShouldClose(window) == 1;
 }
 
@@ -61,10 +61,10 @@ void engine3D_window_getSize(int *const width, int *const height) {
 	glfwGetFramebufferSize(window, width, height);
 }
 
-const char *const engine3D_window_getTitle() {
+const char *const engine3D_window_getTitle(void) {
 	return current_title;
 }
 
-void engine3D_window_destroy() {
+void engine3D_window_destroy(void) {
 	glfwTerminate();
 }

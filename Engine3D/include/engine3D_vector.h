@@ -79,3 +79,13 @@ engine3D_vector3f_t *engine3D_vector3f_div(const engine3D_vector3f_t *const v1, 
 engine3D_vector3f_t *engine3D_vector3f_divf(const engine3D_vector3f_t *const v, float f, engine3D_vector3f_t *const result);
 
 int engine3D_vector3f_fprintf(FILE *stream, const engine3D_vector3f_t *const v);
+
+
+
+typedef struct engine3d_matrix4f_t {
+	float mat[4][4];
+} engine3d_matrix4f_t;
+
+void engine3D_matrix4f_setIdentity(engine3d_matrix4f_t *const matrix);
+
+void engine3D_matrix4f_mul(const engine3d_matrix4f_t *const m1, const engine3d_matrix4f_t *const m2, engine3d_matrix4f_t *const r);

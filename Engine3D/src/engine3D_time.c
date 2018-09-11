@@ -1,5 +1,4 @@
-#include "..\include\engine3D_time.h"
-#pragma once
+#include <engine3D_time.h>
 
 #ifdef _WIN32
 #include <Windows.h>

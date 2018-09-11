@@ -6,7 +6,7 @@
 #include <stdlib.h>
 
 void engine3D_util_bail(const char *const message) {
-	fprintf(stderr, message);
+	fputs(message, stderr);
 	abort();
 }
 
