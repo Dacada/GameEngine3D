@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ENGINE3D_TIME_H
+#define ENGINE3D_TIME_H
 
 // Conversion unit to convert the result of
 // engine3D_timer_getTime into seconds
@@ -22,3 +23,5 @@ void engine3D_timer_setDelta(const double d);
 // Time is in the internal module's units
 // engine3D_timer_second can be used to convert from seconds
 void engine3D_timer_sleep(const double t);
+
+#endif /* ENGINE3D_TIME_H */

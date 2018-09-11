@@ -182,6 +182,8 @@ int engine3D_vector3f_fprintf(FILE * stream, const engine3D_vector3f_t *const v)
 	return fprintf(stream, "vector2d<%f,%f,%f>", v->x, v->y, v->z);
 }
 
+
+
 void engine3D_matrix4f_setIdentity(engine3d_matrix4f_t * const matrix) {
 	for (size_t i = 0; i < 4; i++) {
 		for (size_t j = 0; j < 4; j++) {
@@ -201,4 +203,43 @@ void engine3D_matrix4f_mul(const engine3d_matrix4f_t * const m1, const engine3d_
 			r->mat[i][j] = sum;
 		}
 	}
+}
+
+
+
+float engine3D_quaternion_length(const engine3D_quaternion_t * const v) {
+	return sqrtf(v->x * v->x + v->y * v->y + v->z * v->z + v->w * v->w);
+}
+
+engine3D_quaternion_t * engine3D_quaternion_normalize(engine3D_quaternion_t * const v) {
+	float length = engine3D_quaternion_length(v);
+	v->x /= length;
+	v->y /= length;
+	v->z /= length;
+	v->w /= length;
+	return v;
+}
+
+engine3D_quaternion_t * engine3D_quaternion_conjugate(const engine3D_quaternion_t * const v, engine3D_quaternion_t * const r) {
+	r->x = -v->x;
+	r->y = -v->y;
+	r->z = -v->z;
+	r->w = v->w;
+	return r;
+}
+
+engine3D_quaternion_t * engine3D_quaternion_mul(const engine3D_quaternion_t * const v1, const engine3D_quaternion_t * const v2, engine3D_quaternion_t * const r) {
+	r->w = v1->w * v2->w - v1->x * v2->x - v1->y * v2->y - v1->z * v2->z;
+	r->x = v1->x * v2->w + v1->w * v2->x + v1->y * v2->z - v1->z * v2->y;
+	r->y = v1->y * v2->w + v1->w * v2->y + v1->z * v2->x - v1->x * v2->z;
+	r->z = v1->z * v2->w + v1->w * v2->z + v1->x * v2->y - v1->y * v2->x;
+	return r;
+}
+
+engine3D_quaternion_t * engine3D_quaternion_mulv(const engine3D_quaternion_t * const v1, const engine3D_vector3f_t * const v2, engine3D_quaternion_t * const r) {
+	r->w = -v1->x * v2->x - v1->y * v2->y - v1->z * v2->z;
+	r->x =  v1->w * v2->x + v1->y * v2->z - v1->z * v2->y;
+	r->y =  v1->w * v2->y + v1->z * v2->x - v1->x * v2->z;
+	r->z =  v1->w * v2->z + v1->x * v2->y - v1->y * v2->x;
+	return r;
 }

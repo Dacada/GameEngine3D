@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ENGINE3D_INPUT_H
+#define ENGINE3D_INPUT_H
 
 #include <engine3D_vector.h>
 
@@ -28,3 +29,5 @@ void _engine3D_input_keyCallback(const GLFWwindow *const window, const int key, 
 void _engine3D_input_mouseButtonCallback(const GLFWwindow *const window, const int button, const int action, const int mods);
 
 void _engine3D_input_mousePositionCallback(const GLFWwindow *const window, const double xpos, const double ypos);
+
+#endif /* ENGINE3D_INPUT_H */

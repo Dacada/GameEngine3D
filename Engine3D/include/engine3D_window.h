@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ENGINE3D_WINDOW_H
+#define ENGINE3D_WINDOW_H
 
 #include <stdbool.h>
 
@@ -20,3 +21,5 @@ const char *const engine3D_window_getTitle(void);
 
 // Terminate and destroy the window.
 void engine3D_window_destroy(void);
+
+#endif /* ENGINE3D_WINDOW_H */

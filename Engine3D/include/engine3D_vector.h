@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ENGINE3D_VECTOR_H
+#define ENGINE3D_VECTOR_H
 
 #include <stdio.h>
 
@@ -89,3 +90,24 @@ typedef struct engine3d_matrix4f_t {
 void engine3D_matrix4f_setIdentity(engine3d_matrix4f_t *const matrix);
 
 void engine3D_matrix4f_mul(const engine3d_matrix4f_t *const m1, const engine3d_matrix4f_t *const m2, engine3d_matrix4f_t *const r);
+
+
+
+typedef struct engine3D_quaternion_t {
+	float x;
+	float y;
+	float z;
+	float w;
+} engine3D_quaternion_t;
+
+float engine3D_quaternion_length(const engine3D_quaternion_t *const v);
+
+engine3D_quaternion_t * engine3D_quaternion_normalize(engine3D_quaternion_t * const v);
+
+engine3D_quaternion_t * engine3D_quaternion_conjugate(const engine3D_quaternion_t * const v, engine3D_quaternion_t * const r);
+
+engine3D_quaternion_t * engine3D_quaternion_mul(const engine3D_quaternion_t * const v1, const engine3D_quaternion_t * const v2, engine3D_quaternion_t * const r);
+
+engine3D_quaternion_t * engine3D_quaternion_mulv(const engine3D_quaternion_t * const v1, const engine3D_vector3f_t * const v2, engine3D_quaternion_t * const r);
+
+#endif /* ENGINE3D_VECTOR_H */
