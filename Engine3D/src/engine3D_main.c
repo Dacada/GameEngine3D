@@ -1,8 +1,8 @@
 #include <engine3D_main.h>
 #include <engine3D_window.h>
-#include <engine3D_game.h>
 #include <engine3D_time.h>
 #include <engine3D_input.h>
+#include <engine3D_renderUtil.h>
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -14,12 +14,18 @@ const double engine3D_frameCap = 5000.0;
 
 static bool isRunning = false;
 
+static game_callback_t game_init;
+static game_callback_t game_input;
+static game_callback_t game_update;
+static game_callback_t game_render;
+
 static void cleanup(void) {
 	engine3D_window_destroy();
 }
 
 static void render(void) {
-	engine3D_game_render();
+	engine3D_renderUtil_clearScreen();
+	game_render();
 	engine3D_window_update();
 }
 
@@ -55,10 +61,11 @@ static void run(void) {
 			}
 
 			engine3D_timer_setDelta(frameTime);
-			engine3d_input_update();
 
-			engine3D_game_input();
-			engine3D_game_update();
+			game_input();
+			engine3D_input_update();
+
+			game_update();
 
 			if (frameCounter >= engine3D_timer_second) {
 				printf("%d\n", frames);
@@ -81,7 +88,8 @@ static void run(void) {
 void engine3D_init(void) {
 	engine3D_timer_init();
 	engine3D_window_create(engine3D_width, engine3D_height, engine3D_title);
-	engine3D_game_init();
+	engine3D_renderUtil_initGraphics();
+	game_init();
 }
 
 void engine3D_start(void) {
@@ -93,4 +101,20 @@ void engine3D_start(void) {
 
 void engine3D_stop(void) {
 	isRunning = false;
+}
+
+void engine3D_setGame_init(game_callback_t fun) {
+	game_init = fun;
+}
+
+void engine3D_setGame_input(game_callback_t fun) {
+	game_input = fun;
+}
+
+void engine3D_setGame_update(game_callback_t fun) {
+	game_update = fun;
+}
+
+void engine3D_setGame_render(game_callback_t fun) {
+	game_render = fun;
 }

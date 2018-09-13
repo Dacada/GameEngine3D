@@ -275,7 +275,7 @@ public:
 
 
 	TEST_METHOD(Matrix4fIdentityTest) {
-		engine3d_matrix4f_t m;
+		engine3D_matrix4f_t m;
 		engine3D_matrix4f_setIdentity(&m);
 
 		Assert::AreEqual(1.0f, m.mat[0][0]);
@@ -300,7 +300,7 @@ public:
 	}
 
 	TEST_METHOD(Matrix4fMulTest) {
-		engine3d_matrix4f_t m1, m2, r;
+		engine3D_matrix4f_t m1, m2, r;
 
 		m1.mat[0][0] = 3;		m2.mat[0][0] = 5;
 		m1.mat[0][1] = 8;		m2.mat[0][1] = 6;

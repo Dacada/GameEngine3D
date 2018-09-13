@@ -19,21 +19,25 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\engine3D_game.c" />
+    <ClCompile Include="src\engine3d_mesh.c" />
+    <ClCompile Include="src\engine3D_renderUtil.c" />
     <ClCompile Include="src\engine3D_input.c" />
     <ClCompile Include="src\engine3D_main.c" />
     <ClCompile Include="src\engine3D_time.c" />
     <ClCompile Include="src\engine3D_util.c" />
     <ClCompile Include="src\engine3D_vector.c" />
+    <ClCompile Include="src\engine3D_vertex.c" />
     <ClCompile Include="src\engine3D_window.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\engine3D_game.h" />
+    <ClInclude Include="include\engine3d_mesh.h" />
+    <ClInclude Include="include\engine3D_renderUtil.h" />
     <ClInclude Include="include\engine3D_input.h" />
     <ClInclude Include="include\engine3D_main.h" />
     <ClInclude Include="include\engine3D_time.h" />
     <ClInclude Include="include\engine3D_util.h" />
     <ClInclude Include="include\engine3D_vector.h" />
+    <ClInclude Include="include\engine3D_vertex.h" />
     <ClInclude Include="include\engine3D_window.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

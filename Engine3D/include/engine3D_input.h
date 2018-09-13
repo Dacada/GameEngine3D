@@ -5,24 +5,25 @@
 
 #include <GL\glew.h>
 #include <GLFW\glfw3.h>
+#include <gl/GL.h>
 
 #include <stdbool.h>
 
-void engine3d_input_update(void);
+void engine3D_input_update(void);
 
-bool engine3d_input_getKey(const int keyCode);
+bool engine3D_input_getKey(const int keyCode);
 
-bool engine3d_input_getKeyDown(const int keyCode);
+bool engine3D_input_getKeyDown(const int keyCode);
 
-bool engine3d_input_getKeyUp(const int keyCode);
+bool engine3D_input_getKeyUp(const int keyCode);
 
-bool engine3d_input_getMouse(const int mouseButton);
+bool engine3D_input_getMouse(const int mouseButton);
 
-bool engine3d_input_getMouseDown(const int mouseButton);
+bool engine3D_input_getMouseDown(const int mouseButton);
 
-bool engine3d_input_getMouseUp(const int mouseButton);
+bool engine3D_input_getMouseUp(const int mouseButton);
 
-void engine3d_input_getMousePosition(engine3D_vector2f_t *const position);
+void engine3D_input_getMousePosition(engine3D_vector2f_t *const position);
 
 void _engine3D_input_keyCallback(const GLFWwindow *const window, const int key, const int scancode, const int action, const int mods);
 

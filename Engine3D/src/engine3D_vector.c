@@ -184,7 +184,7 @@ int engine3D_vector3f_fprintf(FILE * stream, const engine3D_vector3f_t *const v)
 
 
 
-void engine3D_matrix4f_setIdentity(engine3d_matrix4f_t * const matrix) {
+void engine3D_matrix4f_setIdentity(engine3D_matrix4f_t * const matrix) {
 	for (size_t i = 0; i < 4; i++) {
 		for (size_t j = 0; j < 4; j++) {
 			matrix->mat[i][j] = 0;
@@ -193,7 +193,7 @@ void engine3D_matrix4f_setIdentity(engine3d_matrix4f_t * const matrix) {
 	}
 }
 
-void engine3D_matrix4f_mul(const engine3d_matrix4f_t * const m1, const engine3d_matrix4f_t * const m2, engine3d_matrix4f_t * const r) {
+void engine3D_matrix4f_mul(const engine3D_matrix4f_t * const m1, const engine3D_matrix4f_t * const m2, engine3D_matrix4f_t * const r) {
 	for (size_t i = 0; i < 4; i++) {
 		for (size_t j = 0; j < 4; j++) {
 			float sum = 0;

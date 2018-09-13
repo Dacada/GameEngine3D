@@ -21,7 +21,7 @@ static bool mouseButtonsUp[LEN_MOUSE_BUTTONS];
 
 static float lastMousePositionX, lastMousePositionY;
 
-void engine3d_input_update(void) {
+void engine3D_input_update(void) {
 	for (int i = 0; i < LEN_KEYS; i++)
 	{
 		keysDown[i] = keys[i] && !keysState[i];
@@ -37,43 +37,43 @@ void engine3d_input_update(void) {
 	memcpy(mouseButtonsState, mouseButtons, sizeof(bool)*LEN_MOUSE_BUTTONS);
 }
 
-bool engine3d_input_getKey(const int keyCode) {
+bool engine3D_input_getKey(const int keyCode) {
 	if (keyCode < 0 || keyCode > LEN_KEYS)
 		return false;
 	return keys[keyCode];
 }
 
-bool engine3d_input_getKeyDown(const int keyCode) {
+bool engine3D_input_getKeyDown(const int keyCode) {
 	if (keyCode < 0 || keyCode > LEN_KEYS)
 		return false;
 	return keysDown[keyCode];
 }
 
-bool engine3d_input_getKeyUp(const int keyCode) {
+bool engine3D_input_getKeyUp(const int keyCode) {
 	if (keyCode < 0 || keyCode > LEN_KEYS)
 		return false;
 	return keysUp[keyCode];
 }
 
-bool engine3d_input_getMouse(const int mouseButton) {
+bool engine3D_input_getMouse(const int mouseButton) {
 	if (mouseButton < 0 || mouseButton > LEN_MOUSE_BUTTONS)
 		return false;
 	return mouseButtons[mouseButton];
 }
 
-bool engine3d_input_getMouseDown(const int mouseButton) {
+bool engine3D_input_getMouseDown(const int mouseButton) {
 	if (mouseButton < 0 || mouseButton > LEN_MOUSE_BUTTONS)
 		return false;
 	return mouseButtonsDown[mouseButton];
 }
 
-bool engine3d_input_getMouseUp(const int mouseButton) {
+bool engine3D_input_getMouseUp(const int mouseButton) {
 	if (mouseButton < 0 || mouseButton > LEN_MOUSE_BUTTONS)
 		return false;
 	return mouseButtonsUp[mouseButton];
 }
 
-void engine3d_input_getMousePosition(engine3D_vector2f_t *const position) {
+void engine3D_input_getMousePosition(engine3D_vector2f_t *const position) {
 	position->x = lastMousePositionX;
 	position->y = lastMousePositionY;
 }
