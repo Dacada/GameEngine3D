@@ -23,6 +23,8 @@
     <ClCompile Include="src\engine3D_renderUtil.c" />
     <ClCompile Include="src\engine3D_input.c" />
     <ClCompile Include="src\engine3D_main.c" />
+    <ClCompile Include="src\engine3D_resourceLoader.c" />
+    <ClCompile Include="src\engine3D_shader.c" />
     <ClCompile Include="src\engine3D_time.c" />
     <ClCompile Include="src\engine3D_util.c" />
     <ClCompile Include="src\engine3D_vector.c" />
@@ -34,6 +36,8 @@
     <ClInclude Include="include\engine3D_renderUtil.h" />
     <ClInclude Include="include\engine3D_input.h" />
     <ClInclude Include="include\engine3D_main.h" />
+    <ClInclude Include="include\engine3D_resourceLoader.h" />
+    <ClInclude Include="include\engine3D_shader.h" />
     <ClInclude Include="include\engine3D_time.h" />
     <ClInclude Include="include\engine3D_util.h" />
     <ClInclude Include="include\engine3D_vector.h" />
@@ -112,7 +116,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <CompileAs>CompileAsC</CompileAs>
-      <PreprocessorDefinitions>ENGINE3D_OUTPUT_OPENGL_ON_WINDOW_CREATION;GLEW_STATIC;_USE_MATH_DEFINES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;_USE_MATH_DEFINES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Lib>
@@ -126,7 +130,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <CompileAs>CompileAsC</CompileAs>
-      <PreprocessorDefinitions>ENGINE3D_OUTPUT_OPENGL_ON_WINDOW_CREATION;GLEW_STATIC;_USE_MATH_DEFINES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;_USE_MATH_DEFINES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Lib>
@@ -142,7 +146,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <CompileAs>CompileAsC</CompileAs>
-      <PreprocessorDefinitions>ENGINE3D_OUTPUT_OPENGL_ON_WINDOW_CREATION;GLEW_STATIC;_USE_MATH_DEFINES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;_USE_MATH_DEFINES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>
       </DisableSpecificWarnings>
     </ClCompile>
@@ -163,7 +167,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <CompileAs>CompileAsC</CompileAs>
-      <PreprocessorDefinitions>ENGINE3D_OUTPUT_OPENGL_ON_WINDOW_CREATION;GLEW_STATIC;_USE_MATH_DEFINES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;_USE_MATH_DEFINES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>
       </DisableSpecificWarnings>
     </ClCompile>

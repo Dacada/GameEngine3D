@@ -89,6 +89,7 @@ void engine3D_init(void) {
 	engine3D_timer_init();
 	engine3D_window_create(engine3D_width, engine3D_height, engine3D_title);
 	engine3D_renderUtil_initGraphics();
+	puts(engine3D_renderUtil_getOpenGLVersion());
 	game_init();
 }
 

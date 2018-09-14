@@ -37,10 +37,6 @@ void engine3D_window_create(const int width, const int height, const char *const
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-#ifdef ENGINE3D_OUTPUT_OPENGL_ON_WINDOW_CREATION
-	printf("OpenGL - %s\n", glGetString(GL_VERSION));
-#endif
 }
 
 void engine3D_window_update(void) {

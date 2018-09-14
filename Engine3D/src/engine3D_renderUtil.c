@@ -21,3 +21,7 @@ void engine3D_renderUtil_initGraphics(void) {
 	
 	glEnable(GL_FRAMEBUFFER_SRGB);
 }
+
+const char *engine3D_renderUtil_getOpenGLVersion(void) {
+	return (char*)glGetString(GL_VERSION);
+}
