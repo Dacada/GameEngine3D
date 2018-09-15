@@ -8,6 +8,7 @@
 
 void engine3D_util_bail(const char *const message) {
 	fputs(message, stderr);
+	fputc('\n', stderr);
 	abort();
 }
 

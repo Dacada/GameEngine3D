@@ -3,7 +3,7 @@ INCDIR = include
 
 CC = gcc
 CFLAGS = -I$(INCDIR) -Wall -Wextra -Werror -std=gnu11 -Wformat\
-         -Wformat-security -D_FORTIFY_SOURCE=2
+         -Wformat-security -D_FORTIFY_SOURCE=2 -DENGINE3D_RES_PATH="\"Engine3D/res/"\"
 
 SRCFILES = $(wildcard $(SRCDIR)/*.c)
 INCFILES = $(wildcard $(INCDIR)/*.h)
