@@ -1,7 +1,5 @@
 #include <engine3D_vector.h>
 
-#include <Windows.h>
-
 #include <math.h>
 
 float engine3D_vector2f_length(const engine3D_vector2f_t * const v) {
@@ -113,6 +111,10 @@ engine3D_vector3f_t * engine3D_vector3f_normalize(engine3D_vector3f_t * const v)
 }
 
 engine3D_vector3f_t * engine3D_vector3f_rotateRad(const engine3D_vector3f_t * const v, float angle, engine3D_vector3f_t *const result) {
+	// Suppress unused warnings
+	(void)(v);
+	(void)(angle);
+
 	return result;
 }
 

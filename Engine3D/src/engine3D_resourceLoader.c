@@ -18,7 +18,7 @@ size_t engine3D_resourceLoader_loadShader(const char *const filename, char *cons
 
 	size_t s = fread(text, sizeof(char), size, f);
 	int err;
-	if (err = ferror(f) != 0) {
+	if ((err = ferror(f)) != 0) {
 		engine3D_util_errPrintf("fprintf: error %d", err);
 		engine3D_util_bail("failed to load shader");
 	}

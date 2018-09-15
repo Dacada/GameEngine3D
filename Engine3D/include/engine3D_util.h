@@ -1,7 +1,7 @@
 #ifndef ENGINE3D_UTIL_H
 #define ENGINE3D_UTIL_H
 
-#include <GL\glew.h>
+#include <GL/glew.h>
 
 void engine3D_util_bail(const char *const message);
 

@@ -29,16 +29,53 @@ void engine3D_timer_sleep(const double t) {
 
 // TODO: Linux compatibility
 #ifdef __unix__
-const double engine3D_timer_second = 0;
+#include <engine3D_util.h>
+#include <stdio.h>
+#include <errno.h>
+#include <time.h>
+
+const double engine3D_timer_second = 1000000.0;
+
+static struct timespec start;
 
 void engine3D_timer_init(void) {
+	if (clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start) == -1) {
+		perror("clock_gettime");
+		engine3D_util_bail("CLOCK_PROCESS_CPUTIME_ID failed");
+	}
 }
 
 double engine3D_timer_getTime(void) {
-	return 0;
+	struct timespec tp;
+	if (clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &tp) == -1) {
+		perror("clock_gettime");
+		engine3D_util_bail("CLOCK_PROCESS_CPUTIME_ID failed");
+	}
+	return ((double)(tp.tv_nsec - start.tv_nsec))/1000.0 + ((double)(tp.tv_sec - start.tv_sec))*1000000.0;
 }
 
 void engine3D_timer_sleep(const double t) {
+	struct timespec tp, currentTime;
+	long t_long = (long)t;
+
+	if (clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &currentTime) == -1) {
+		perror("clock_gettime");
+		engine3D_util_bail("CLOCK_PROCESS_CPUTIME_ID failed");
+	}
+
+	long realns = currentTime.tv_nsec + (t_long % 1000000) * 1000;
+	tp.tv_nsec = realns % 1000000000;
+	tp.tv_sec = realns / 1000000000 + currentTime.tv_sec + t_long / 1000000;
+
+	int err = EINTR;
+	while (err == EINTR) {
+		err = clock_nanosleep(CLOCK_PROCESS_CPUTIME_ID, TIMER_ABSTIME, &tp, NULL);
+	}
+
+	if (err != 0) {
+		perror("clock_nanosleep");
+		engine3D_util_bail("CLOCK_PROCESS_CPUTIME_ID nanosleep failed");
+	}
 }
 #endif
 

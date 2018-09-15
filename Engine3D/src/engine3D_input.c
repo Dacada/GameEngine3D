@@ -1,8 +1,8 @@
 #include <engine3D_input.h>
 #include <engine3D_vector.h>
 
-#include <GL\glew.h>
-#include <GLFW\glfw3.h>
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 
 #include <string.h>
 
@@ -79,18 +79,30 @@ void engine3D_input_getMousePosition(engine3D_vector2f_t *const position) {
 }
 
 void _engine3D_input_keyCallback(const GLFWwindow *const window, const int key, const int scancode, const int action, const int mods) {
+	// Suppress unused warnings
+	(void)window;
+	(void)scancode;
+	(void)mods;
+
 	if (key < 0 || key > LEN_KEYS)
 		return;
 	keys[key] = action != GLFW_RELEASE;
 }
 
 void _engine3D_input_mouseButtonCallback(const GLFWwindow *const window, const int button, const int action, const int mods) {
+	// Suppress unused warnings
+	(void)window;
+	(void)mods;
+
 	if (button < 0 || button > LEN_MOUSE_BUTTONS)
 		return;
 	mouseButtons[button] = action != GLFW_RELEASE;
 }
 
 void _engine3D_input_mousePositionCallback(const GLFWwindow *const window, const double xpos, const double ypos) {
+	// Suppress unused warnings
+	(void)window;
+	
 	lastMousePositionX = (float)xpos;
 	lastMousePositionY = (float)ypos;
 }

@@ -3,9 +3,9 @@
 
 #include <engine3D_vector.h>
 
-#include <GL\glew.h>
-#include <GLFW\glfw3.h>
-#include <gl/GL.h>
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include <GL/gl.h>
 
 #include <stdbool.h>
 

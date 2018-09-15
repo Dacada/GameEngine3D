@@ -1,6 +1,6 @@
 #include <engine3D_util.h>
 
-#include <GL\glew.h>
+#include <GL/glew.h>
 
 #include <stdio.h>
 #include <stdarg.h>
@@ -39,6 +39,7 @@ void engine3D_util_reportGlError(GLenum error) {
 int engine3D_util_errPrintf(const char *format, ...) {
 	va_list args;
 	va_start(args, format);
-	vfprintf(stderr, format, args);
+	int ret = vfprintf(stderr, format, args);
 	va_end(args);
+	return ret;
 }

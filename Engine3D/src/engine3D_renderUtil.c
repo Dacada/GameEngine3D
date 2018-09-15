@@ -1,8 +1,8 @@
 #include <engine3D_renderUtil.h>
 
-#include <GL\glew.h>
-#include <GLFW\glfw3.h>
-#include <gl/GL.h>
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include <GL/gl.h>
 
 void engine3D_renderUtil_clearScreen(void) {
 	// TODO: Stencil Buffer
@@ -18,7 +18,7 @@ void engine3D_renderUtil_initGraphics(void) {
 	glEnable(GL_DEPTH_TEST);
 
 	// TODO: Depth clamp for later
-	
+
 	glEnable(GL_FRAMEBUFFER_SRGB);
 }
 

@@ -1,7 +1,7 @@
 #include <engine3D_main.h>
 
-#include <engine3d_mesh.h>
-#include <engine3d_vertex.h>
+#include <engine3D_mesh.h>
+#include <engine3D_vertex.h>
 #include <engine3D_input.h>
 
 #include <stdbool.h>

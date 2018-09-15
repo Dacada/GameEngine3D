@@ -17,8 +17,6 @@ bool engine3D_window_closeRequested(void);
 // NULL is an accepted value for any of the two pointers.
 void engine3D_window_getSize(int *const width, int *const height);
 
-const char *const engine3D_window_getTitle(void);
-
 // Terminate and destroy the window.
 void engine3D_window_destroy(void);
 
