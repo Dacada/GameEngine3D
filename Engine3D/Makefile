@@ -1,6 +1,5 @@
 SRCDIR = src
 INCDIR = include
-OBJDIR = debug
 
 CC = gcc
 CFLAGS = -I$(INCDIR) -Wall -Wextra -Werror -std=gnu11 -Wformat\
@@ -8,32 +7,37 @@ CFLAGS = -I$(INCDIR) -Wall -Wextra -Werror -std=gnu11 -Wformat\
 
 SRCFILES = $(wildcard $(SRCDIR)/*.c)
 INCFILES = $(wildcard $(INCDIR)/*.h)
-OBJFILES = $(patsubst $(SRCDIR)/%, $(OBJDIR)/%, $(SRCFILES:.c=.o))
+DBGOBJFILES = $(patsubst $(SRCDIR)/%, debug/%, $(SRCFILES:.c=.o))
+RELOBJFILES = $(patsubst $(SRCDIR)/%, release/%, $(SRCFILES:.c=.o))
 
 FINAL = Engine3D.a
 
 .PHONY: all dbg cleanlib
 
-all: OBJDIR = release
 all: CFLAGS += -O3
-all: | $(OBJDIR)
-all: $(FINAL)
+all: | release
+all: release/$(FINAL)
 
-dbg: OBJDIR = debug
 dbg: CFLAGS += -Og
-dbg: | $(OBJDIR)
-dbg: $(FINAL)
+dbg: | debug
+dbg: debug/$(FINAL)
 
 cleanlib:
-	rm -f $(FINAL)
+	rm -f debug/Engine3D.a release/Engine3D.a
 clean: cleanlib
-	rm -f $(OBJFILES)
+	rm -f debug/*.o release/*.o
 
-$(FINAL): $(OBJFILES)
+debug/$(FINAL): $(DBGOBJFILES)
+	ar rcs $@ $^
+release/$(FINAL): $(RELOBJFILES)
 	ar rcs $@ $^
 
-$(OBJDIR):
-	mkdir -p $(OBJDIR)
+debug:
+	mkdir -p debug
+release:
+	mkdir -p release
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
+debug/%.o: $(SRCDIR)/%.c
+	$(CC) -c -o $@ $< $(CFLAGS)
+release/%.o: $(SRCDIR)/%.c
 	$(CC) -c -o $@ $< $(CFLAGS)
