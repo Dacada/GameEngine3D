@@ -1,23 +1,31 @@
 #include <engine3D_main.h>
 
 #include <engine3D_mesh.h>
+#include <engine3D_shader.h>
+#include <engine3D_resourceLoader.h>
 #include <engine3D_vertex.h>
 #include <engine3D_input.h>
 
 #include <stdbool.h>
 #include <stdlib.h>
 
-void init(void) {
-	engine3D_mesh_t mesh;
-	engine3D_mesh_init(&mesh);
+static engine3D_mesh_t mesh;
+static engine3D_shader_t shader;
 
-	engine3D_vertex_t vertices[3] = { { { -1, -1, 0 } },{ { 0, 1, 0 } },{ { 1, -1, 0 } } };
+static void init(void) {
+	engine3D_mesh_init(&mesh);
+	engine3D_shader_init(&shader);
+
+	engine3D_vertex_t vertices[3] = { { { -1, -1, 0 } }, { { 0, 1, 0 } }, { { 1, -1, 0 } } };
 	engine3D_mesh_addVertices(&mesh, vertices, 3);
 
-	engine3D_mesh_draw(&mesh);
+	char shaderText[1024];
+	engine3D_shader_addVertexShader(engine3D_resourceLoader_loadShader("basicVertex.vs", shaderText, 1024), &shader);
+	engine3D_shader_addFragmentShader(engine3D_resourceLoader_loadShader("basicFragment.fs", shaderText, 1024), &shader);
+	engine3D_shader_compile(&shader);
 }
 
-void input(void) {
+static void input(void) {
 	if (engine3D_input_getKeyDown(GLFW_KEY_UP)) {
 		printf("We've just pressed up.\n");
 	}
@@ -37,10 +45,12 @@ void input(void) {
 	}
 }
 
-void update(void) {
+static void update(void) {
 }
 
-void render(void) {
+static void render(void) {
+	engine3D_shader_bind(&shader);
+	engine3D_mesh_draw(&mesh);
 }
 
 int main(void) {

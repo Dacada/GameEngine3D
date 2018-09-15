@@ -53,15 +53,23 @@ void engine3D_shader_compile(const engine3D_shader_t * const shader) {
 	glLinkProgram(shader->program);
 
 	GLint status;
-	glGetShaderiv(shader->program, GL_LINK_STATUS, &status);
+	glGetProgramiv(shader->program, GL_LINK_STATUS, &status);
 	if (status == GL_FALSE) {
 		char infoLog[1024];
-		glGetShaderInfoLog(shader->program, 1024, NULL, infoLog);
+		glGetProgramInfoLog(shader->program, 1024, NULL, infoLog);
 		engine3D_util_errPrintf(infoLog);
 		engine3D_util_bail("shader linking failed");
 	}
 
 	glValidateProgram(shader->program);
+
+	glGetProgramiv(shader->program, GL_LINK_STATUS, &status);
+	if (status == GL_FALSE) {
+		char infoLog[1024];
+		glGetProgramInfoLog(shader->program, 1024, NULL, infoLog);
+		engine3D_util_errPrintf(infoLog);
+		engine3D_util_bail("shader validation failed");
+	}
 }
 
 void engine3D_shader_bind(const engine3D_shader_t * const shader) {

@@ -6,9 +6,9 @@
 
 #include <string.h>
 
-size_t engine3D_resourceLoader_loadShader(const char *const filename, char *const text, size_t size) {
-	char filepath[256] = "./res/shaders/";
-	strncat(filepath, filename, 200);
+char *engine3D_resourceLoader_loadShader(const char *const filename, char *const text, size_t size) {
+	char filepath[256] = ENGINE3D_RES_PATH "shaders/";
+	strncat(filepath, filename, 128);
 
 	FILE *f = fopen(filepath, "r");
 	if (f == NULL) {
@@ -22,7 +22,7 @@ size_t engine3D_resourceLoader_loadShader(const char *const filename, char *cons
 		engine3D_util_errPrintf("fprintf: error %d", err);
 		engine3D_util_bail("failed to load shader");
 	}
-	text[size - 1] = '\0'; // Ensure it's null terminated even if it has been truncated
+	text[s] = '\0'; // Ensure it's null terminated
 
-	return s;
+	return text;
 }
