@@ -78,21 +78,6 @@ void engine3D_timer_sleep(const double t) {
 }
 #endif
 
-// TODO: Mac compatibility
-#if defined(__APPLE__) && defined(__MACH__)
-const double engine3D_timer_second = 0;
-
-void engine3D_timer_init(void) {
-}
-
-double engine3D_timer_getTime(void) {
-	return 0;
-}
-
-void engine3D_timer_sleep(const double t) {
-}
-#endif
-
 static double delta;
 
 double engine3D_timer_getDelta(void) {
