@@ -44,3 +44,23 @@ int engine3D_util_errPrintf(const char *format, ...) {
 	va_end(args);
 	return ret;
 }
+
+void *engine3D_util_safeMalloc(size_t size) {
+	void *ptr = malloc(size);
+	if (ptr == NULL)
+	{
+		perror("malloc");
+		abort();
+	}
+	return ptr;
+}
+
+void *engine3D_util_safeRealloc(void *ptr, size_t size) {
+	void *newPtr = realloc(ptr, size);
+	if (newPtr == NULL)
+	{
+		perror("realloc");
+		abort();
+	}
+	return newPtr;
+}

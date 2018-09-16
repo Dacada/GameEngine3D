@@ -5,9 +5,12 @@
 #include <engine3D_resourceLoader.h>
 #include <engine3D_vertex.h>
 #include <engine3D_input.h>
+#include <engine3D_time.h>
 
 #include <stdbool.h>
 #include <stdlib.h>
+
+#include <math.h>
 
 static engine3D_mesh_t mesh;
 static engine3D_shader_t shader;
@@ -23,6 +26,8 @@ static void init(void) {
 	engine3D_shader_addVertexShader(engine3D_resourceLoader_loadShader("basicVertex.vs", shaderText, 1024), &shader);
 	engine3D_shader_addFragmentShader(engine3D_resourceLoader_loadShader("basicFragment.fs", shaderText, 1024), &shader);
 	engine3D_shader_compile(&shader);
+
+	engine3D_shader_addUniform("uniformFloat", &shader);
 }
 
 static void input(void) {
@@ -46,6 +51,9 @@ static void input(void) {
 }
 
 static void update(void) {
+	static float tmp = 0.0f;
+	tmp += engine3D_time_getDelta();
+	engine3D_shader_setUniformf("uniformFloat", fabsf(sinf(tmp)), &shader);
 }
 
 static void render(void) {
