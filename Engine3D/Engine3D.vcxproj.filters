@@ -48,7 +48,7 @@
     <ClCompile Include="src\engine3D_shader.c">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine3D_trie.cpp">
+    <ClCompile Include="src\engine3D_trie.c">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>

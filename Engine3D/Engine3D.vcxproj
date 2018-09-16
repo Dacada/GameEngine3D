@@ -26,7 +26,7 @@
     <ClCompile Include="src\engine3D_resourceLoader.c" />
     <ClCompile Include="src\engine3D_shader.c" />
     <ClCompile Include="src\engine3D_time.c" />
-    <ClCompile Include="src\engine3D_trie.cpp" />
+    <ClCompile Include="src\engine3D_trie.c" />
     <ClCompile Include="src\engine3D_util.c" />
     <ClCompile Include="src\engine3D_vector.c" />
     <ClCompile Include="src\engine3D_vertex.c" />

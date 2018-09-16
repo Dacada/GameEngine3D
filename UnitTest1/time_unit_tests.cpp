@@ -24,8 +24,8 @@ namespace UnitTesting {
 
 		TEST_METHOD(GetDeltaTest) {
 			double d = 123.456;
-			engine3D_timer_setDelta(d);
-			Assert::AreEqual(d, engine3D_timer_getDelta());
+			engine3D_time_setDelta(d);
+			Assert::AreEqual(d, engine3D_time_getDelta());
 		}
 
 	};
