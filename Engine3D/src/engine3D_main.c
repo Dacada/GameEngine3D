@@ -60,7 +60,7 @@ static void run(void) {
 				engine3D_stop();
 			}
 
-			engine3D_timer_setDelta(frameTime);
+			engine3D_time_setDelta(frameTime);
 
 			game_input();
 			engine3D_input_update();
@@ -78,7 +78,7 @@ static void run(void) {
 			render();
 			frames++;
 		} else {
-			engine3D_timer_sleep(0.001 * engine3D_timer_second);
+			engine3D_time_sleep(0.001 * engine3D_timer_second);
 		}
 	}
 

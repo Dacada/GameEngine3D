@@ -5,7 +5,13 @@
 
 #include <stdlib.h>
 
-void engine3D_util_bail(const char *const message);
+#ifdef _MSC_VER
+__declspec(noreturn) void engine3D_util_bail(const char *const message);
+#endif
+
+#ifdef __GNUC__
+void engine3D_util_bail(const char *const message) __attribute__((noreturn));
+#endif
 
 void engine3D_util_reportGlError(GLenum error);
 

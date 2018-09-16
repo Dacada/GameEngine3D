@@ -22,7 +22,7 @@ double engine3D_timer_getTime(void) {
 	return cycles * frequency;
 }
 
-void engine3D_timer_sleep(const double t) {
+void engine3D_time_sleep(const double t) {
 	Sleep((DWORD)(t * 1000.0));
 }
 #endif
@@ -53,7 +53,7 @@ double engine3D_timer_getTime(void) {
 	return ((double)(tp.tv_nsec - start.tv_nsec))/1000.0 + ((double)(tp.tv_sec - start.tv_sec))*1000000.0;
 }
 
-void engine3D_timer_sleep(const double t) {
+void engine3D_time_sleep(const double t) {
 	struct timespec tp, currentTime;
 	long t_long = (long)t;
 
@@ -80,10 +80,10 @@ void engine3D_timer_sleep(const double t) {
 
 static double delta;
 
-double engine3D_timer_getDelta(void) {
+double engine3D_time_getDelta(void) {
 	return delta;
 }
 
-void engine3D_timer_setDelta(const double d) {
+void engine3D_time_setDelta(const double d) {
 	delta = d;
 }

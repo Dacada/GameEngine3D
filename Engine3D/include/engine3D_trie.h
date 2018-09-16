@@ -8,7 +8,7 @@ typedef struct engine3D_trie_t {
 	bool hasValue;
 	int value;
 	char *childrenKeys;
-	engine3D_trie_t *children;
+	struct engine3D_trie_t *children;
 	size_t childrenNextIndex;
 	size_t childrenCapacity;
 } engine3D_trie_t;

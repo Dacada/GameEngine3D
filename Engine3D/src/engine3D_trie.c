@@ -74,6 +74,6 @@ int engine3D_trie_get(const engine3D_trie_t *const trie, const char *const key) 
 			engine3D_util_bail("attempt to get non existing key from trie");
 		}
 
-		engine3D_trie_get(trie->children + i, key + 1);
+		return engine3D_trie_get(trie->children + i, key + 1);
 	}
 }

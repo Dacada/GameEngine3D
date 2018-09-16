@@ -3,7 +3,7 @@
 
 #include <stdlib.h>
 
-static void addProgram(const char *const text, const engine3D_shader_t * const shader, GLenum type) {
+static void addProgram(const char *const text, engine3D_shader_t * const shader, GLenum type) {
 	GLuint shaderId = glCreateShader(type);
 	if (shader == 0) {
 		engine3D_util_bail("shader creation failed");
@@ -37,17 +37,17 @@ engine3D_shader_t *engine3D_shader_init(engine3D_shader_t * const shader) {
 	return shader;
 }
 
-engine3D_shader_t *engine3D_shader_addVertexShader(const char *const text, const engine3D_shader_t * const shader) {
+engine3D_shader_t *engine3D_shader_addVertexShader(const char *const text, engine3D_shader_t * const shader) {
 	addProgram(text, shader, GL_VERTEX_SHADER);
 	return shader;
 }
 
-engine3D_shader_t *engine3D_shader_addGeometryShader(const char *const text, const engine3D_shader_t * const shader) {
+engine3D_shader_t *engine3D_shader_addGeometryShader(const char *const text, engine3D_shader_t * const shader) {
 	addProgram(text, shader, GL_GEOMETRY_SHADER);
 	return shader;
 }
 
-engine3D_shader_t *engine3D_shader_addFragmentShader(const char *const text, const engine3D_shader_t * const shader) {
+engine3D_shader_t *engine3D_shader_addFragmentShader(const char *const text, engine3D_shader_t * const shader) {
 	addProgram(text, shader, GL_FRAGMENT_SHADER);
 	return shader;
 }
@@ -106,5 +106,5 @@ void engine3D_shader_setUniformVec3f(const char *const uniform, const engine3D_v
 
 void engine3D_shader_setUniformMat4f(const char *const uniform, const engine3D_matrix4f_t *const value, const engine3D_shader_t *const shader) {
 	int location = engine3D_trie_get(shader->uniforms, uniform);
-	glUniformMatrix4fv(location, 1, GL_TRUE, value->mat);
+	glUniformMatrix4fv(location, 1, GL_TRUE, (float*)value->mat);
 }
