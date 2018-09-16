@@ -26,6 +26,7 @@
     <ClCompile Include="src\engine3D_resourceLoader.c" />
     <ClCompile Include="src\engine3D_shader.c" />
     <ClCompile Include="src\engine3D_time.c" />
+    <ClCompile Include="src\engine3D_transform.c" />
     <ClCompile Include="src\engine3D_trie.c" />
     <ClCompile Include="src\engine3D_util.c" />
     <ClCompile Include="src\engine3D_vector.c" />
@@ -40,6 +41,7 @@
     <ClInclude Include="include\engine3D_resourceLoader.h" />
     <ClInclude Include="include\engine3D_shader.h" />
     <ClInclude Include="include\engine3D_time.h" />
+    <ClInclude Include="include\engine3D_transform.h" />
     <ClInclude Include="include\engine3D_trie.h" />
     <ClInclude Include="include\engine3D_util.h" />
     <ClInclude Include="include\engine3D_vector.h" />

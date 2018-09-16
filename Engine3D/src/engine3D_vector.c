@@ -195,6 +195,13 @@ void engine3D_matrix4f_setIdentity(engine3D_matrix4f_t * const matrix) {
 	}
 }
 
+void engine3D_matrix4f_setTranslation(engine3D_matrix4f_t * const matrix, float x, float y, float z) {
+	engine3D_matrix4f_setIdentity(matrix);
+	matrix->mat[0][3] = x;
+	matrix->mat[1][3] = y;
+	matrix->mat[2][3] = z;
+}
+
 void engine3D_matrix4f_mul(const engine3D_matrix4f_t * const m1, const engine3D_matrix4f_t * const m2, engine3D_matrix4f_t * const r) {
 	for (size_t i = 0; i < 4; i++) {
 		for (size_t j = 0; j < 4; j++) {

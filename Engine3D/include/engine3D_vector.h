@@ -91,6 +91,8 @@ void engine3D_matrix4f_setIdentity(engine3D_matrix4f_t *const matrix);
 
 void engine3D_matrix4f_mul(const engine3D_matrix4f_t *const m1, const engine3D_matrix4f_t *const m2, engine3D_matrix4f_t *const r);
 
+void engine3D_matrix4f_setTranslation(engine3D_matrix4f_t * const matrix, float x, float y, float z);
+
 
 
 typedef struct engine3D_quaternion_t {
