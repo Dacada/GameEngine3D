@@ -20,7 +20,7 @@ static engine3D_transform_t transform;
 static void init(void) {
 	engine3D_mesh_init(&mesh);
 	engine3D_shader_init(&shader);
-	engine3D_transform_init(&transform);
+	engine3D_transform_reset(&transform);
 
 	engine3D_vertex_t vertices[3] = { { { -1, -1, 0 } }, { { 0, 1, 0 } }, { { 1, -1, 0 } } };
 	engine3D_mesh_addVertices(&mesh, vertices, 3);
@@ -56,9 +56,13 @@ static void input(void) {
 static void update(void) {
 	static float tmp = 0.0f;
 	tmp += engine3D_time_getDelta();
+
 	transform.translation.x = sinf(tmp);
 	transform.translation.y = 0;
 	transform.translation.z = 0;
+	transform.rotation.x = 0;
+	transform.rotation.y = 0;
+	transform.rotation.z = sinf(tmp) * 180;
 }
 
 static void render(void) {

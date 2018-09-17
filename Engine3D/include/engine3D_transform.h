@@ -5,10 +5,11 @@
 
 typedef struct engine3D_transform_t {
 	engine3D_vector3f_t translation;
+	engine3D_vector3f_t rotation;
 } engine3D_transform_t;
 
-void engine3D_transform_init(engine3D_transform_t *const transform);
+void engine3D_transform_reset(engine3D_transform_t *const transform);
 
-void engine3D_transform_getTransformation(const engine3D_transform_t *const transform, engine3D_matrix4f_t *const transformation);
+void engine3D_transform_getTransformation(const engine3D_transform_t *const transform, engine3D_matrix4f_t *const transformationMatrix);
 
 #endif /* ENGINE3D_TRANSFORM_H */
