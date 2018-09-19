@@ -232,6 +232,13 @@ void engine3D_matrix4f_setRotation(engine3D_matrix4f_t * const matrix, float x, 
 	engine3D_matrix4f_mul(&rz, &tmp, matrix);
 }
 
+void engine3D_matrix4f_setScale(engine3D_matrix4f_t * const matrix, float x, float y, float z) {
+	engine3D_matrix4f_setIdentity(matrix);
+	matrix->mat[0][0] = x;
+	matrix->mat[1][1] = y;
+	matrix->mat[2][2] = z;
+}
+
 void engine3D_matrix4f_mul(const engine3D_matrix4f_t * const m1, const engine3D_matrix4f_t * const m2, engine3D_matrix4f_t * const r) {
 	for (size_t i = 0; i < 4; i++) {
 		for (size_t j = 0; j < 4; j++) {

@@ -6,14 +6,22 @@
 
 engine3D_mesh_t * engine3D_mesh_init(engine3D_mesh_t * const mesh) {
 	glGenBuffers(1, &mesh->vbo);
-	mesh->size = 0;
+	glGenBuffers(1, &mesh->ibo);
+	mesh->len_vbo = 0;
+	mesh->len_ibo = 0;
 	return mesh;
 }
 
-engine3D_mesh_t * engine3D_mesh_addVertices(engine3D_mesh_t * const mesh, engine3D_vertex_t vertices[], size_t vertices_len) {
-	mesh->size = vertices_len * sizeof(engine3D_vertex_t);
+engine3D_mesh_t * engine3D_mesh_addVertices(engine3D_mesh_t * const mesh, engine3D_vertex_t vertices[], size_t vertices_len, unsigned int indices[], size_t indices_len) {
+	mesh->len_vbo = vertices_len;
+	mesh->len_ibo = indices_len;
+
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo);
-	glBufferData(GL_ARRAY_BUFFER, mesh->size, vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, vertices_len * sizeof(engine3D_vertex_t), vertices, GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->ibo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices_len * sizeof(unsigned int), indices, GL_STATIC_DRAW);
+
 	return mesh;
 }
 
@@ -23,7 +31,8 @@ void engine3D_mesh_draw(const engine3D_mesh_t * const mesh) {
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(engine3D_vertex_t), 0);
 
-	glDrawArrays(GL_TRIANGLES, 0, mesh->size);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->ibo);
+	glDrawElements(GL_TRIANGLES, mesh->len_ibo, GL_UNSIGNED_INT, 0);
 
 	glDisableVertexAttribArray(0);
 }

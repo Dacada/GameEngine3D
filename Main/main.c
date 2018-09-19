@@ -22,8 +22,21 @@ static void init(void) {
 	engine3D_shader_init(&shader);
 	engine3D_transform_reset(&transform);
 
-	engine3D_vertex_t vertices[3] = { { { -1, -1, 0 } }, { { 0, 1, 0 } }, { { 1, -1, 0 } } };
-	engine3D_mesh_addVertices(&mesh, vertices, 3);
+	engine3D_vertex_t vertices[4] = {
+		{ { -1, -1, 0 } },
+		{ { 0, 1, 0 } },
+		{ { 1, -1, 0 } },
+		{ { 0, -1, 1 } }
+	};
+
+	unsigned int indices[12] = {
+		0, 1, 3,
+		3, 1, 2,
+		2, 1, 0,
+		0, 2, 3
+	};
+
+	engine3D_mesh_addVertices(&mesh, vertices, 4, indices, 12);
 
 	char shaderText[1024];
 	engine3D_shader_addVertexShader(engine3D_resourceLoader_loadShader("basicVertex.vs", shaderText, 1024), &shader);
@@ -57,12 +70,17 @@ static void update(void) {
 	static float tmp = 0.0f;
 	tmp += engine3D_time_getDelta();
 
-	transform.translation.x = sinf(tmp);
+	float sinTmp = sinf(tmp);
+
+	transform.translation.x = sinTmp;
 	transform.translation.y = 0;
 	transform.translation.z = 0;
 	transform.rotation.x = 0;
-	transform.rotation.y = 0;
-	transform.rotation.z = sinf(tmp) * 180;
+	transform.rotation.y = sinTmp * 180;
+	transform.rotation.z = 0;
+	//transform.scale.x = sinTmp;
+	//transform.scale.y = sinTmp;
+	//transform.scale.z = sinTmp;
 }
 
 static void render(void) {

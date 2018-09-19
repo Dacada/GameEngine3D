@@ -6,6 +6,7 @@
 typedef struct engine3D_transform_t {
 	engine3D_vector3f_t translation;
 	engine3D_vector3f_t rotation;
+	engine3D_vector3f_t scale;
 } engine3D_transform_t;
 
 void engine3D_transform_reset(engine3D_transform_t *const transform);
