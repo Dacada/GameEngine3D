@@ -39,8 +39,14 @@ static void init(void) {
 	engine3D_mesh_addVertices(&mesh, vertices, 4, indices, 12);
 
 	char shaderText[1024];
+	// Quick fix to use the right shader version in my windows and linux machines.
+	#ifndef __UNIX__
 	engine3D_shader_addVertexShader(engine3D_resourceLoader_loadShader("basicVertex.vs", shaderText, 1024), &shader);
 	engine3D_shader_addFragmentShader(engine3D_resourceLoader_loadShader("basicFragment.fs", shaderText, 1024), &shader);
+	#else
+	engine3D_shader_addVertexShader(engine3D_resourceLoader_loadShader("basicVertex_ES.vs", shaderText, 1024), &shader);
+	engine3D_shader_addFragmentShader(engine3D_resourceLoader_loadShader("basicFragment_ES.fs", shaderText, 1024), &shader);
+	#endif
 	engine3D_shader_compile(&shader);
 
 	engine3D_shader_addUniform("transform", &shader);
