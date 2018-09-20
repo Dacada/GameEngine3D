@@ -41,6 +41,7 @@ int engine3D_util_errPrintf(const char *format, ...) {
 	va_list args;
 	va_start(args, format);
 	int ret = vfprintf(stderr, format, args);
+	ret += fprintf(stderr, "\n");
 	va_end(args);
 	return ret;
 }

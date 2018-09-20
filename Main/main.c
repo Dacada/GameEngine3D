@@ -18,25 +18,27 @@ static engine3D_shader_t shader;
 static engine3D_transform_t transform;
 
 static void init(void) {
-	engine3D_mesh_init(&mesh);
+	//engine3D_mesh_init(&mesh);
 	engine3D_shader_init(&shader);
 	engine3D_transform_reset(&transform);
 
-	engine3D_vertex_t vertices[4] = {
-		{ { -1, -1, 0 } },
-		{ { 0, 1, 0 } },
-		{ { 1, -1, 0 } },
-		{ { 0, -1, 1 } }
-	};
+	//engine3D_vertex_t vertices[4] = {
+	//	{ { -1, -1, 0 } },
+	//	{ { 0, 1, 0 } },
+	//	{ { 1, -1, 0 } },
+	//	{ { 0, -1, 1 } }
+	//};
 
-	unsigned int indices[12] = {
-		0, 1, 3,
-		3, 1, 2,
-		2, 1, 0,
-		0, 2, 3
-	};
+	//unsigned int indices[12] = {
+	//	0, 1, 3,
+	//	3, 1, 2,
+	//	2, 1, 0,
+	//	0, 2, 3
+	//};
 
-	engine3D_mesh_addVertices(&mesh, vertices, 4, indices, 12);
+	//engine3D_mesh_addVertices(&mesh, vertices, 4, indices, 12);
+
+	engine3D_resourceLoader_loadMesh("box.obj", &mesh);
 
 	char shaderText[1024];
 	// Quick fix to use the right shader version in my windows and linux machines.
@@ -87,6 +89,9 @@ static void update(void) {
 	//transform.scale.x = sinTmp;
 	//transform.scale.y = sinTmp;
 	//transform.scale.z = sinTmp;
+	transform.scale.x = 0.5f;
+	transform.scale.y = 0.5f;
+	transform.scale.z = 0.5f;
 }
 
 static void render(void) {
