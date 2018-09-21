@@ -240,4 +240,6 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+
 /Engine3D/lib/include
+!/Engine3D/res/models/*.obj
