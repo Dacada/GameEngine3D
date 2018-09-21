@@ -1,7 +1,7 @@
 #ifndef ENGINE3D_RESOURCELOADER_H
 #define ENGINE3D_RESOURCELOADER_H
 
-#include <engine3d_mesh.h>
+#include <engine3D_mesh.h>
 
 #include <stdlib.h>
 

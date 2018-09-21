@@ -1,7 +1,7 @@
 #include <engine3D_resourceLoader.h>
 #include <engine3D_util.h>
-#include <engine3d_mesh.h>
-#include <engine3d_vertex.h>
+#include <engine3D_mesh.h>
+#include <engine3D_vertex.h>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,6 +10,7 @@
 #include <stdbool.h>
 #include <ctype.h>
 #include <limits.h>
+#include <errno.h>
 
 char *engine3D_resourceLoader_loadShader(const char *const filename, char *const text, size_t size) {
 	char filepath[256] = ENGINE3D_RES_PATH "shaders/";
@@ -73,7 +74,7 @@ static char *getNextToken(char *ptr, char buff[], size_t len) {
 	if (*ptr == '\0') {
 		buff[0] = '\n';
 		buff[1] = '\0';
-		return;
+		return ptr;
 	}
 
 	for (size_t i = 0; i < len; i++) {
@@ -99,7 +100,7 @@ static float readNextFloat(char **ptr) {
 		engine3D_util_bail("attempt to load invalid .obj file (error reading float)");
 	}
 
-	if (*ptr == *tmp) {
+	if (*ptr == tmp) {
 		engine3D_util_bail("attempt to load invalid .obj file (could not find float)");
 	}
 
@@ -117,7 +118,7 @@ static long readNextLong(char **ptr) {
 		engine3D_util_bail("attempt to load invalid .obj file (error reading long)");
 	}
 
-	if (*ptr == *tmp) {
+	if (*ptr == tmp) {
 		engine3D_util_bail("attempt to load invalid .obj file (could not find long)");
 	}
 
@@ -171,7 +172,7 @@ void engine3D_resourceLoader_loadMesh(const char *const filename, engine3D_mesh_
 
 	int ret;
 	char lineBuff[1024];
-	while ((ret = readLine(f, &lineBuff, 1024)) == 0) {
+	while ((ret = readLine(f, lineBuff, 1024)) == 0) {
 		char *current = lineBuff;
 		char token[256];
 
@@ -185,7 +186,6 @@ void engine3D_resourceLoader_loadMesh(const char *const filename, engine3D_mesh_
 
 		if (strncmp(token, "v", 2) == 0) {
 			float coords[4];
-			float defaultW = 1.0f;
 			coords[0] = readNextFloat(&current);
 			coords[1] = readNextFloat(&current);
 			coords[2] = readNextFloat(&current);
