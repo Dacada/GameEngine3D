@@ -2,6 +2,8 @@
 
 #include <math.h>
 
+#define TO_RADIANS(angle) ((angle) / 180 * (float)M_PI)
+
 float engine3D_vector2f_length(const engine3D_vector2f_t * const v) {
 	return sqrtf(v->x * v->x + v->y * v->y);
 }
@@ -28,7 +30,7 @@ engine3D_vector2f_t * engine3D_vector2f_rotateRad(const engine3D_vector2f_t * co
 }
 
 engine3D_vector2f_t * engine3D_vector2f_rotateDeg(const engine3D_vector2f_t * const v, float angle, engine3D_vector2f_t *const result) {
-	float rad = angle / 180 * (float)M_PI;
+	float rad = TO_RADIANS(angle);
 	return engine3D_vector2f_rotateRad(v, rad, result);
 }
 
@@ -120,7 +122,7 @@ engine3D_vector3f_t * engine3D_vector3f_rotateRad(const engine3D_vector3f_t * co
 
 engine3D_vector3f_t * engine3D_vector3f_rotateDeg(const engine3D_vector3f_t * const v, float angle, engine3D_vector3f_t *const result)
 {
-	float rad = angle / 180 * (float)M_PI;
+	float rad = TO_RADIANS(angle);
 	return engine3D_vector3f_rotateRad(v, rad, result);
 }
 
@@ -209,9 +211,9 @@ void engine3D_matrix4f_setRotation(engine3D_matrix4f_t * const matrix, float x, 
 	engine3D_matrix4f_setIdentity(&ry);
 	engine3D_matrix4f_setIdentity(&rz);
 
-	x = x / 180 * (float)M_PI;
-	y = y / 180 * (float)M_PI;
-	z = z / 180 * (float)M_PI;
+	x = TO_RADIANS(x);
+	y = TO_RADIANS(y);
+	z = TO_RADIANS(z);
 
 	rz.mat[0][0] =  cosf(z);
 	rz.mat[0][1] = -sinf(z);
@@ -237,6 +239,20 @@ void engine3D_matrix4f_setScale(engine3D_matrix4f_t * const matrix, float x, flo
 	matrix->mat[0][0] = x;
 	matrix->mat[1][1] = y;
 	matrix->mat[2][2] = z;
+}
+
+void engine3D_matrix4f_setProjection(engine3D_matrix4f_t * const matrix, float zNear, float zFar, float width, float height, float fov) {
+	float ar = width / height;
+	float tanHalfFOV = tanf(TO_RADIANS(fov / 2));
+	float zRange = zNear - zFar;
+
+	engine3D_matrix4f_setIdentity(matrix);
+	matrix->mat[0][0] = 1.0f / (tanHalfFOV * ar);
+	matrix->mat[1][1] = 1.0f / tanHalfFOV;
+	matrix->mat[2][2] = (-zNear - zFar) / zRange;
+	matrix->mat[3][2] = 1.0f;
+	matrix->mat[2][3] = 2 * zFar * zNear / zRange;
+	matrix->mat[3][3] = 0;
 }
 
 void engine3D_matrix4f_mul(const engine3D_matrix4f_t * const m1, const engine3D_matrix4f_t * const m2, engine3D_matrix4f_t * const r) {

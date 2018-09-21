@@ -18,27 +18,16 @@ static engine3D_shader_t shader;
 static engine3D_transform_t transform;
 
 static void init(void) {
-	//engine3D_mesh_init(&mesh);
 	engine3D_shader_init(&shader);
 	engine3D_transform_reset(&transform);
 
-	//engine3D_vertex_t vertices[4] = {
-	//	{ { -1, -1, 0 } },
-	//	{ { 0, 1, 0 } },
-	//	{ { 1, -1, 0 } },
-	//	{ { 0, -1, 1 } }
-	//};
-
-	//unsigned int indices[12] = {
-	//	0, 1, 3,
-	//	3, 1, 2,
-	//	2, 1, 0,
-	//	0, 2, 3
-	//};
-
-	//engine3D_mesh_addVertices(&mesh, vertices, 4, indices, 12);
-
 	engine3D_resourceLoader_loadMesh("box.obj", &mesh);
+
+	engine3D_transform_zNear = 0.1f;
+	engine3D_transform_zFar = 1000.0f;
+	engine3D_transform_width = engine3D_width;
+	engine3D_transform_height = engine3D_height;
+	engine3D_transform_fov = 70.0f;
 
 	char shaderText[1024];
 	// Quick fix to use the right shader version in my windows and linux machines.
@@ -82,22 +71,19 @@ static void update(void) {
 
 	transform.translation.x = sinTmp;
 	transform.translation.y = 0;
-	transform.translation.z = 0;
+	transform.translation.z = 5;
 	transform.rotation.x = 0;
 	transform.rotation.y = sinTmp * 180;
 	transform.rotation.z = 0;
 	//transform.scale.x = sinTmp;
 	//transform.scale.y = sinTmp;
 	//transform.scale.z = sinTmp;
-	transform.scale.x = 0.5f;
-	transform.scale.y = 0.5f;
-	transform.scale.z = 0.5f;
 }
 
 static void render(void) {
 	engine3D_shader_bind(&shader);
 	engine3D_matrix4f_t transformation;
-	engine3D_transform_getTransformation(&transform, &transformation);
+	engine3D_transform_getProjectedTransformation(&transform, &transformation);
 	engine3D_shader_setUniformMat4f("transform", &transformation, &shader);
 	engine3D_mesh_draw(&mesh);
 }

@@ -97,6 +97,8 @@ void engine3D_matrix4f_setRotation(engine3D_matrix4f_t * const matrix, float x, 
 
 void engine3D_matrix4f_setScale(engine3D_matrix4f_t * const matrix, float x, float y, float z);
 
+void engine3D_matrix4f_setProjection(engine3D_matrix4f_t * const matrix, float zNear, float zFar, float width, float height, float fov);
+
 
 
 typedef struct engine3D_quaternion_t {

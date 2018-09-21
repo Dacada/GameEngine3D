@@ -1,5 +1,13 @@
 #include <engine3D_transform.h>
 
+#include <string.h>
+
+float engine3D_transform_zNear;
+float engine3D_transform_zFar;
+float engine3D_transform_width;
+float engine3D_transform_height;
+float engine3D_transform_fov;
+
 void engine3D_transform_reset(engine3D_transform_t *const transform) {
 	transform->translation.x = 0;
 	transform->translation.y = 0;
@@ -21,4 +29,14 @@ void engine3D_transform_getTransformation(const engine3D_transform_t *const tran
 
 	engine3D_matrix4f_mul(&rotationMatrix, &scaleMatrix, &tmp);
 	engine3D_matrix4f_mul(&translationMatrix, &tmp, transformationMatrix);
+}
+
+void engine3D_transform_getProjectedTransformation(const engine3D_transform_t *const transform, engine3D_matrix4f_t *const transformationMatrix) {
+	engine3D_matrix4f_t projectionMatrix, tmp;
+
+	engine3D_transform_getTransformation(transform, transformationMatrix);
+	engine3D_matrix4f_setProjection(&projectionMatrix, engine3D_transform_zNear, engine3D_transform_zFar, engine3D_transform_width, engine3D_transform_height, engine3D_transform_fov);
+
+	engine3D_matrix4f_mul(&projectionMatrix, transformationMatrix, &tmp);
+	memcpy(transformationMatrix, &tmp, sizeof(engine3D_matrix4f_t));
 }
