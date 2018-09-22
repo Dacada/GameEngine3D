@@ -136,7 +136,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <CompileAs>CompileAsC</CompileAs>
-      <PreprocessorDefinitions>ENGINE3D_RES_PATH "../Engine3D/res/";_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;_USE_MATH_DEFINES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ENGINE3D_RES_PATH="../Engine3D/res/";_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;_USE_MATH_DEFINES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Lib>
@@ -152,7 +152,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <CompileAs>CompileAsC</CompileAs>
-      <PreprocessorDefinitions>ENGINE3D_RES_PATH "../Engine3D/res/";_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;_USE_MATH_DEFINES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ENGINE3D_RES_PATH="../Engine3D/res/";_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;_USE_MATH_DEFINES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>
       </DisableSpecificWarnings>
     </ClCompile>
@@ -173,7 +173,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <CompileAs>CompileAsC</CompileAs>
-      <PreprocessorDefinitions>ENGINE3D_RES_PATH "../Engine3D/res/";_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;_USE_MATH_DEFINES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ENGINE3D_RES_PATH="../Engine3D/res/";_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;_USE_MATH_DEFINES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>
       </DisableSpecificWarnings>
     </ClCompile>
