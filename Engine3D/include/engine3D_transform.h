@@ -2,7 +2,9 @@
 #define ENGINE3D_TRANSFORM_H
 
 #include <engine3D_vector.h>
+#include <engine3D_camera.h>
 
+extern engine3D_camera_t engine3D_transform_camera;
 extern float engine3D_transform_zNear;
 extern float engine3D_transform_zFar;
 extern float engine3D_transform_width;

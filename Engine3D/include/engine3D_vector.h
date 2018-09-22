@@ -99,6 +99,8 @@ void engine3D_matrix4f_setScale(engine3D_matrix4f_t * const matrix, float x, flo
 
 void engine3D_matrix4f_setProjection(engine3D_matrix4f_t * const matrix, float zNear, float zFar, float width, float height, float fov);
 
+void engine3D_matrix4f_setCamera(engine3D_matrix4f_t * const matrix, const engine3D_vector3f_t *const forward, const engine3D_vector3f_t *const up);
+
 
 
 typedef struct engine3D_quaternion_t {

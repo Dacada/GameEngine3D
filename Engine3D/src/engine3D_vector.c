@@ -1,6 +1,7 @@
 #include <engine3D_vector.h>
 
 #include <math.h>
+#include <string.h>
 
 #define TO_RADIANS(angle) ((angle) / 180 * (float)M_PI)
 
@@ -113,10 +114,24 @@ engine3D_vector3f_t * engine3D_vector3f_normalize(engine3D_vector3f_t * const v)
 }
 
 engine3D_vector3f_t * engine3D_vector3f_rotateRad(const engine3D_vector3f_t * const v, float angle, const engine3D_vector3f_t *const axis, engine3D_vector3f_t *const result) {
-	// Suppress unused warnings
-	(void)(v);
-	(void)(angle);
-	(void)(axis);
+	engine3D_quaternion_t rotation, rotationConj, w, tmp;
+
+	float sinHalfAngle = sinf(angle / 2);
+	float cosHalfAngle = cosf(angle / 2);
+
+	rotation.x = axis->x * sinHalfAngle;
+	rotation.y = axis->y * sinHalfAngle;
+	rotation.z = axis->z * sinHalfAngle;
+	rotation.w = cosHalfAngle;
+
+	engine3D_quaternion_conjugate(&rotation, &rotationConj);
+	
+	engine3D_quaternion_mulv(&rotation, v, &tmp);
+	engine3D_quaternion_mul(&tmp, &rotationConj, &w);
+
+	result->x = w.x;
+	result->y = w.y;
+	result->z = w.z;
 
 	return result;
 }
@@ -254,6 +269,31 @@ void engine3D_matrix4f_setProjection(engine3D_matrix4f_t * const matrix, float z
 	matrix->mat[3][2] = 1.0f;
 	matrix->mat[2][3] = 2 * zFar * zNear / zRange;
 	matrix->mat[3][3] = 0;
+}
+
+void engine3D_matrix4f_setCamera(engine3D_matrix4f_t *const matrix, const engine3D_vector3f_t *const forward, const engine3D_vector3f_t *const up) {
+	engine3D_vector3f_t f, r, u, tmp;
+
+	memcpy(&f, forward, sizeof(engine3D_vector3f_t));
+	engine3D_vector3f_normalize(&f);
+
+	memcpy(&r, up, sizeof(engine3D_vector3f_t));
+	engine3D_vector3f_normalize(&r);
+	engine3D_vector3f_cross(&r, &f, &tmp);
+	memcpy(&r, &tmp, sizeof(engine3D_vector3f_t));
+
+	engine3D_vector3f_cross(&f, &r, &u);
+
+	engine3D_matrix4f_setIdentity(matrix);
+	matrix->mat[0][0] = r.x;
+	matrix->mat[0][1] = r.y;
+	matrix->mat[0][2] = r.z;
+	matrix->mat[1][0] = u.x;
+	matrix->mat[1][1] = u.y;
+	matrix->mat[1][2] = u.z;
+	matrix->mat[2][0] = f.x;
+	matrix->mat[2][1] = f.y;
+	matrix->mat[2][2] = f.z;
 }
 
 void engine3D_matrix4f_mul(const engine3D_matrix4f_t * const m1, const engine3D_matrix4f_t * const m2, engine3D_matrix4f_t * const r) {

@@ -2,6 +2,7 @@
 
 #include <string.h>
 
+engine3D_camera_t engine3D_transform_camera;
 float engine3D_transform_zNear;
 float engine3D_transform_zFar;
 float engine3D_transform_width;
@@ -32,10 +33,11 @@ void engine3D_transform_getTransformation(const engine3D_transform_t *const tran
 }
 
 void engine3D_transform_getProjectedTransformation(const engine3D_transform_t *const transform, engine3D_matrix4f_t *const transformationMatrix) {
-	engine3D_matrix4f_t projectionMatrix, tmp;
+	engine3D_matrix4f_t projectionMatrix, cameraMatrix, tmp;
 
 	engine3D_transform_getTransformation(transform, transformationMatrix);
 	engine3D_matrix4f_setProjection(&projectionMatrix, engine3D_transform_zNear, engine3D_transform_zFar, engine3D_transform_width, engine3D_transform_height, engine3D_transform_fov);
+	engine3D_matrix4f_setCamera(&cameraMatrix, );
 
 	engine3D_matrix4f_mul(&projectionMatrix, transformationMatrix, &tmp);
 	memcpy(transformationMatrix, &tmp, sizeof(engine3D_matrix4f_t));
