@@ -20,6 +20,7 @@ static engine3D_transform_t transform;
 static void init(void) {
 	engine3D_shader_init(&shader);
 	engine3D_transform_reset(&transform);
+	transform.translation.z = 5;
 
 	engine3D_resourceLoader_loadMesh("box.obj", &mesh);
 
@@ -44,6 +45,7 @@ static void init(void) {
 }
 
 static void input(void) {
+	/*
 	if (engine3D_input_getKeyDown(GLFW_KEY_UP)) {
 		printf("We've just pressed up.\n");
 	}
@@ -61,9 +63,49 @@ static void input(void) {
 	if (engine3D_input_getMouseUp(GLFW_MOUSE_BUTTON_LEFT)) {
 		printf("We've just released left click.\n");
 	}
+	*/
+
+	float t = engine3D_time_getDelta();
+	if (engine3D_input_getKey(GLFW_KEY_D))
+		transform.translation.x += t;
+	if (engine3D_input_getKey(GLFW_KEY_A))
+		transform.translation.x -= t;
+	if (engine3D_input_getKey(GLFW_KEY_W))
+		transform.translation.y += t;
+	if (engine3D_input_getKey(GLFW_KEY_S))
+		transform.translation.y -= t;
+	if (engine3D_input_getKey(GLFW_KEY_Z))
+		transform.translation.z += t;
+	if (engine3D_input_getKey(GLFW_KEY_X))
+		transform.translation.z -= t;
+	if (engine3D_input_getKey(GLFW_KEY_UP))
+		transform.rotation.x += t*100;
+	if (engine3D_input_getKey(GLFW_KEY_DOWN))
+		transform.rotation.x -= t*100;
+	if (engine3D_input_getKey(GLFW_KEY_RIGHT))
+		transform.rotation.y += t*100;
+	if (engine3D_input_getKey(GLFW_KEY_LEFT))
+		transform.rotation.y -= t*100;
+	if (engine3D_input_getKey(GLFW_KEY_RIGHT_SHIFT))
+		transform.rotation.z += t*100;
+	if (engine3D_input_getKey(GLFW_KEY_ENTER))
+		transform.rotation.z -= t*100;
+	if (engine3D_input_getKey(GLFW_KEY_LEFT_BRACKET))
+		transform.scale.x += t;
+	if (engine3D_input_getKey(GLFW_KEY_RIGHT_BRACKET))
+		transform.scale.x -= t;
+	if (engine3D_input_getKey(GLFW_KEY_SEMICOLON))
+		transform.scale.y += t;
+	if (engine3D_input_getKey(GLFW_KEY_APOSTROPHE))
+		transform.scale.y -= t;
+	if (engine3D_input_getKey(GLFW_KEY_COMMA))
+		transform.scale.z += t;
+	if (engine3D_input_getKey(GLFW_KEY_PERIOD))
+		transform.scale.z -= t;
 }
 
 static void update(void) {
+	/*
 	static float tmp = 0.0f;
 	tmp += engine3D_time_getDelta();
 
@@ -78,6 +120,9 @@ static void update(void) {
 	//transform.scale.x = sinTmp;
 	//transform.scale.y = sinTmp;
 	//transform.scale.z = sinTmp;
+	*/
+
+
 }
 
 static void render(void) {
