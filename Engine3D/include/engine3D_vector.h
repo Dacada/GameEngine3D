@@ -55,10 +55,10 @@ engine3D_vector3f_t *engine3D_vector3f_cross(const engine3D_vector3f_t *const v1
 // Normalize given vector and return given pointer to it
 engine3D_vector3f_t *engine3D_vector3f_normalize(engine3D_vector3f_t *const v);
 
-// Rotate given vector and return pointer to given result vector
+// Rotate given vector around given axis and return pointer to given result vector
 // Version for angle in degrees or in radians
-engine3D_vector3f_t *engine3D_vector3f_rotateRad(const engine3D_vector3f_t *const v, float angle, engine3D_vector3f_t *const result);
-engine3D_vector3f_t *engine3D_vector3f_rotateDeg(const engine3D_vector3f_t *const v, float angle, engine3D_vector3f_t *const result);
+engine3D_vector3f_t *engine3D_vector3f_rotateRad(const engine3D_vector3f_t * const v, float angle, const engine3D_vector3f_t *const axis, engine3D_vector3f_t *const result);
+engine3D_vector3f_t *engine3D_vector3f_rotateDeg(const engine3D_vector3f_t * const v, float angle, const engine3D_vector3f_t *const axis, engine3D_vector3f_t *const result);
 
 // Add the two first vectors and save the result into the third.
 // Return the pointer to this third vector.

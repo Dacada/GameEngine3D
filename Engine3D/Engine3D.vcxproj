@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\engine3d_camera.c" />
     <ClCompile Include="src\engine3d_mesh.c" />
     <ClCompile Include="src\engine3D_renderUtil.c" />
     <ClCompile Include="src\engine3D_input.c" />
@@ -34,6 +35,7 @@
     <ClCompile Include="src\engine3D_window.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\engine3D_camera.h" />
     <ClInclude Include="include\engine3d_mesh.h" />
     <ClInclude Include="include\engine3D_renderUtil.h" />
     <ClInclude Include="include\engine3D_input.h" />

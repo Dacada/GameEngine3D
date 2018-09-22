@@ -150,7 +150,7 @@ static unsigned int normalizeToUInt(long input, size_t lastIndex) {
 	return (unsigned int)num;
 }
 
-void engine3D_resourceLoader_loadMesh(const char *const filename, engine3D_mesh_t *mesh) {
+void engine3D_resourceLoader_loadMesh(const char *const filename, engine3D_mesh_t *const mesh) {
 	char filepath[256] = ENGINE3D_RES_PATH "models/";
 	strncat(filepath, filename, 128);
 

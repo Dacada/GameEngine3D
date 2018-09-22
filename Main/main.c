@@ -102,6 +102,11 @@ static void input(void) {
 		transform.scale.z += t;
 	if (engine3D_input_getKey(GLFW_KEY_PERIOD))
 		transform.scale.z -= t;
+
+	if (engine3D_input_getKeyDown(GLFW_KEY_SPACE)) {
+		engine3D_transform_reset(&transform);
+		transform.translation.z = 5;
+	}
 }
 
 static void update(void) {

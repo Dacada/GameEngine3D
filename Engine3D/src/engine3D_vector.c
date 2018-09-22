@@ -112,18 +112,19 @@ engine3D_vector3f_t * engine3D_vector3f_normalize(engine3D_vector3f_t * const v)
 	return v;
 }
 
-engine3D_vector3f_t * engine3D_vector3f_rotateRad(const engine3D_vector3f_t * const v, float angle, engine3D_vector3f_t *const result) {
+engine3D_vector3f_t * engine3D_vector3f_rotateRad(const engine3D_vector3f_t * const v, float angle, const engine3D_vector3f_t *const axis, engine3D_vector3f_t *const result) {
 	// Suppress unused warnings
 	(void)(v);
 	(void)(angle);
+	(void)(axis);
 
 	return result;
 }
 
-engine3D_vector3f_t * engine3D_vector3f_rotateDeg(const engine3D_vector3f_t * const v, float angle, engine3D_vector3f_t *const result)
+engine3D_vector3f_t * engine3D_vector3f_rotateDeg(const engine3D_vector3f_t * const v, float angle, const engine3D_vector3f_t *const axis, engine3D_vector3f_t *const result)
 {
 	float rad = TO_RADIANS(angle);
-	return engine3D_vector3f_rotateRad(v, rad, result);
+	return engine3D_vector3f_rotateRad(v, rad, axis, result);
 }
 
 engine3D_vector3f_t * engine3D_vector3f_add(const engine3D_vector3f_t * const v1, const engine3D_vector3f_t * const v2, engine3D_vector3f_t * const result) {
