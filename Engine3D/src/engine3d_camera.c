@@ -57,11 +57,11 @@ void engine3D_camera_rotateX(engine3D_camera_t *const camera, const float angleD
 }
 
 void engine3D_camera_left(const engine3D_camera_t *const camera, engine3D_vector3f_t *const left) {
-	engine3D_vector3f_cross(&camera->up, &camera->forward, left);
+	engine3D_vector3f_cross(&camera->forward, &camera->up, left);
 	engine3D_vector3f_normalize(left);
 }
 
 void engine3D_camera_right(const engine3D_camera_t *const camera, engine3D_vector3f_t *const right) {
-	engine3D_vector3f_cross(&camera->forward, &camera->up, right);
+	engine3D_vector3f_cross(&camera->up, &camera->forward, right);
 	engine3D_vector3f_normalize(right);
 }

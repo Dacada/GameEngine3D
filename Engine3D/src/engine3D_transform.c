@@ -33,12 +33,14 @@ void engine3D_transform_getTransformation(const engine3D_transform_t *const tran
 }
 
 void engine3D_transform_getProjectedTransformation(const engine3D_transform_t *const transform, engine3D_matrix4f_t *const transformationMatrix) {
-	engine3D_matrix4f_t projectionMatrix, cameraMatrix, tmp;
+	engine3D_matrix4f_t projectionMatrix, cameraRotationMatrix, cameraTranslationMatrix, tmp1, tmp2;
 
 	engine3D_transform_getTransformation(transform, transformationMatrix);
 	engine3D_matrix4f_setProjection(&projectionMatrix, engine3D_transform_zNear, engine3D_transform_zFar, engine3D_transform_width, engine3D_transform_height, engine3D_transform_fov);
-	engine3D_matrix4f_setCamera(&cameraMatrix, );
+	engine3D_matrix4f_setCamera(&cameraRotationMatrix, &engine3D_transform_camera.forward, &engine3D_transform_camera.up);
+	engine3D_matrix4f_setTranslation(&cameraTranslationMatrix, -engine3D_transform_camera.pos.x, -engine3D_transform_camera.pos.y, -engine3D_transform_camera.pos.z);
 
-	engine3D_matrix4f_mul(&projectionMatrix, transformationMatrix, &tmp);
-	memcpy(transformationMatrix, &tmp, sizeof(engine3D_matrix4f_t));
+	engine3D_matrix4f_mul(&cameraTranslationMatrix, transformationMatrix, &tmp1);
+	engine3D_matrix4f_mul(&cameraRotationMatrix, &tmp1, &tmp2);
+	engine3D_matrix4f_mul(&projectionMatrix, &tmp2, transformationMatrix);
 }
