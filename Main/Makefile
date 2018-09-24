@@ -1,4 +1,4 @@
-LIB = -lGLEW -lGLU -lGL -lm
+LIB = -lGLEW -lGLU -lGL -lfreeimage -lm
 
 CC = gcc
 CFLAGS = -I../Engine3D/include -Wall -Wextra -Werror -std=gnu11 -Wformat\

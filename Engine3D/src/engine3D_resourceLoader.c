@@ -3,7 +3,7 @@
 #include <engine3D_mesh.h>
 #include <engine3D_vertex.h>
 
-#include <FreeImage\FreeImage.h>
+#include <FreeImage.h>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -275,9 +275,9 @@ void engine3D_resourceLoader_loadTexture(const char *const filename, engine3D_te
 
 	glGenTextures(1, &texture->id);
 	glBindTexture(GL_TEXTURE_2D, texture->id);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, bits);
+	glTexStorage2D(GL_TEXTURE_2D, 1, GL_RGBA8, width, height);
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_BGRA, GL_UNSIGNED_BYTE, bits);
 
 	FreeImage_Unload(dib);
 }
