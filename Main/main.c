@@ -8,6 +8,7 @@
 #include <engine3D_time.h>
 #include <engine3D_transform.h>
 #include <engine3D_camera.h>
+#include <engine3D_texture.h>
 
 #include <stdbool.h>
 #include <stdlib.h>
@@ -17,13 +18,21 @@
 static engine3D_mesh_t mesh;
 static engine3D_shader_t shader;
 static engine3D_transform_t transform;
+static engine3D_texture_t texture;
 
 static void init(void) {
 	engine3D_shader_init(&shader);
 	engine3D_transform_reset(&transform);
 	transform.translation.z = 5;
 
-	engine3D_resourceLoader_loadMesh("box.obj", &mesh);
+	engine3D_resourceLoader_loadTexture("test.png", &texture);
+
+	//engine3D_resourceLoader_loadMesh("box.obj", &mesh);
+
+	engine3D_mesh_init(&mesh);
+	engine3D_vertex_t vertices[] = { { {-1, -1, 0},{0, 0} },{ {0, 1, 0},{0.5f, 0} },{ {1, -1, 0},{1, 0} },{ {0, -1, 1},{0,0.5f} } };
+	unsigned int indices[] = { 3,1,0, 2,1,3, 0,1,2, 0,2,3 };
+	engine3D_mesh_addVertices(&mesh, vertices, 4, indices, 12);
 
 	engine3D_transform_zNear = 0.1f;
 	engine3D_transform_zFar = 1000.0f;
@@ -166,6 +175,7 @@ static void render(void) {
 	engine3D_matrix4f_t transformation;
 	engine3D_transform_getProjectedTransformation(&transform, &transformation);
 	engine3D_shader_setUniformMat4f("transform", &transformation, &shader);
+	engine3D_texture_bind(&texture);
 	engine3D_mesh_draw(&mesh);
 }
 

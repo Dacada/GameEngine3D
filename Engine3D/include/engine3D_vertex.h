@@ -5,6 +5,7 @@
 
 typedef struct engine3D_vertex_t {
 	engine3D_vector3f_t vec;
+	engine3D_vector2f_t texCoord;
 } engine3D_vertex_t;
 
 #endif /* ENGINE3D_VERTEX_H */

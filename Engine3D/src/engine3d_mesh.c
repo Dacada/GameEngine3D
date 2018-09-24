@@ -27,12 +27,15 @@ engine3D_mesh_t * engine3D_mesh_addVertices(engine3D_mesh_t * const mesh, engine
 
 void engine3D_mesh_draw(const engine3D_mesh_t * const mesh) {
 	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
 
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(engine3D_vertex_t), 0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(engine3D_vertex_t), offsetof(engine3D_vertex_t, vec));
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(engine3D_vertex_t), offsetof(engine3D_vertex_t, texCoord));
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->ibo);
 	glDrawElements(GL_TRIANGLES, mesh->len_ibo, GL_UNSIGNED_INT, 0);
 
 	glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(1);
 }

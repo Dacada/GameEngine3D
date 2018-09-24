@@ -4,9 +4,18 @@
 #include <GLFW/glfw3.h>
 #include <GL/gl.h>
 
+#include <stdbool.h>
+
 void engine3D_renderUtil_clearScreen(void) {
 	// TODO: Stencil Buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+void engine3D_renderUtil_setTextures(bool enabled) {
+	if (enabled)
+		glEnable(GL_TEXTURE_2D);
+	else
+		glDisable(GL_TEXTURE_2D);
 }
 
 void engine3D_renderUtil_initGraphics(void) {
@@ -19,6 +28,7 @@ void engine3D_renderUtil_initGraphics(void) {
 
 	// TODO: Depth clamp for later
 
+	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_FRAMEBUFFER_SRGB);
 }
 

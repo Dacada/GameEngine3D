@@ -26,6 +26,7 @@
     <ClCompile Include="src\engine3D_main.c" />
     <ClCompile Include="src\engine3D_resourceLoader.c" />
     <ClCompile Include="src\engine3D_shader.c" />
+    <ClCompile Include="src\engine3D_texture.c" />
     <ClCompile Include="src\engine3D_time.c" />
     <ClCompile Include="src\engine3D_transform.c" />
     <ClCompile Include="src\engine3D_trie.c" />
@@ -42,6 +43,7 @@
     <ClInclude Include="include\engine3D_main.h" />
     <ClInclude Include="include\engine3D_resourceLoader.h" />
     <ClInclude Include="include\engine3D_shader.h" />
+    <ClInclude Include="include\engine3D_texture.h" />
     <ClInclude Include="include\engine3D_time.h" />
     <ClInclude Include="include\engine3D_transform.h" />
     <ClInclude Include="include\engine3D_trie.h" />
@@ -127,7 +129,7 @@
     </ClCompile>
     <Lib>
       <IgnoreSpecificDefaultLibraries>libc;libcmt;msvcrt;libcd;libcmtd;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>FreeImage.lib;glew32s.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -140,7 +142,7 @@
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Lib>
-      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib</AdditionalDependencies>
+      <AdditionalDependencies>FreeImage.lib;glew32s.lib;glfw3.lib;opengl32.lib</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>libc;libcmt;msvcrt;libcd;libcmtd;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Lib>
   </ItemDefinitionGroup>
@@ -162,7 +164,7 @@
     </Link>
     <Lib>
       <IgnoreSpecificDefaultLibraries>libc;libcmt;libcd;libcmtd;msvcrtd;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>FreeImage.lib;glew32s.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -182,7 +184,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib</AdditionalDependencies>
+      <AdditionalDependencies>FreeImage.lib;glew32s.lib;glfw3.lib;opengl32.lib</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>libc;libcmt;libcd;libcmtd;msvcrtd;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Lib>
   </ItemDefinitionGroup>

@@ -3,6 +3,8 @@
 #include <engine3D_mesh.h>
 #include <engine3D_vertex.h>
 
+#include <FreeImage\FreeImage.h>
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -242,4 +244,40 @@ void engine3D_resourceLoader_loadMesh(const char *const filename, engine3D_mesh_
 
 	free(vertices);
 	free(indices);
+}
+
+void engine3D_resourceLoader_loadTexture(const char *const filename, engine3D_texture_t *const texture) {
+	char filepath[256] = ENGINE3D_RES_PATH "textures/";
+	strncat(filepath, filename, 128);
+
+	FREE_IMAGE_FORMAT fif = FIF_UNKNOWN;
+	FIBITMAP *dib = NULL;
+	BYTE* bits;
+	unsigned int width, height;
+
+	fif = FreeImage_GetFileType(filepath, 0);
+	if (fif == FIF_UNKNOWN)
+		fif = FreeImage_GetFIFFromFilename(filepath);
+	if (fif == FIF_UNKNOWN)
+		engine3D_util_bail("attempt to load texture of unknown image type");
+
+	if (FreeImage_FIFSupportsReading(fif))
+		dib = FreeImage_Load(fif, filepath, 0);
+
+	if (!dib)
+		engine3D_util_bail("failed to load image for texture");
+
+	bits = FreeImage_GetBits(dib);
+	width = FreeImage_GetWidth(dib);
+	height = FreeImage_GetHeight(dib);
+	if (bits == 0 || width == 0 || height == 0)
+		engine3D_util_bail("failed to load image data for texture");
+
+	glGenTextures(1, &texture->id);
+	glBindTexture(GL_TEXTURE_2D, texture->id);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, bits);
+
+	FreeImage_Unload(dib);
 }

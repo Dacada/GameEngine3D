@@ -57,6 +57,9 @@
     <ClCompile Include="src\engine3d_camera.c">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
+    <ClCompile Include="src\engine3D_texture.c">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\engine3D_util.h">
@@ -99,6 +102,9 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="include\engine3D_camera.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\engine3D_texture.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
