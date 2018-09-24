@@ -245,3 +245,4 @@ ModelManifest.xml
 
 /Engine3D/lib/include
 !/Engine3D/res/models/*.obj
+/Engine3D/res/textures

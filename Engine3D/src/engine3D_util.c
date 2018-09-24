@@ -12,7 +12,9 @@ void engine3D_util_bail(const char *const message) {
 	abort();
 }
 
-void engine3D_util_reportGlError(GLenum error) {
+void engine3D_util_reportGlError(void) {
+	GLenum error = glGetError();
+
 	switch (error) {
 	case GL_NO_ERROR: break;
 	case GL_INVALID_ENUM:

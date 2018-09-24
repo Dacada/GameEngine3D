@@ -39,8 +39,7 @@ void engine3D_window_create(const int width, const int height, const char *const
 
 void engine3D_window_update(void) {
 #ifndef NDEBUG
-	GLenum error = glGetError();
-	engine3D_util_reportGlError(error);
+	engine3D_util_reportGlError();
 #endif
 
 	glfwPollEvents();

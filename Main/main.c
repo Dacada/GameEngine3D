@@ -9,6 +9,7 @@
 #include <engine3D_transform.h>
 #include <engine3D_camera.h>
 #include <engine3D_texture.h>
+#include <engine3D_util.h>
 
 #include <stdbool.h>
 #include <stdlib.h>

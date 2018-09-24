@@ -267,17 +267,20 @@ void engine3D_resourceLoader_loadTexture(const char *const filename, engine3D_te
 	if (!dib)
 		engine3D_util_bail("failed to load image for texture");
 
-	bits = FreeImage_GetBits(dib);
-	width = FreeImage_GetWidth(dib);
-	height = FreeImage_GetHeight(dib);
+	FIBITMAP *dib32 = FreeImage_ConvertTo32Bits(dib);
+	FreeImage_Unload(dib);
+
+	bits = FreeImage_GetBits(dib32);
+	width = FreeImage_GetWidth(dib32);
+	height = FreeImage_GetHeight(dib32);
 	if (bits == 0 || width == 0 || height == 0)
 		engine3D_util_bail("failed to load image data for texture");
 
 	glGenTextures(1, &texture->id);
 	glBindTexture(GL_TEXTURE_2D, texture->id);
-	glTexStorage2D(GL_TEXTURE_2D, 1, GL_RGBA8, width, height);
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_BGRA, GL_UNSIGNED_BYTE, bits);
 
-	FreeImage_Unload(dib);
+	FreeImage_Unload(dib32);
 }

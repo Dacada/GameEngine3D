@@ -13,7 +13,7 @@ __declspec(noreturn) void engine3D_util_bail(const char *const message);
 void engine3D_util_bail(const char *const message) __attribute__((noreturn));
 #endif
 
-void engine3D_util_reportGlError(GLenum error);
+void engine3D_util_reportGlError(void);
 
 int engine3D_util_errPrintf(const char *format, ...);
 
