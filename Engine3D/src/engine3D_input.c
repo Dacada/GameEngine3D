@@ -81,7 +81,7 @@ void engine3D_input_getMousePosition(engine3D_vector2f_t *const position) {
 }
 
 void engine3D_input_setCursor(engine3D_input_cursorMode mode) {
-	/*switch (mode)
+	switch (mode)
 	{
 	case ENGINE3D_CURSOR_ENABLED:
 		glfwSetInputMode(engine3D_input_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
@@ -92,7 +92,7 @@ void engine3D_input_setCursor(engine3D_input_cursorMode mode) {
 	case ENGINE3D_CURSOR_DISABLED:
 		glfwSetInputMode(engine3D_input_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		break;
-	}*/
+	}
 }
 
 void _engine3D_input_keyCallback(const GLFWwindow *const window, const int key, const int scancode, const int action, const int mods) {
@@ -119,7 +119,7 @@ void _engine3D_input_mouseButtonCallback(const GLFWwindow *const window, const i
 void _engine3D_input_mousePositionCallback(const GLFWwindow *const window, const double xpos, const double ypos) {
 	// Suppress unused warnings
 	(void)window;
-	
+
 	lastMousePositionX = (float)xpos;
 	lastMousePositionY = (float)ypos;
 }

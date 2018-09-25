@@ -11,6 +11,7 @@
 #include <engine3D_camera.h>
 #include <engine3D_texture.h>
 #include <engine3D_util.h>
+#include <engine3D_renderUtil.h>
 
 #include <stdbool.h>
 #include <stdlib.h>
@@ -50,6 +51,8 @@ static void init(void) {
 }
 
 static void generalInput(float delta) {
+	(void)delta;
+
 	if (engine3D_input_getKey(GLFW_KEY_ESCAPE)) {
 		exit(EXIT_SUCCESS);
 	}

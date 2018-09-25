@@ -35,6 +35,8 @@ GLFWwindow *engine3D_window_create(const int width, const int height, const char
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	return window;
 }
 
 void engine3D_window_update(void) {
