@@ -79,6 +79,8 @@ engine3D_vector3f_t *engine3D_vector3f_div(const engine3D_vector3f_t *const v1, 
 
 engine3D_vector3f_t *engine3D_vector3f_divf(const engine3D_vector3f_t *const v, float f, engine3D_vector3f_t *const result);
 
+engine3D_vector3f_t *engine3D_vector3f_abs(const engine3D_vector3f_t *const v, engine3D_vector3f_t *const result);
+
 int engine3D_vector3f_fprintf(FILE *stream, const engine3D_vector3f_t *const v);
 
 

@@ -9,6 +9,8 @@
 #define LEN_KEYS (GLFW_KEY_LAST + 1)
 #define LEN_MOUSE_BUTTONS (GLFW_MOUSE_BUTTON_LAST + 1)
 
+GLFWwindow *engine3D_input_window = NULL;
+
 static bool keys[LEN_KEYS];
 static bool keysState[LEN_KEYS];
 static bool keysDown[LEN_KEYS];
@@ -76,6 +78,21 @@ bool engine3D_input_getMouseUp(const int mouseButton) {
 void engine3D_input_getMousePosition(engine3D_vector2f_t *const position) {
 	position->x = lastMousePositionX;
 	position->y = lastMousePositionY;
+}
+
+void engine3D_input_setCursor(engine3D_input_cursorMode mode) {
+	/*switch (mode)
+	{
+	case ENGINE3D_CURSOR_ENABLED:
+		glfwSetInputMode(engine3D_input_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+		break;
+	case ENGINE3D_CURSOR_HIDDEN:
+		glfwSetInputMode(engine3D_input_window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+		break;
+	case ENGINE3D_CURSOR_DISABLED:
+		glfwSetInputMode(engine3D_input_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+		break;
+	}*/
 }
 
 void _engine3D_input_keyCallback(const GLFWwindow *const window, const int key, const int scancode, const int action, const int mods) {

@@ -84,7 +84,7 @@ engine3D_vector2f_t * engine3D_vector2f_divf(const engine3D_vector2f_t * const v
 }
 
 int engine3D_vector2f_fprintf(FILE *stream, const engine3D_vector2f_t *const v) {
-	return fprintf(stream, "vector2d<%f,%f>", v->x, v->y);
+	return fprintf(stream, "vector2d<%f,%f>\n", v->x, v->y);
 }
 
 
@@ -198,8 +198,15 @@ engine3D_vector3f_t * engine3D_vector3f_divf(const engine3D_vector3f_t * const v
 	return result;
 }
 
+engine3D_vector3f_t * engine3D_vector3f_abs(const engine3D_vector3f_t * const v, engine3D_vector3f_t * const result) {
+	result->x = fabsf(v->x);
+	result->y = fabsf(v->y);
+	result->z = fabsf(v->z);
+	return result;
+}
+
 int engine3D_vector3f_fprintf(FILE * stream, const engine3D_vector3f_t *const v) {
-	return fprintf(stream, "vector2d<%f,%f,%f>", v->x, v->y, v->z);
+	return fprintf(stream, "vector2d<%f,%f,%f>\n", v->x, v->y, v->z);
 }
 
 

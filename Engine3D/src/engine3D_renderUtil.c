@@ -18,6 +18,10 @@ void engine3D_renderUtil_setTextures(bool enabled) {
 		glDisable(GL_TEXTURE_2D);
 }
 
+void engine3D_renderUtils_setClearColor(const engine3D_vector3f_t *const color) {
+	glClearColor(color->x, color->y, color->z, 1);
+}
+
 void engine3D_renderUtil_initGraphics(void) {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
@@ -30,6 +34,10 @@ void engine3D_renderUtil_initGraphics(void) {
 
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_FRAMEBUFFER_SRGB);
+}
+
+void engine3D_renderUtil_unbindTextures(void) {
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 const char *engine3D_renderUtil_getOpenGLVersion(void) {

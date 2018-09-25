@@ -3,6 +3,7 @@
 #include <engine3D_time.h>
 #include <engine3D_input.h>
 #include <engine3D_renderUtil.h>
+#include <engine3D_transform.h>
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -87,7 +88,7 @@ static void run(void) {
 
 void engine3D_init(void) {
 	engine3D_timer_init();
-	engine3D_window_create(engine3D_width, engine3D_height, engine3D_title);
+	engine3D_input_window = engine3D_window_create(engine3D_width, engine3D_height, engine3D_title);
 	engine3D_renderUtil_initGraphics();
 	puts(engine3D_renderUtil_getOpenGLVersion());
 	game_init();

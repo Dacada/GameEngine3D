@@ -12,7 +12,7 @@
 static GLFWwindow *window;
 static const char *current_title;
 
-void engine3D_window_create(const int width, const int height, const char *const title) {
+GLFWwindow *engine3D_window_create(const int width, const int height, const char *const title) {
 	if (!glfwInit()) {
 		engine3D_util_bail("failed to initialize glfw");
 	}

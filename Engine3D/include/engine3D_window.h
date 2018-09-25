@@ -1,10 +1,14 @@
 #ifndef ENGINE3D_WINDOW_H
 #define ENGINE3D_WINDOW_H
 
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include <GL/gl.h>
+
 #include <stdbool.h>
 
 // Create the window. Bail on error.
-void engine3D_window_create(const int width, const int height, const char *const title);
+GLFWwindow *engine3D_window_create(const int width, const int height, const char *const title);
 
 // Poll events and perform the framebuffer swap.
 // If on debug mode, query for OpenGL errors.
