@@ -4,14 +4,20 @@ precision mediump float;
 in vec2 texCoord0;
 out vec4 fragColor;
 
-uniform vec3 color;
+uniform vec3 baseColor;
+uniform vec3 ambientLight;
+
 uniform sampler2D sampler;
 
 void main() {
-	fragColor = texture2D(sampler, texCoord0.xy);
+	vec4 totalLight = vec4(ambientLight,1);
+	vec4 textureColor = texture2D(sampler, texCoord0.xy);
+	vec4 color = vec4(baseColor, 1);
 
-	if (fragColor == vec4(0,0,0,0))
-		fragColor = vec4(color, 1);
-	else
-		fragColor *= vec4(color, 1);
+	fragColor = color;
+
+	if (textureColor != vec4(0,0,0,0))
+		fragColor *= textureColor;
+
+	fragColor *= totalLight;
 }
