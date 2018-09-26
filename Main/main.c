@@ -2,7 +2,7 @@
 
 #include <engine3D_mesh.h>
 #include <engine3D_shader.h>
-#include <engine3D_basicShader.h>
+#include <engine3D_phongShader.h>
 #include <engine3D_resourceLoader.h>
 #include <engine3D_vertex.h>
 #include <engine3D_input.h>
@@ -19,7 +19,7 @@
 #include <math.h>
 
 static engine3D_mesh_t mesh;
-static engine3D_basicShader_t shader;
+static engine3D_phongShader_t shader;
 static engine3D_transform_t transform;
 static engine3D_material_t material;
 
@@ -27,7 +27,7 @@ static engine3D_texture_t texture;
 static engine3D_vector3f_t color;
 
 static void init(void) {
-	engine3D_basicShader_init(&shader);
+	engine3D_phongShader_init(&shader);
 	engine3D_transform_reset(&transform);
 	transform.translation.z = 5;
 
@@ -48,6 +48,10 @@ static void init(void) {
 	engine3D_transform_height = engine3D_height;
 	engine3D_transform_fov = 70.0f;
 	engine3D_camera_init(&engine3D_transform_camera);
+
+	engine3D_phongShader_ambientLight.x = 0.1f;
+	engine3D_phongShader_ambientLight.y = 0.1f;
+	engine3D_phongShader_ambientLight.z = 0.1f;
 }
 
 static void generalInput(float delta) {
@@ -145,7 +149,7 @@ static void render(void) {
 	engine3D_matrix4f_t transformation, projectedTransformation;
 	engine3D_transform_getTransformation(&transform, &transformation);
 	engine3D_transform_getProjectedTransformation(&transform, &projectedTransformation);
-	engine3D_basicShader_updateUniforms(&shader, &transformation, &projectedTransformation, &material);
+	engine3D_phongShader_updateUniforms(&shader, &transformation, &projectedTransformation, &material);
 
 	engine3D_mesh_draw(&mesh);
 }
