@@ -198,6 +198,7 @@ void engine3D_resourceLoader_loadMesh(const char *const filename, engine3D_mesh_
 				}
 				vertices = engine3D_util_safeRealloc(vertices, sizeof(engine3D_vertex_t) * verticesCapacity);
 			}
+			engine3D_vertex_initZero(&vertices[verticesIndex]);
 			vertices[verticesIndex].vec.x = coords[0];
 			vertices[verticesIndex].vec.y = coords[1];
 			vertices[verticesIndex].vec.z = coords[2];
@@ -240,7 +241,7 @@ void engine3D_resourceLoader_loadMesh(const char *const filename, engine3D_mesh_
 	fclose(f);
 
 	engine3D_mesh_init(mesh);
-	engine3D_mesh_addVertices(mesh, vertices, verticesIndex, indices, indicesIndex);
+	engine3D_mesh_addVertices(mesh, vertices, verticesIndex, indices, indicesIndex, false);
 
 	free(vertices);
 	free(indices);
