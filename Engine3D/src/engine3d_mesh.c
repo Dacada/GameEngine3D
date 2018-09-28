@@ -8,7 +8,7 @@
 #include <stdbool.h>
 
 static void calcNormals(engine3D_vertex_t vertices[], size_t vertices_len, unsigned int indices[], size_t indices_len) {
-	for (int i = 0; i < indices_len; i += 3) {
+	for (size_t i = 0; i < indices_len; i += 3) {
 		int i0 = indices[i];
 		int i1 = indices[i + 1];
 		int i2 = indices[i + 2];
@@ -20,11 +20,11 @@ static void calcNormals(engine3D_vertex_t vertices[], size_t vertices_len, unsig
 		engine3D_vector3f_normalize(&normal);
 
 		engine3D_vector3f_add(&vertices[i0].normal, &normal, &vertices[i0].normal);
-		engine3D_vector3f_add(&vertices[i0].normal, &normal, &vertices[i1].normal);
-		engine3D_vector3f_add(&vertices[i0].normal, &normal, &vertices[i2].normal);
+		engine3D_vector3f_add(&vertices[i1].normal, &normal, &vertices[i1].normal);
+		engine3D_vector3f_add(&vertices[i2].normal, &normal, &vertices[i2].normal);
 	}
 
-	for (int i = 0; i < vertices_len; i++) {
+	for (size_t i = 0; i < vertices_len; i++) {
 		engine3D_vector3f_normalize(&vertices[i].normal);
 	}
 }

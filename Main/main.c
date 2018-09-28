@@ -38,9 +38,9 @@ static void init(void) {
 
 	//engine3D_resourceLoader_loadMesh("box.obj", &mesh);
 	engine3D_mesh_init(&mesh);
-	engine3D_vertex_t vertices[] = { { {-1, -1, 0},{0, 0} },{ {0, 1, 0},{0.5f, 0} },{ {1, -1, 0},{1, 0} },{ {0, -1, 1},{0,0.5f} } };
+	engine3D_vertex_t vertices[] = { { {-1, -1, 0},{0, 0},{0, 0, 0} },{ {0, 1, 0},{0.5f, 0},{0, 0, 0} },{ {1, -1, 0},{1, 0},{0, 0, 0} },{ {0, -1, 1},{0, 0.5f},{0, 0, 0} } };
 	unsigned int indices[] = { 3,1,0, 2,1,3, 0,1,2, 0,2,3 };
-	engine3D_mesh_addVertices(&mesh, vertices, 4, indices, 12, false);
+	engine3D_mesh_addVertices(&mesh, vertices, 4, indices, 12, true);
 
 	engine3D_transform_zNear = 0.1f;
 	engine3D_transform_zFar = 1000.0f;
@@ -56,10 +56,11 @@ static void init(void) {
 	engine3D_phongShader_directionalLight.base.color.x = 1;
 	engine3D_phongShader_directionalLight.base.color.y = 1;
 	engine3D_phongShader_directionalLight.base.color.z = 1;
-	engine3D_phongShader_directionalLight.base.intensity = 0;
-	engine3D_phongShader_directionalLight.direction.x = 0;
-	engine3D_phongShader_directionalLight.direction.y = 0;
-	engine3D_phongShader_directionalLight.directionxz = 0;
+	engine3D_phongShader_directionalLight.base.intensity = 0.8f;
+	engine3D_phongShader_directionalLight.direction.x = 1;
+	engine3D_phongShader_directionalLight.direction.y = 1;
+	engine3D_phongShader_directionalLight.direction.z = 1;
+	engine3D_vector3f_normalize(&engine3D_phongShader_directionalLight.direction);
 }
 
 static void generalInput(float delta) {

@@ -24,11 +24,11 @@ uniform DirectionalLight directionalLight;
 vec4 calcLight(BaseLight base, vec3 direction, vec3 normal) {
 	float diffuseFactor = dot(-direction, normal);
 	vec4 diffuseColor = vec4(0, 0, 0, 0);
-	
+
 	if (difuseFactor > 0) {
 		diffuseColor = vec4(base.color, 1) * base.intensity * diffuseFactor;
 	}
-	
+
 	return diffuseColor;
 }
 
@@ -40,14 +40,14 @@ void main() {
 	vec4 totalLight = vec4(ambientLight,1);
 	vec4 textureColor = texture2D(sampler, texCoord0.xy);
 	vec4 color = vec4(baseColor, 1);
-	
+
 	fragColor = color;
-	
+
 	if (textureColor != vec4(0,0,0,0))
 		fragColor *= textureColor;
-		
-	vec3 normal = normalize(normal0)
+
+	vec3 normal = normalize(normal0);
 	totalLight += calcDirectionalLight(directionalLight, normal);
-		
+
 	fragColor *= totalLight;
 }

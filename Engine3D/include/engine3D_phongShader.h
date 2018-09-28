@@ -6,7 +6,6 @@
 #include <engine3D_vector.h>
 
 extern engine3D_vector3f_t engine3D_phongShader_ambientLight;
-extern engine3D_phongShader_directionalLight_t engine3D_phongShader_directionalLight;
 
 typedef struct engine3D_phongShader_t {
 	engine3D_shader_t shader;
@@ -21,6 +20,8 @@ typedef struct engine3D_phongShader_directionalLight_t {
 	engine3D_phongShader_baseLight_t base;
 	engine3D_vector3f_t direction;
 } engine3D_phongShader_directionalLight_t;
+
+extern engine3D_phongShader_directionalLight_t engine3D_phongShader_directionalLight;
 
 engine3D_phongShader_t *engine3D_phongShader_init(engine3D_phongShader_t *const shader);
 
