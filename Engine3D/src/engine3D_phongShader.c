@@ -4,6 +4,7 @@
 #include <engine3D_renderUtil.h>
 
 engine3D_vector3f_t engine3D_phongShader_ambientLight;
+engine3D_phongShader_directionalLight_t engine3D_phongShader_directionalLight;
 
 engine3D_phongShader_t *engine3D_phongShader_init(engine3D_phongShader_t *const shader) {
 	engine3D_shader_init((engine3D_shader_t*)shader);
@@ -22,6 +23,9 @@ engine3D_phongShader_t *engine3D_phongShader_init(engine3D_phongShader_t *const 
 	engine3D_shader_addUniform("transform", (engine3D_shader_t*)shader);
 	engine3D_shader_addUniform("baseColor", (engine3D_shader_t*)shader);
 	engine3D_shader_addUniform("ambientLight", (engine3D_shader_t*)shader);
+	engine3D_shader_addUniform("directionalLight.base.color", (engine3D_shader_t*)shader);
+	engine3D_shader_addUniform("directionalLight.base.intensity", (engine3D_shader_t*)shader);
+	engine3D_shader_addUniform("directionalLight.direction", (engine3D_shader_t*)shader);
 
 	return shader;
 }
@@ -37,4 +41,7 @@ void engine3D_phongShader_updateUniforms(engine3D_phongShader_t * const shader, 
 	engine3D_shader_setUniformMat4f("transform", projectedMatrix, (engine3D_shader_t*)shader);
 	engine3D_shader_setUniformVec3f("baseColor", material->color, (engine3D_shader_t*)shader);
 	engine3D_shader_setUniformVec3f("ambientLight", &engine3D_phongShader_ambientLight, (engine3D_shader_t*)shader);
+	engine3D_shader_setUniformVec3f("directionalLight.base.color", engine3D_phongShader_directionalLight.base.color, (engine3D_shader_t*)shader);
+	engine3D_shader_setUniformf("directionalLight.base.intensity", engine3D_phongShader_directionalLight.base.intensity, (engine3D_shader_t*)shader);
+	engine3D_shader_setUniformVec3f("directionalLight.direction", engine3D_phongShader_directionalLight.direction, (engine3D_shader_t*)shader);
 }

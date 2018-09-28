@@ -52,6 +52,14 @@ static void init(void) {
 	engine3D_phongShader_ambientLight.x = 0.1f;
 	engine3D_phongShader_ambientLight.y = 0.1f;
 	engine3D_phongShader_ambientLight.z = 0.1f;
+
+	engine3D_phongShader_directionalLight.base.color.x = 1;
+	engine3D_phongShader_directionalLight.base.color.y = 1;
+	engine3D_phongShader_directionalLight.base.color.z = 1;
+	engine3D_phongShader_directionalLight.base.intensity = 0;
+	engine3D_phongShader_directionalLight.direction.x = 0;
+	engine3D_phongShader_directionalLight.direction.y = 0;
+	engine3D_phongShader_directionalLight.directionxz = 0;
 }
 
 static void generalInput(float delta) {
