@@ -412,7 +412,7 @@ void engine3D_resourceLoader_loadMesh(const char *const filename, engine3D_mesh_
 	fclose(f);
 
 	engine3D_mesh_init(mesh);
-	engine3D_mesh_addVertices(mesh, vertices, verticesIndex, indices, indicesIndex, true);
+	engine3D_mesh_addVertices(mesh, vertices, verticesIndex, indices, indicesIndex, false);
 
 	free(vs);
 	free(vts);
