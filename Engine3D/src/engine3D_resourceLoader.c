@@ -129,37 +129,153 @@ static long readNextLong(char **ptr) {
 	return num;
 }
 
-static unsigned int normalizeToUInt(long input, size_t lastIndex) {
-	long num;
+static void readFaces(char *input, int faces[3][3], size_t iv, size_t itv, size_t inv) {
+	size_t i, j;
 
-	if (input > 0) {
-		num = input - 1;
+	for (i = 0; i < 9; i++) {
+		faces[i / 3][i % 3] = -1;
 	}
-	else if (input < 0) {
-		num = lastIndex - (input + 1);
+
+	while (isspace(*input)) input++;
+
+	i = j = 0;
+	while (*input != '\0') {
+		if (isspace(*input)) {
+			j++;
+			i = 0;
+			while (isspace(*input)) input++;
+		}
+		else if (*input == '/') {
+			i++;
+			input++;
+		}
+		else {
+			long n = readNextLong(&input);
+
+			size_t lastIndex;
+			if (i == 0) {
+				lastIndex = iv;
+			}
+			else if (i == 1) {
+				lastIndex = itv;
+			}
+			else if (i == 2) {
+				lastIndex = inv;
+			}
+			else {
+				engine3D_util_bail("attempt to load invalid .obj file (too many items in face tuple)");
+			}
+
+			if (n > 0) {
+				n -= 1;
+			}
+			else if (n < 0) {
+				n = lastIndex - (n + 1);
+			}
+			else {
+				engine3D_util_bail("attempt to load invalid .obj file (invalid index: 0)");
+			}
+
+			if (n > INT_MAX) engine3D_util_bail("attempt to load invalid .obj file (index too positive)");
+			if (n < 0) engine3D_util_bail("attempt to load invalid .obj file (index too negative)");
+
+			faces[j][i] = (int)n;
+		}
+	}
+}
+
+// indices is an array of arrays of structs used as the underlying data of a hash map that maps a face tuple (vertex, texture coord, normal) to an index
+// struct fields meaning: the first three are the tuple, the index field is the index this tupple is mapped to, the last field is a pointer to the next
+// it's an array of arrays because there might be hash collisions
+struct bucket { int faceV; int faceT; int faceN; size_t index; struct bucket *next; };
+struct bucket *indices[0x1000];
+size_t lastIndex;
+
+size_t getFaceKey(int face[3]) {
+	size_t result = 0;
+
+	for (int i = 0; i < 3; i++) {
+		result += face[i];
+		result %= 0x1000;
+		result *= 5113;
+		result %= 0x1000;
+	}
+
+	return result;
+}
+
+void initSeenIndex() {
+	for (int i = 0; i < 0x1000; i++) {
+		if (indices[i] != NULL) {
+			struct bucket *b = indices[i];
+			struct bucket *next;
+			while (b != NULL) {
+				next = b->next;
+				free(b);
+				b = next;
+			}
+		}
+		indices[i] = NULL;
+	}
+	lastIndex = 0;
+}
+
+bool getSeenIndex(int face[3], size_t *seenIndex) {
+	size_t key = getFaceKey(face);
+	struct bucket *b = indices[key];
+	if (b == NULL) {
+		return false;
 	}
 	else {
-		engine3D_util_bail("attempt to load invalid .obj file (invalid index: 0)");
+		while ((b = b->next) != NULL) {
+			if (b->faceV == face[0] && b->faceT == face[1] && b->faceN == face[2]) {
+				*seenIndex = b->index;
+				return true;
+			}
+		}
+		return false;
+	}
+}
+
+size_t setSeenIndex(int face[3]) {
+	size_t key = getFaceKey(face);
+	struct bucket *b = indices[key];
+
+	if (b == NULL) {
+		b = indices[key] = engine3D_util_safeMalloc(sizeof(struct bucket));
+	}
+	else {
+		struct bucket *next = b->next;
+		while (next != NULL) {
+			b = next;
+			next = b->next;
+		}
 	}
 
-	if (num > UINT_MAX) {
-		engine3D_util_bail("attempt to load invalid .obj file (index too positive)");
-	}
-	if (num < 0) {
-		engine3D_util_bail("attempt to load invalid .obj file (index too negative)");
-	}
-
-	return (unsigned int)num;
+	b->faceV = face[0];
+	b->faceT = face[1];
+	b->faceN = face[2];
+	b->index = lastIndex;
+	b->next = NULL;
+	return lastIndex++;
 }
 
 void engine3D_resourceLoader_loadMesh(const char *const filename, engine3D_mesh_t *const mesh) {
 	char filepath[256] = ENGINE3D_RES_PATH "models/";
 	strncat(filepath, filename, 128);
 
+	initSeenIndex();
+
 	size_t verticesCapacity = 4, indicesCapacity = 4;
 	size_t verticesIndex = 0, indicesIndex = 0;
 	engine3D_vertex_t *vertices = engine3D_util_safeMalloc(sizeof(engine3D_vertex_t) * verticesCapacity);
 	unsigned int *indices = engine3D_util_safeMalloc(sizeof(unsigned int) * indicesCapacity);
+
+	size_t vsCapacity = 4, vtsCapacity = 4, vnsCapacity = 4;
+	size_t vsIndex = 0, vtsIndex = 0, vnsIndex = 0;
+	engine3D_vector3f_t *vs = engine3D_util_safeMalloc(sizeof(engine3D_vector3f_t) * vsCapacity);
+	engine3D_vector2f_t *vts = engine3D_util_safeMalloc(sizeof(engine3D_vector2f_t) * vsCapacity);
+	engine3D_vector3f_t *vns = engine3D_util_safeMalloc(sizeof(engine3D_vector3f_t) * vsCapacity);
 
 	size_t filenameLen = strlen(filepath);
 	if (filenameLen < 4 || strncmp(filepath + filenameLen - 4, ".obj", 4) != 0) {
@@ -180,37 +296,65 @@ void engine3D_resourceLoader_loadMesh(const char *const filename, engine3D_mesh_
 
 		current = getNextToken(current, token, 256);
 		if (current == NULL) {
-			engine3D_util_bail("attempt to load invalid .obj file (unrecognized token)");
+			engine3D_util_bail("attempt to load invalid .obj file (invalid token)");
 		}
 
-		if (strncmp(token, "#", 2) == 0 || strncmp(token, "\n", 2) == 0)
+		if (strncmp(token, "#", 2) == 0 || strncmp(token, "\n", 2) == 0) {
 			continue;
+		}
+		else if (strncmp(token, "v", 2) == 0) {
+			float coords[3];
+			coords[0] = readNextFloat(&current);
+			coords[1] = readNextFloat(&current);
+			coords[2] = readNextFloat(&current);
+			while (!isspace(*current) && *current != '\0') current++;
+			if (*current != '\0')
+				engine3D_util_errPrintf("reading .obj file: ignoring optional w element of vertex", token);
 
-		if (strncmp(token, "v", 2) == 0) {
-			float coords[4];
+			if (vsIndex >= vsCapacity) {
+				vsCapacity *= 2;
+				vs = engine3D_util_safeRealloc(vs, sizeof(engine3D_vector3f_t) * vsCapacity);
+			}
+			vs[vsIndex].x = coords[0];
+			vs[vsIndex].y = coords[1];
+			vs[vsIndex].z = coords[2];
+			vsIndex++;
+		}
+		else if (strncmp(token, "vt", 3) == 0) {
+			float coords[2];
+			coords[0] = readNextFloat(&current);
+			coords[1] = readNextFloat(&current);
+			while (!isspace(*current) && *current != '\0') current++;
+			if (*current != '\0')
+				engine3D_util_errPrintf("reading .obj file: ignoring optional w element of texture", token);
+
+			if (vtsIndex >= vtsCapacity) {
+				vtsCapacity *= 2;
+				vts = engine3D_util_safeRealloc(vts, sizeof(engine3D_vector2f_t) * vtsCapacity);
+			}
+			vts[vtsIndex].x = coords[0];
+			vts[vtsIndex].y = coords[1];
+			vtsIndex++;
+		}
+		else if (strncmp(token, "vn", 3) == 0) {
+			float coords[3];
 			coords[0] = readNextFloat(&current);
 			coords[1] = readNextFloat(&current);
 			coords[2] = readNextFloat(&current);
 
-			if (verticesIndex >= verticesCapacity) {
-				while (verticesIndex >= verticesCapacity) {
-					verticesCapacity *= 2;
-				}
-				vertices = engine3D_util_safeRealloc(vertices, sizeof(engine3D_vertex_t) * verticesCapacity);
+			if (vnsIndex >= vnsCapacity) {
+				vnsCapacity *= 2;
+				vns = engine3D_util_safeRealloc(vns, sizeof(engine3D_vertex_t) * vnsCapacity);
 			}
-			engine3D_vertex_initZero(&vertices[verticesIndex]);
-			vertices[verticesIndex].vec.x = coords[0];
-			vertices[verticesIndex].vec.y = coords[1];
-			vertices[verticesIndex].vec.z = coords[2];
-			verticesIndex++;
+			engine3D_vertex_initZero(&vns[vnsIndex]);
+			vns[vnsIndex].x = coords[0];
+			vns[vnsIndex].y = coords[1];
+			vns[vnsIndex].z = coords[2];
+			vnsIndex++;
 		}
 		else if (strncmp(token, "f", 2) == 0) {
-			unsigned int faces[3];
-			faces[0] = normalizeToUInt(readNextLong(&current), verticesIndex);
-			while (!isspace(*current) && *current != '\0') current++;
-			faces[1] = normalizeToUInt(readNextLong(&current), verticesIndex);
-			while (!isspace(*current) && *current != '\0') current++;
-			faces[2] = normalizeToUInt(readNextLong(&current), verticesIndex);
+			int faces[3][3];
+			readFaces(current, faces, vsIndex, vtsIndex, vnsIndex);
 
 			if (indicesIndex + 2 >= indicesCapacity) {
 				while (indicesIndex + 2 >= indicesCapacity) {
@@ -218,9 +362,37 @@ void engine3D_resourceLoader_loadMesh(const char *const filename, engine3D_mesh_
 				}
 				indices = engine3D_util_safeRealloc(indices, sizeof(unsigned int) * indicesCapacity);
 			}
-			indices[indicesIndex++] = faces[0];
-			indices[indicesIndex++] = faces[1];
-			indices[indicesIndex++] = faces[2];
+
+			for (int i = 0; i < 3; i++)
+			{
+				size_t seenIndex;
+				bool hasBeenSeen = getSeenIndex(faces[i], &seenIndex);
+				if (!hasBeenSeen) {
+					seenIndex = setSeenIndex(faces[i]);
+
+					if (verticesIndex + 1 >= verticesCapacity) {
+						verticesCapacity *= 2;
+						vertices = engine3D_util_safeRealloc(vertices, sizeof(engine3D_vertex_t) * verticesCapacity);
+					}
+
+					vertices[verticesIndex].vec.x = vs[faces[i][0]].x;
+					vertices[verticesIndex].vec.y = vs[faces[i][0]].y;
+					vertices[verticesIndex].vec.z = vs[faces[i][0]].z;
+					if (faces[i][1] >= 0) {
+						vertices[verticesIndex].texCoord.x = vts[faces[i][1]].x;
+						vertices[verticesIndex].texCoord.y = vts[faces[i][1]].y;
+					}
+					if (faces[i][2] >= 0) {
+						vertices[verticesIndex].normal.x = vns[faces[i][2]].x;
+						vertices[verticesIndex].normal.y = vns[faces[i][2]].y;
+						vertices[verticesIndex].normal.z = vns[faces[i][2]].z;
+					}
+
+					verticesIndex++;
+				}
+
+				indices[indicesIndex++] = seenIndex;
+			}
 		}
 		else {
 			engine3D_util_errPrintf("reading .obj file: ignoring token: %s", token);
@@ -241,8 +413,11 @@ void engine3D_resourceLoader_loadMesh(const char *const filename, engine3D_mesh_
 	fclose(f);
 
 	engine3D_mesh_init(mesh);
-	engine3D_mesh_addVertices(mesh, vertices, verticesIndex, indices, indicesIndex, false);
+	engine3D_mesh_addVertices(mesh, vertices, verticesIndex, indices, indicesIndex, true);
 
+	free(vs);
+	free(vts);
+	free(vns);
 	free(vertices);
 	free(indices);
 }

@@ -9,7 +9,15 @@ static void addProgram(const char *const text, engine3D_shader_t * const shader,
 		engine3D_util_bail("shader creation failed");
 	}
 
-	glShaderSource(shaderId, 1, &text, NULL);
+	char *sources[2];
+#ifdef ENGINE3D_USE_ES_SHADERS
+	programs[0] = "#version 300 es\nprecision mediump float;\n";
+#else
+	sources[0] = "#version 330\n";
+#endif
+	sources[1] = text;
+
+	glShaderSource(shaderId, 2, sources, NULL);
 	glCompileShader(shaderId);
 
 	GLint status;

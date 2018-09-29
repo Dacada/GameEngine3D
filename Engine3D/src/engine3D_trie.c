@@ -39,10 +39,8 @@ void engine3D_trie_add(engine3D_trie_t *const trie, const char *const key, int v
 				trie->childrenKeys = engine3D_util_safeRealloc(trie->childrenKeys, sizeof(char)*trie->childrenCapacity);
 				trie->children = engine3D_util_safeRealloc(trie->children, sizeof(engine3D_trie_t)*trie->childrenCapacity);
 			}
-			else {
-				trie->childrenKeys[trie->childrenNextIndex] = *key;
-				engine3D_trie_init(trie->children + trie->childrenNextIndex);
-			}
+			trie->childrenKeys[trie->childrenNextIndex] = *key;
+			engine3D_trie_init(trie->children + trie->childrenNextIndex);
 			i = trie->childrenNextIndex;
 			trie->childrenNextIndex++;
 		}

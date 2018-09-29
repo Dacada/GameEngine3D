@@ -35,12 +35,14 @@ static void init(void) {
 	engine3D_resourceLoader_loadTexture("test.png", &texture);
 	material.texture = &texture;
 	material.color = &color;
+	material.specularIntensity = 2;
+	material.specularPower = 32;
 
-	//engine3D_resourceLoader_loadMesh("box.obj", &mesh);
-	engine3D_mesh_init(&mesh);
-	engine3D_vertex_t vertices[] = { { {-1, -1, 0},{0, 0},{0, 0, 0} },{ {0, 1, 0},{0.5f, 0},{0, 0, 0} },{ {1, -1, 0},{1, 0},{0, 0, 0} },{ {0, -1, 1},{0, 0.5f},{0, 0, 0} } };
-	unsigned int indices[] = { 3,1,0, 2,1,3, 0,1,2, 0,2,3 };
-	engine3D_mesh_addVertices(&mesh, vertices, 4, indices, 12, true);
+	engine3D_resourceLoader_loadMesh("tetrahedron.obj", &mesh);
+	//engine3D_mesh_init(&mesh);
+	//engine3D_vertex_t vertices[] = { { {-1, -1, 0},{0, 0},{0, 0, 0} },{ {0, 1, 0},{0.5f, 0},{0, 0, 0} },{ {1, -1, 0},{1, 0},{0, 0, 0} },{ {0, -1, 1},{0, 0.5f},{0, 0, 0} } };
+	//unsigned int indices[] = { 3,1,0, 2,1,3, 0,1,2, 0,2,3 };
+	//engine3D_mesh_addVertices(&mesh, vertices, 4, indices, 12, true);
 
 	engine3D_transform_zNear = 0.1f;
 	engine3D_transform_zFar = 1000.0f;
