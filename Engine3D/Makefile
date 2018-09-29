@@ -3,7 +3,8 @@ INCDIR = include
 
 CC = gcc
 CFLAGS = -I$(INCDIR) -Wall -Wextra -Werror -std=gnu11 -Wformat\
-         -Wformat-security -D_FORTIFY_SOURCE=2 -DENGINE3D_RES_PATH="\"Engine3D/res/"\"
+         -Wformat-security -D_FORTIFY_SOURCE=2 -DENGINE3D_RES_PATH="\"Engine3D/res/"\"\
+				 -DENGINE3D_USE_ES_SHADERS
 
 SRCFILES = $(wildcard $(SRCDIR)/*.c)
 INCFILES = $(wildcard $(INCDIR)/*.h)
@@ -13,7 +14,7 @@ PRFOBJFILES = $(patsubst $(SRCDIR)/%, profile/%, $(SRCFILES:.c=.o))
 
 FINAL = Engine3D.a
 
-.PHONY: all dbg prf cleanlib
+.PHONY: all dbg prf clean cleanlib
 
 all: CFLAGS += -O3
 all: | release

@@ -346,7 +346,6 @@ void engine3D_resourceLoader_loadMesh(const char *const filename, engine3D_mesh_
 				vnsCapacity *= 2;
 				vns = engine3D_util_safeRealloc(vns, sizeof(engine3D_vertex_t) * vnsCapacity);
 			}
-			engine3D_vertex_initZero(&vns[vnsIndex]);
 			vns[vnsIndex].x = coords[0];
 			vns[vnsIndex].y = coords[1];
 			vns[vnsIndex].z = coords[2];

@@ -9,9 +9,9 @@ static void addProgram(const char *const text, engine3D_shader_t * const shader,
 		engine3D_util_bail("shader creation failed");
 	}
 
-	char *sources[2];
+	const char *sources[2];
 #ifdef ENGINE3D_USE_ES_SHADERS
-	programs[0] = "#version 300 es\nprecision mediump float;\n";
+	sources[0] = "#version 300 es\nprecision mediump float;\n";
 #else
 	sources[0] = "#version 330\n";
 #endif
