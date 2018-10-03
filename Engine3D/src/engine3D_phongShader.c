@@ -71,6 +71,12 @@ engine3D_phongShader_t *engine3D_phongShader_init(engine3D_phongShader_t *const 
 		strncat(str, ".position", 128);
 		str[127] = 0;
 		engine3D_shader_addUniform(str, (engine3D_shader_t*)shader);
+
+		strncpy(str, base, 64);
+		str[127] = 0;
+		strncat(str, ".range", 128);
+		str[127] = 0;
+		engine3D_shader_addUniform(str, (engine3D_shader_t*)shader);
 	}
 
 	return shader;
@@ -147,4 +153,8 @@ void engine3D_phongShader_setUniformPointLight(const char *const uniform, const 
 	strncpy(name, uniform, 2048);
 	strncat(name, ".position", 2048);
 	engine3D_shader_setUniformVec3f(name, &value->position, (engine3D_shader_t*)shader);
+
+	strncpy(name, uniform, 2048);
+	strncat(name, ".range", 2048);
+	engine3D_shader_setUniformf(name, value->range, (engine3D_shader_t*)shader);
 }

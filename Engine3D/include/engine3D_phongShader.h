@@ -31,6 +31,7 @@ typedef struct engine3D_phongShader_pointLight_t {
 	engine3D_phongShader_baseLight_t base;
 	engine3D_phongShader_attenuation_t atten;
 	engine3D_vector3f_t position;
+	float range;
 } engine3D_phongShader_pointLight_t;
 
 extern engine3D_vector3f_t engine3D_phongShader_ambientLight;

@@ -79,6 +79,7 @@ static void init(void) {
 	engine3D_phongShader_pointLights[0].position.x = 3;
 	engine3D_phongShader_pointLights[0].position.x = 0;
 	engine3D_phongShader_pointLights[0].position.x = 8;
+	engine3D_phongShader_pointLights[0].range = 6;
 
 	engine3D_phongShader_pointLights[1].base.color.x = 0;
 	engine3D_phongShader_pointLights[1].base.color.y = 0.5f;
@@ -90,6 +91,7 @@ static void init(void) {
 	engine3D_phongShader_pointLights[1].position.x = 7;
 	engine3D_phongShader_pointLights[1].position.x = 0;
 	engine3D_phongShader_pointLights[1].position.x = 8;
+	engine3D_phongShader_pointLights[1].range = 6;
 
 	engine3D_phongShader_numberOfPointLights = 2;
 }
