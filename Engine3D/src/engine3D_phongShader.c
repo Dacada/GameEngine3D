@@ -35,7 +35,7 @@ engine3D_phongShader_t *engine3D_phongShader_init(engine3D_phongShader_t *const 
 
 	for (size_t i = 0; i < ENGINE3D_PHONGSHADER_MAXPOINTLIGHTS; i++) {
 		char str[128], base[64];
-		sprintf(base, "pointLights[%u]", i);
+		sprintf(base, "pointLights[%lu]", i);
 
 		strncpy(str, base, 128);
 		str[127] = 0;
@@ -99,7 +99,7 @@ void engine3D_phongShader_updateUniforms(engine3D_phongShader_t * const shader, 
 	engine3D_phongShader_setUniformDirectionalLight("directionalLight", &engine3D_phongShader_directionalLight, shader);
 	for (size_t i = 0; i < engine3D_phongShader_numberOfPointLights; i++) {
 		char base[64];
-		sprintf(base, "pointLights[%u]", i);
+		sprintf(base, "pointLights[%lu]", i);
 		engine3D_phongShader_setUniformPointLight(base, &engine3D_phongShader_pointLights[i], shader);
 	}
 

@@ -167,8 +167,6 @@ static void update(void) {
 	static float tmp = 0.0f;
 	tmp += (float)engine3D_time_getDelta();
 
-	float sinTmp = sinf(tmp);
-
 	transform.translation.x = 0;
 	transform.translation.y = -1;
 	transform.translation.z = 5;
