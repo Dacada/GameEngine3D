@@ -39,7 +39,7 @@ typedef struct engine3D_phongShader_spotLight_t {
 	engine3D_phongShader_pointLight_t pointLight;
 	engine3D_vector3f_t direction;
 	float cutoff;
-};
+} engine3D_phongShader_spotLight_t;
 
 extern engine3D_vector3f_t engine3D_phongShader_ambientLight;
 
@@ -47,6 +47,9 @@ extern engine3D_phongShader_directionalLight_t engine3D_phongShader_directionalL
 
 extern engine3D_phongShader_pointLight_t engine3D_phongShader_pointLights[ENGINE3D_PHONGSHADER_MAXPOINTLIGHTS];
 extern size_t engine3D_phongShader_numberOfPointLights;
+
+extern engine3D_phongShader_spotLight_t engine3D_phongShader_spotLights[ENGINE3D_PHONGSHADER_MAXSPOTLIGHTS];
+extern size_t engine3D_phongShader_numberOfSpotLights;
 
 engine3D_phongShader_t *engine3D_phongShader_init(engine3D_phongShader_t *const shader);
 
@@ -57,5 +60,7 @@ void engine3D_phongShader_setUniformBaseLight(const char *const uniform, const e
 void engine3D_phongShader_setUniformDirectionalLight(const char *const uniform, const engine3D_phongShader_directionalLight_t *const value, const engine3D_phongShader_t *const shader);
 
 void engine3D_phongShader_setUniformPointLight(const char *const uniform, const engine3D_phongShader_pointLight_t *const value, const engine3D_phongShader_t *const shader);
+
+void engine3D_phongShader_setUniformSpotLight(const char *const uniform, const engine3D_phongShader_spotLight_t *const value, const engine3D_phongShader_t *const shader);
 
 #endif /* ENGINE3D_BASICSHADER */

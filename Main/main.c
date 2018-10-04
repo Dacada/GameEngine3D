@@ -93,7 +93,24 @@ static void init(void) {
 	engine3D_phongShader_pointLights[1].position.x = 8;
 	engine3D_phongShader_pointLights[1].range = 6;
 
-	engine3D_phongShader_numberOfPointLights = 2;
+	engine3D_phongShader_spotLights[0].pointLight.base.color.x = 0;
+	engine3D_phongShader_spotLights[0].pointLight.base.color.y = 1;
+	engine3D_phongShader_spotLights[0].pointLight.base.color.z = 1;
+	engine3D_phongShader_spotLights[0].pointLight.base.intensity = 0.8f;
+	engine3D_phongShader_spotLights[0].pointLight.atten.constant = 0;
+	engine3D_phongShader_spotLights[0].pointLight.atten.linear = 0;
+	engine3D_phongShader_spotLights[0].pointLight.atten.exponent = 0.1f;
+	engine3D_phongShader_spotLights[0].pointLight.position.x = engine3D_transform_camera.pos.x;
+	engine3D_phongShader_spotLights[0].pointLight.position.y = engine3D_transform_camera.pos.y;
+	engine3D_phongShader_spotLights[0].pointLight.position.z = engine3D_transform_camera.pos.z;
+	engine3D_phongShader_spotLights[0].pointLight.range = 30;
+	engine3D_phongShader_spotLights[0].direction.x = engine3D_transform_camera.forward.x;
+	engine3D_phongShader_spotLights[0].direction.y = engine3D_transform_camera.forward.y;
+	engine3D_phongShader_spotLights[0].direction.z = engine3D_transform_camera.forward.z;
+	engine3D_phongShader_spotLights[0].cutoff = 0.7f;
+
+	//engine3D_phongShader_numberOfPointLights = 2;
+	engine3D_phongShader_numberOfSpotLights = 1;
 }
 
 static void generalInput(float delta) {
@@ -179,6 +196,13 @@ static void update(void) {
 
 	engine3D_phongShader_pointLights[0].position.z = 8 * sinf(tmp) + 1.0f / 2.0f + 10;
 	engine3D_phongShader_pointLights[1].position.z = 8 * cosf(tmp) + 1.0f / 2.0f + 10;
+
+	engine3D_phongShader_spotLights[0].pointLight.position.x = engine3D_transform_camera.pos.x;
+	engine3D_phongShader_spotLights[0].pointLight.position.y = engine3D_transform_camera.pos.y;
+	engine3D_phongShader_spotLights[0].pointLight.position.z = engine3D_transform_camera.pos.z;
+	engine3D_phongShader_spotLights[0].direction.x = engine3D_transform_camera.forward.x;
+	engine3D_phongShader_spotLights[0].direction.y = engine3D_transform_camera.forward.y;
+	engine3D_phongShader_spotLights[0].direction.z = engine3D_transform_camera.forward.z;
 }
 
 static void render(void) {

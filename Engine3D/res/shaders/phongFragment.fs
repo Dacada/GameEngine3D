@@ -34,7 +34,7 @@ struct SpotLight {
 	PointLight pointLight;
 	vec3 direction;
 	float cutoff;
-}
+};
 
 uniform vec3 baseColor;
 uniform vec3 eyePos;
@@ -101,7 +101,7 @@ vec4 calcSpotLight(SpotLight spotLight, vec3 normal) {
 	vec3 lightDirection = normalize(worldPos0 - spotLight.pointLight.position);
 	float spotFactor = dot(lightDirection, spotLight.direction);
 	
-	vec4 color = vec4(0, 0, 0, 0)
+	vec4 color = vec4(0, 0, 0, 0);
 	
 	if (spotFactor > spotLight.cutoff) {
 		float mul = 1.0 - (1.0 - spotFactor)/(1.0 - spotLight.cutoff);
