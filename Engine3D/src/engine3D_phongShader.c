@@ -9,6 +9,7 @@
 engine3D_vector3f_t engine3D_phongShader_ambientLight;
 engine3D_phongShader_directionalLight_t engine3D_phongShader_directionalLight;
 engine3D_phongShader_pointLight_t engine3D_phongShader_pointLights[ENGINE3D_PHONGSHADER_MAXPOINTLIGHTS];
+engine3D_phongShader_pointLight_t engine3D_phongShader_pointLights[ENGINE3D_PHONGSHADER_MAXSPOTLIGHTS];
 size_t engine3D_phongShader_numberOfPointLights = 0;
 
 engine3D_phongShader_t *engine3D_phongShader_init(engine3D_phongShader_t *const shader) {

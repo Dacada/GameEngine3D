@@ -1,4 +1,5 @@
 const int MAX_POINT_LIGHTS = 4;
+const int MAX_SPOT_LIGHTS = 4;
 
 in vec2 texCoord0;
 in vec3 normal0;
@@ -29,6 +30,12 @@ struct PointLight {
 	float range;
 };
 
+struct SpotLight {
+	PointLight pointLight;
+	vec3 direction;
+	float cutoff;
+}
+
 uniform vec3 baseColor;
 uniform vec3 eyePos;
 uniform vec3 ambientLight;
@@ -40,6 +47,7 @@ uniform sampler2D sampler;
 
 uniform DirectionalLight directionalLight;
 uniform PointLight pointLights[MAX_POINT_LIGHTS];
+uniform SpotLight spotLights[MAX_SPOT_LIGHTS];
 
 vec4 calcLight(BaseLight base, vec3 direction, vec3 normal) {
 	float diffuseFactor = dot(normal, -direction);
@@ -89,6 +97,20 @@ vec4 calcPointLight(PointLight pointLight, vec3 normal) {
 	return color / attenuation;
 }
 
+vec4 calcSpotLight(SpotLight spotLight, vec3 normal) {
+	vec3 lightDirection = normalize(worldPos0 - spotLight.pointLight.position);
+	float spotFactor = dot(lightDirection, spotLight.direction);
+	
+	vec4 color = vec4(0, 0, 0, 0)
+	
+	if (spotFactor > spotLight.cutoff) {
+		float mul = 1.0 - (1.0 - spotFactor)/(1.0 - spotLight.cutoff);
+		color = calcPointLight(spotLight.pointLight, normal) * mul;
+	}
+	
+	return color;
+}
+
 void main() {
 	vec4 totalLight = vec4(ambientLight,1);
 	vec4 textureColor = texture2D(sampler, texCoord0.xy);
@@ -106,6 +128,12 @@ void main() {
 	for (int i = 0; i < MAX_POINT_LIGHTS; i++) {
 		if (pointLights[i].base.intensity > 0) {
 			totalLight += calcPointLight(pointLights[i], normal);
+		}
+	}
+	
+	for (int i = 0; i < MAX_SPOT_LIGHTS; i++) {
+		if (spotLights[i].pointLight.base.intensity > 0) {
+			totalLight += calcSpotLight(spotLights[i], normal);
 		}
 	}
 

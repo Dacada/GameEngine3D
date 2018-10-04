@@ -6,6 +6,7 @@
 #include <engine3D_vector.h>
 
 #define ENGINE3D_PHONGSHADER_MAXPOINTLIGHTS 4
+#define ENGINE3D_PHONGSHADER_MAXSPOTLIGHTS 4
 
 typedef struct engine3D_phongShader_t {
 	engine3D_shader_t shader;
@@ -33,6 +34,12 @@ typedef struct engine3D_phongShader_pointLight_t {
 	engine3D_vector3f_t position;
 	float range;
 } engine3D_phongShader_pointLight_t;
+
+typedef struct engine3D_phongShader_spotLight_t {
+	engine3D_phongShader_pointLight_t pointLight;
+	engine3D_vector3f_t direction;
+	float cutoff;
+};
 
 extern engine3D_vector3f_t engine3D_phongShader_ambientLight;
 
