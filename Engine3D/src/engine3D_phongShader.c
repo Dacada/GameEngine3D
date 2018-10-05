@@ -1,6 +1,5 @@
 #include <engine3D_phongShader.h>
 #include <engine3D_shader.h>
-#include <engine3D_resourceLoader.h>
 #include <engine3D_renderUtil.h>
 #include <engine3D_transform.h>
 
@@ -16,9 +15,8 @@ size_t engine3D_phongShader_numberOfSpotLights = 0;
 engine3D_phongShader_t *engine3D_phongShader_init(engine3D_phongShader_t *const shader) {
 	engine3D_shader_init((engine3D_shader_t*)shader);
 
-	char shaderText[65536];
-	engine3D_shader_addVertexShader(engine3D_resourceLoader_loadShader("phongVertex.vs", shaderText, 65536), (engine3D_shader_t*)shader);
-	engine3D_shader_addFragmentShader(engine3D_resourceLoader_loadShader("phongFragment.fs", shaderText, 65536), (engine3D_shader_t*)shader);
+	engine3D_shader_addVertexShaderFromFile("phongVertex.vs", (engine3D_shader_t*)shader);
+	engine3D_shader_addFragmentShaderFromFile("phongFragment.fs", (engine3D_shader_t*)shader);
 	engine3D_shader_compile((engine3D_shader_t*)shader);
 
 	engine3D_shader_addUniform("transform", (engine3D_shader_t*)shader);

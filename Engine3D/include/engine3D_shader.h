@@ -21,6 +21,12 @@ engine3D_shader_t *engine3D_shader_addGeometryShader(const char *const text, eng
 
 engine3D_shader_t *engine3D_shader_addFragmentShader(const char *const text, engine3D_shader_t * const shader);
 
+engine3D_shader_t *engine3D_shader_addVertexShaderFromFile(const char *const text, engine3D_shader_t * const shader);
+
+engine3D_shader_t *engine3D_shader_addGeometryShaderFromFile(const char *const text, engine3D_shader_t * const shader);
+
+engine3D_shader_t *engine3D_shader_addFragmentShaderFromFile(const char *const text, engine3D_shader_t * const shader);
+
 void engine3D_shader_compile(const engine3D_shader_t * const shader);
 
 void engine3D_shader_bind(const engine3D_shader_t * const shader);

@@ -1,5 +1,6 @@
 #include <engine3D_shader.h>
 #include <engine3D_util.h>
+#include <engine3D_resourceLoader.h>
 
 #include <stdlib.h>
 
@@ -57,6 +58,27 @@ engine3D_shader_t *engine3D_shader_addGeometryShader(const char *const text, eng
 
 engine3D_shader_t *engine3D_shader_addFragmentShader(const char *const text, engine3D_shader_t * const shader) {
 	addProgram(text, shader, GL_FRAGMENT_SHADER);
+	return shader;
+}
+
+engine3D_shader_t *engine3D_shader_addVertexShaderFromFile(const char *const text, engine3D_shader_t * const shader) {
+	char shaderText[65536];
+	engine3D_resourceLoader_loadShader(text, shaderText, 65536);
+	addProgram(shaderText, shader, GL_VERTEX_SHADER);
+	return shader;
+}
+
+engine3D_shader_t *engine3D_shader_addGeometryShaderFromFile(const char *const text, engine3D_shader_t * const shader) {
+	char shaderText[65536];
+	engine3D_resourceLoader_loadShader(text, shaderText, 65536);
+	addProgram(shaderText, shader, GL_GEOMETRY_SHADER);
+	return shader;
+}
+
+engine3D_shader_t *engine3D_shader_addFragmentShaderFromFile(const char *const text, engine3D_shader_t * const shader) {
+	char shaderText[65536];
+	engine3D_resourceLoader_loadShader(text, shaderText, 65536);
+	addProgram(shaderText, shader, GL_FRAGMENT_SHADER);
 	return shader;
 }
 

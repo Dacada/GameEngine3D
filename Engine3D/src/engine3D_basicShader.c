@@ -1,20 +1,13 @@
 #include <engine3D_basicShader.h>
 #include <engine3D_shader.h>
-#include <engine3D_resourceLoader.h>
 #include <engine3D_renderUtil.h>
 
 engine3D_basicShader_t *engine3D_basicShader_init(engine3D_basicShader_t *const shader) {
 	engine3D_shader_init((engine3D_shader_t*)shader);
 
-	char shaderText[1024];
 	// Quick fix to use the right shader version in my windows and linux machines.
-#ifndef __unix__
-	engine3D_shader_addVertexShader(engine3D_resourceLoader_loadShader("basicVertex.vs", shaderText, 1024), (engine3D_shader_t*)shader);
-	engine3D_shader_addFragmentShader(engine3D_resourceLoader_loadShader("basicFragment.fs", shaderText, 1024), (engine3D_shader_t*)shader);
-#else
-	engine3D_shader_addVertexShader(engine3D_resourceLoader_loadShader("basicVertex_ES.vs", shaderText, 1024), (engine3D_shader_t*)shader);
-	engine3D_shader_addFragmentShader(engine3D_resourceLoader_loadShader("basicFragment_ES.fs", shaderText, 1024), (engine3D_shader_t*)shader);
-#endif
+	engine3D_shader_addVertexShaderFromFile("basicVertex.vs", (engine3D_shader_t*)shader);
+	engine3D_shader_addFragmentShaderFromFile("basicFragment.fs", (engine3D_shader_t*)shader);
 	engine3D_shader_compile((engine3D_shader_t*)shader);
 
 	engine3D_shader_addUniform("transform", (engine3D_shader_t*)shader);
