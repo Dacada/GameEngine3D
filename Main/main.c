@@ -27,7 +27,6 @@ static engine3D_texture_t texture;
 static engine3D_vector3f_t color;
 
 static void init(void) {
-	engine3D_resourceLoader_setResPath("../Engine3D/res/");
 	engine3D_phongShader_init(&shader);
 	engine3D_transform_reset(&transform);
 	transform.translation.z = 5;

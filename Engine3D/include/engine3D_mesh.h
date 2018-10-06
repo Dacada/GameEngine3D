@@ -1,7 +1,7 @@
 #ifndef ENGINE3D_MESH_H
 #define ENGINE3D_MESH_H
 
-#include <engine3D_vertex.h>
+#include "engine3D_vertex.h"
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>

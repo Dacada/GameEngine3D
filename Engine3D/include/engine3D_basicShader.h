@@ -1,8 +1,8 @@
 #ifndef ENGINE3D_BASICSHADER
 #define ENGINE3D_BASICSHADER
 
-#include <engine3D_shader.h>
-#include <engine3D_material.h>
+#include "engine3D_shader.h"
+#include "engine3D_material.h"
 
 typedef struct engine3D_basicShader_t {
 	engine3D_shader_t shader;

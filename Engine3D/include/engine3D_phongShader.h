@@ -1,9 +1,9 @@
 #ifndef ENGINE3D_PHONGSHADER
 #define ENGINE3D_PHONGSHADER
 
-#include <engine3D_shader.h>
-#include <engine3D_material.h>
-#include <engine3D_vector.h>
+#include "engine3D_shader.h"
+#include "engine3D_material.h"
+#include "engine3D_vector.h"
 
 #define ENGINE3D_PHONGSHADER_MAXPOINTLIGHTS 4
 #define ENGINE3D_PHONGSHADER_MAXSPOTLIGHTS 4
