@@ -6,6 +6,8 @@
 
 #include <stdlib.h>
 
+void engine3D_resourceLoader_setResPath(const char *path);
+
 char *engine3D_resourceLoader_loadShader(const char *const filename, char *const text, size_t size);
 
 void engine3D_resourceLoader_loadMesh(const char *const filename, engine3D_mesh_t *const mesh);

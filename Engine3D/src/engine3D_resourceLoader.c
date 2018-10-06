@@ -14,8 +14,15 @@
 #include <limits.h>
 #include <errno.h>
 
+const char *resourcesPath = ENGINE3D_RES_PATH;
+void engine3D_resourceLoader_setResPath(const char *path) {
+	resourcesPath = path;
+}
+
 char *engine3D_resourceLoader_loadShader(const char *const filename, char *const text, size_t size) {
-	char filepath[256] = ENGINE3D_RES_PATH "shaders/";
+	char filepath[256];
+	strncpy(filepath, resourcesPath, 256);
+	strncat(filepath, "shaders/", 256);
 	strncat(filepath, filename, 128);
 
 	FILE *f = fopen(filepath, "r");
@@ -261,7 +268,9 @@ size_t setSeenIndex(int face[3]) {
 }
 
 void engine3D_resourceLoader_loadMesh(const char *const filename, engine3D_mesh_t *const mesh) {
-	char filepath[256] = ENGINE3D_RES_PATH "models/";
+	char filepath[256];
+	strncpy(filepath, resourcesPath, 256);
+	strncat(filepath, "models/", 256);
 	strncat(filepath, filename, 128);
 
 	initSeenIndex();
@@ -422,7 +431,9 @@ void engine3D_resourceLoader_loadMesh(const char *const filename, engine3D_mesh_
 }
 
 void engine3D_resourceLoader_loadTexture(const char *const filename, engine3D_texture_t *const texture) {
-	char filepath[256] = ENGINE3D_RES_PATH "textures/";
+	char filepath[256];
+	strncpy(filepath, resourcesPath, 256);
+	strncat(filepath, "textures/", 256);
 	strncat(filepath, filename, 128);
 
 	FREE_IMAGE_FORMAT fif = FIF_UNKNOWN;
