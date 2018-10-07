@@ -12,11 +12,96 @@
 static GLFWwindow *window;
 static const char *current_title;
 
+// typedef void (GLAPIENTRY *GLDEBUGPROC)(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam);
+static void GLAPIENTRY debugMessage(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message, const void *userParam) {
+	switch (source) {
+	case GL_DEBUG_SOURCE_API:
+		printf("[API]");
+		break;
+	case GL_DEBUG_SOURCE_WINDOW_SYSTEM:
+		printf("[WINDOW SYSTEM]");
+		break;
+	case GL_DEBUG_SOURCE_SHADER_COMPILER:
+		printf("[SHADER COMPILER]");
+		break;
+	case GL_DEBUG_SOURCE_THIRD_PARTY:
+		printf("[THIRD PARTY]");
+		break;
+	case GL_DEBUG_SOURCE_APPLICATION:
+		printf("[APPLICATION]");
+		break;
+	case GL_DEBUG_SOURCE_OTHER:
+		printf("[OTHER]");
+		break;
+	default:
+		puts("[UNKNOWN]");
+		break;
+	}
+
+	switch (type) {
+	case GL_DEBUG_TYPE_ERROR:
+		printf("[ERROR]");
+		break;
+	case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR:
+		printf("[DEPRECATED BEHAVIOR]");
+		break;
+	case GL_DEBUG_SOURCE_API:
+		printf("[API]");
+		break;
+	case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:
+		printf("[UNDEFINED BEHAVIOR]");
+		break;
+	case GL_DEBUG_TYPE_PORTABILITY:
+		printf("[PORTABILITY]");
+		break;
+	case GL_DEBUG_TYPE_PERFORMANCE:
+		printf("[PERFORMANCE]");
+		break;
+	case GL_DEBUG_TYPE_MARKER:
+		printf("[MARKER]");
+		break;
+	case GL_DEBUG_TYPE_PUSH_GROUP:
+		printf("[PUSH GROUP]");
+		break;
+	case GL_DEBUG_TYPE_POP_GROUP:
+		printf("[TYPE POP GROUP]");
+		break;
+	default:
+		puts("[UNKNOWN]");
+		break;
+	}
+
+	switch (severity) {
+	case GL_DEBUG_SEVERITY_LOW:
+		printf("[LOW]");
+		break;
+	case GL_DEBUG_SEVERITY_MEDIUM:
+		printf("[MEDIUM]");
+		break;
+	case GL_DEBUG_SEVERITY_HIGH:
+		printf("[HIGH]");
+		break;
+	case GL_DEBUG_SEVERITY_NOTIFICATION:
+		printf("[NOTIFICATION]");
+		break;
+	default:
+		printf("[UNKNOWN]");
+		break;
+	}
+
+	printf("[ID=%u]", id);
+
+	printf(" - ");
+	printf("%.*s", length, message);
+	putchar('\n');
+}
+
 GLFWwindow *engine3D_window_create(const int width, const int height, const char *const title) {
 	if (!glfwInit()) {
 		engine3D_util_bail("failed to initialize glfw");
 	}
 
+	glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
 	window = glfwCreateWindow(width, height, title, NULL, NULL);
 	if (window == NULL) {
 		engine3D_util_bail("failed to create glfw window");
@@ -35,6 +120,15 @@ GLFWwindow *engine3D_window_create(const int width, const int height, const char
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	GLint flags;
+	glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
+	if (flags & GL_CONTEXT_FLAG_DEBUG_BIT) {
+		glEnable(GL_DEBUG_OUTPUT);
+		glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+		glDebugMessageCallback(debugMessage, NULL);
+		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, NULL, GL_TRUE);
+	}
 
 	return window;
 }
