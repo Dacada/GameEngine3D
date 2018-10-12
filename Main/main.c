@@ -54,7 +54,8 @@ static void init(void) {
 	engine3D_transform_width = (float)engine3D_width;
 	engine3D_transform_height = (float)engine3D_height;
 	engine3D_transform_fov = 70.0f;
-	engine3D_camera_init(&engine3D_transform_camera);
+	engine3D_transform_camera = malloc(sizeof(engine3D_camera_t));
+	engine3D_camera_init(engine3D_transform_camera);
 
 	engine3D_phongShader_ambientLight.x = 0.1f;
 	engine3D_phongShader_ambientLight.y = 0.1f;
@@ -100,13 +101,13 @@ static void init(void) {
 	engine3D_phongShader_spotLights[0].pointLight.atten.constant = 0;
 	engine3D_phongShader_spotLights[0].pointLight.atten.linear = 0;
 	engine3D_phongShader_spotLights[0].pointLight.atten.exponent = 0.1f;
-	engine3D_phongShader_spotLights[0].pointLight.position.x = engine3D_transform_camera.pos.x;
-	engine3D_phongShader_spotLights[0].pointLight.position.y = engine3D_transform_camera.pos.y;
-	engine3D_phongShader_spotLights[0].pointLight.position.z = engine3D_transform_camera.pos.z;
+	engine3D_phongShader_spotLights[0].pointLight.position.x = engine3D_transform_camera->pos.x;
+	engine3D_phongShader_spotLights[0].pointLight.position.y = engine3D_transform_camera->pos.y;
+	engine3D_phongShader_spotLights[0].pointLight.position.z = engine3D_transform_camera->pos.z;
 	engine3D_phongShader_spotLights[0].pointLight.range = 30;
-	engine3D_phongShader_spotLights[0].direction.x = engine3D_transform_camera.forward.x;
-	engine3D_phongShader_spotLights[0].direction.y = engine3D_transform_camera.forward.y;
-	engine3D_phongShader_spotLights[0].direction.z = engine3D_transform_camera.forward.z;
+	engine3D_phongShader_spotLights[0].direction.x = engine3D_transform_camera->forward.x;
+	engine3D_phongShader_spotLights[0].direction.y = engine3D_transform_camera->forward.y;
+	engine3D_phongShader_spotLights[0].direction.z = engine3D_transform_camera->forward.z;
 	engine3D_phongShader_spotLights[0].cutoff = 0.7f;
 
 	//engine3D_phongShader_numberOfPointLights = 2;
@@ -139,20 +140,20 @@ static void cameraInput(float delta) {
 	}
 
 	if (engine3D_input_getKey(GLFW_KEY_W)) {
-		engine3D_camera_move(&engine3D_transform_camera, &engine3D_transform_camera.forward, movAmt);
+		engine3D_camera_move(engine3D_transform_camera, &engine3D_transform_camera->forward, movAmt);
 	}
 	if (engine3D_input_getKey(GLFW_KEY_S)) {
-		engine3D_camera_move(&engine3D_transform_camera, &engine3D_transform_camera.forward, -movAmt);
+		engine3D_camera_move(engine3D_transform_camera, &engine3D_transform_camera->forward, -movAmt);
 	}
 	if (engine3D_input_getKey(GLFW_KEY_A)) {
 		engine3D_vector3f_t vec;
-		engine3D_camera_left(&engine3D_transform_camera, &vec);
-		engine3D_camera_move(&engine3D_transform_camera, &vec, movAmt);
+		engine3D_camera_left(engine3D_transform_camera, &vec);
+		engine3D_camera_move(engine3D_transform_camera, &vec, movAmt);
 	}
 	if (engine3D_input_getKey(GLFW_KEY_D)) {
 		engine3D_vector3f_t vec;
-		engine3D_camera_right(&engine3D_transform_camera, &vec);
-		engine3D_camera_move(&engine3D_transform_camera, &vec, movAmt);
+		engine3D_camera_right(engine3D_transform_camera, &vec);
+		engine3D_camera_move(engine3D_transform_camera, &vec, movAmt);
 	}
 
 	if (movingCamera) {
@@ -162,12 +163,12 @@ static void cameraInput(float delta) {
 
 		if (deltaPos.x != 0)
 		{
-			engine3D_camera_rotateY(&engine3D_transform_camera, deltaPos.x * sensitivity * delta);
+			engine3D_camera_rotateY(engine3D_transform_camera, deltaPos.x * sensitivity * delta);
 		}
 
 		if (deltaPos.y != 0)
 		{
-			engine3D_camera_rotateX(&engine3D_transform_camera, deltaPos.y * sensitivity * delta);
+			engine3D_camera_rotateX(engine3D_transform_camera, deltaPos.y * sensitivity * delta);
 		}
 	}
 }
@@ -197,17 +198,17 @@ static void update(void) {
 	engine3D_phongShader_pointLights[0].position.z = 8 * sinf(tmp) + 1.0f / 2.0f + 10;
 	engine3D_phongShader_pointLights[1].position.z = 8 * cosf(tmp) + 1.0f / 2.0f + 10;
 
-	engine3D_phongShader_spotLights[0].pointLight.position.x = engine3D_transform_camera.pos.x;
-	engine3D_phongShader_spotLights[0].pointLight.position.y = engine3D_transform_camera.pos.y;
-	engine3D_phongShader_spotLights[0].pointLight.position.z = engine3D_transform_camera.pos.z;
-	engine3D_phongShader_spotLights[0].direction.x = engine3D_transform_camera.forward.x;
-	engine3D_phongShader_spotLights[0].direction.y = engine3D_transform_camera.forward.y;
-	engine3D_phongShader_spotLights[0].direction.z = engine3D_transform_camera.forward.z;
+	engine3D_phongShader_spotLights[0].pointLight.position.x = engine3D_transform_camera->pos.x;
+	engine3D_phongShader_spotLights[0].pointLight.position.y = engine3D_transform_camera->pos.y;
+	engine3D_phongShader_spotLights[0].pointLight.position.z = engine3D_transform_camera->pos.z;
+	engine3D_phongShader_spotLights[0].direction.x = engine3D_transform_camera->forward.x;
+	engine3D_phongShader_spotLights[0].direction.y = engine3D_transform_camera->forward.y;
+	engine3D_phongShader_spotLights[0].direction.z = engine3D_transform_camera->forward.z;
 }
 
 static void render(void) {
 	engine3D_vector3f_t v1, v2;
-	engine3D_vector3f_divf(&engine3D_transform_camera.pos, 2048, &v1);
+	engine3D_vector3f_divf(&engine3D_transform_camera->pos, 2048, &v1);
 	engine3D_vector3f_abs(&v1, &v2);
 	engine3D_renderUtils_setClearColor(&v2);
 

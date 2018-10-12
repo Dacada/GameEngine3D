@@ -170,7 +170,7 @@ void engine3D_phongShader_updateUniforms(engine3D_phongShader_t * const shader, 
 
 	engine3D_shader_setUniformf("specularIntensity", material->specularIntensity, (engine3D_shader_t*)shader);
 	engine3D_shader_setUniformf("specularPower", material->specularPower, (engine3D_shader_t*)shader);
-	engine3D_shader_setUniformVec3f("eyePos", &engine3D_transform_camera.pos, (engine3D_shader_t*)shader);
+	engine3D_shader_setUniformVec3f("eyePos", &engine3D_transform_camera->pos, (engine3D_shader_t*)shader);
 }
 
 void engine3D_phongShader_setUniformBaseLight(const char *const uniform, const engine3D_phongShader_baseLight_t *const value, const engine3D_phongShader_t *const shader) {
