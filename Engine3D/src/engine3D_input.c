@@ -80,6 +80,10 @@ void engine3D_input_getMousePosition(engine3D_vector2f_t *const position) {
 	position->y = lastMousePositionY;
 }
 
+void engine3D_input_setMousePosition(const engine3D_vector2f_t *const position) {
+	glfwSetCursorPos(engine3D_input_window, position->x, position->y);
+}
+
 void engine3D_input_setCursor(engine3D_input_cursorMode mode) {
 	switch (mode)
 	{
