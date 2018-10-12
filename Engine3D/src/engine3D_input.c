@@ -76,8 +76,10 @@ bool engine3D_input_getMouseUp(const int mouseButton) {
 }
 
 void engine3D_input_getMousePosition(engine3D_vector2f_t *const position) {
-	position->x = lastMousePositionX;
-	position->y = lastMousePositionY;
+	double x, y;
+	glfwGetCursorPos(engine3D_input_window, &x, &y);
+	position->x = (float)x;
+	position->y = (float)y;
 }
 
 void engine3D_input_setMousePosition(const engine3D_vector2f_t *const position) {
@@ -118,12 +120,4 @@ void _engine3D_input_mouseButtonCallback(const GLFWwindow *const window, const i
 	if (button < 0 || button > LEN_MOUSE_BUTTONS)
 		return;
 	mouseButtons[button] = action != GLFW_RELEASE;
-}
-
-void _engine3D_input_mousePositionCallback(const GLFWwindow *const window, const double xpos, const double ypos) {
-	// Suppress unused warnings
-	(void)window;
-
-	lastMousePositionX = (float)xpos;
-	lastMousePositionY = (float)ypos;
 }

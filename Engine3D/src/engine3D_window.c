@@ -114,7 +114,6 @@ GLFWwindow *engine3D_window_create(const int width, const int height, const char
 	glfwSwapInterval(0);
 	glfwSetKeyCallback(window, (GLFWkeyfun)_engine3D_input_keyCallback);
 	glfwSetMouseButtonCallback(window, (GLFWmousebuttonfun)_engine3D_input_mouseButtonCallback);
-	glfwSetCursorPosCallback(window, (GLFWcursorposfun)_engine3D_input_mousePositionCallback);
 
 	if (glewInit() != GLEW_OK) {
 		engine3D_util_bail("failed to initialize glew");
