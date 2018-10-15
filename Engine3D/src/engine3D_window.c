@@ -36,7 +36,7 @@ static void GLAPIENTRY debugMessage(GLenum source, GLenum type, GLuint id, GLenu
 		printf("[OTHER]");
 		break;
 	default:
-		puts("[UNKNOWN]");
+		printf("[UNKNOWN]");
 		break;
 	}
 
@@ -69,7 +69,7 @@ static void GLAPIENTRY debugMessage(GLenum source, GLenum type, GLuint id, GLenu
 		printf("[TYPE POP GROUP]");
 		break;
 	default:
-		puts("[UNKNOWN]");
+		printf("[UNKNOWN]");
 		break;
 	}
 
