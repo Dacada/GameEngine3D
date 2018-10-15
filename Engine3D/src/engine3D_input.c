@@ -21,8 +21,6 @@ static bool mouseButtonsState[LEN_MOUSE_BUTTONS];
 static bool mouseButtonsDown[LEN_MOUSE_BUTTONS];
 static bool mouseButtonsUp[LEN_MOUSE_BUTTONS];
 
-static float lastMousePositionX, lastMousePositionY;
-
 void engine3D_input_update(void) {
 	for (int i = 0; i < LEN_KEYS; i++)
 	{
