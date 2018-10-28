@@ -100,14 +100,14 @@ vec4 calcPointLight(PointLight pointLight, vec3 normal) {
 vec4 calcSpotLight(SpotLight spotLight, vec3 normal) {
 	vec3 lightDirection = normalize(worldPos0 - spotLight.pointLight.position);
 	float spotFactor = dot(lightDirection, spotLight.direction);
-	
+
 	vec4 color = vec4(0, 0, 0, 0);
-	
+
 	if (spotFactor > spotLight.cutoff) {
 		float mul = 1.0 - (1.0 - spotFactor)/(1.0 - spotLight.cutoff);
 		color = calcPointLight(spotLight.pointLight, normal) * mul;
 	}
-	
+
 	return color;
 }
 
@@ -130,9 +130,9 @@ void main() {
 			totalLight += calcPointLight(pointLights[i], normal);
 		}
 	}
-	
+
 	for (int i = 0; i < MAX_SPOT_LIGHTS; i++) {
-		if (spotLights[i].pointLight.base.intensity > 0) {
+		if (spotLights[i].pointLight.base.intensity > 0.0) {
 			totalLight += calcSpotLight(spotLights[i], normal);
 		}
 	}
