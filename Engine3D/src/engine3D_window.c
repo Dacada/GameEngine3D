@@ -103,7 +103,10 @@ GLFWwindow *engine3D_window_create(const int width, const int height, const char
 		engine3D_util_bail("failed to initialize glfw");
 	}
 
+#ifdef DEBUG
 	glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
+#endif
+
 	window = glfwCreateWindow(width, height, title, NULL, NULL);
 	if (window == NULL) {
 		engine3D_util_bail("failed to create glfw window");
@@ -122,6 +125,7 @@ GLFWwindow *engine3D_window_create(const int width, const int height, const char
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+#ifdef DEBUG
 	GLint flags;
 	glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
 	if (flags & GL_CONTEXT_FLAG_DEBUG_BIT) {
@@ -130,12 +134,13 @@ GLFWwindow *engine3D_window_create(const int width, const int height, const char
 		glDebugMessageCallback(debugMessage, NULL);
 		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, NULL, GL_TRUE);
 	}
+#endif
 
 	return window;
 }
 
 void engine3D_window_update(void) {
-#ifndef NDEBUG
+#ifdef DEBUG
 	engine3D_util_reportGlError();
 #endif
 
