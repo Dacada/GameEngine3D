@@ -1,4 +1,4 @@
-.PHONY: all rel dbg prf clean veryclean
+.PHONY: all rel dbg clean veryclean
 
 all: rel
 rel:
@@ -8,10 +8,6 @@ rel:
 dbg:
 	$(MAKE) -C Engine3D dbg
 	$(MAKE) -C Main dbg
-
-prf:
-	$(MAKE) -C Engine3D prf
-	$(MAKE) -C Main prf
 
 clean:
 	$(MAKE) -C Engine3D cleanlib

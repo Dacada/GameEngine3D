@@ -12,7 +12,7 @@
 static GLFWwindow *window;
 static const char *current_title;
 
-// typedef void (GLAPIENTRY *GLDEBUGPROC)(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam);
+#ifdef DEBUG
 static void GLAPIENTRY debugMessage(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message, const void *userParam) {
 	(void)userParam;
 
@@ -97,6 +97,7 @@ static void GLAPIENTRY debugMessage(GLenum source, GLenum type, GLuint id, GLenu
 	printf("%.*s", length, message);
 	putchar('\n');
 }
+#endif
 
 GLFWwindow *engine3D_window_create(const int width, const int height, const char *const title) {
 	if (!glfwInit()) {
