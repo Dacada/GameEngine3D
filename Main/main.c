@@ -117,7 +117,7 @@ static void init(void) {
 static void generalInput(float delta) {
 	(void)delta;
 
-	if (engine3D_input_getKey(GLFW_KEY_ESCAPE)) {
+	if (engine3D_input_getKey(ENGINE3D_KEY_ESCAPE)) {
 		exit(EXIT_SUCCESS);
 	}
 }
@@ -128,29 +128,29 @@ static void cameraInput(float delta) {
 
 	static bool movingCamera = false;
 	static engine3D_vector2f_t centerPosition;
-	if (engine3D_input_getMouseDown(GLFW_MOUSE_BUTTON_1)) {
+	if (engine3D_input_getMouseDown(ENGINE3D_MOUSE_BUTTON_LEFT)) {
 		engine3D_input_setCursor(ENGINE3D_CURSOR_DISABLED);
 		engine3D_input_getMousePosition(&centerPosition);
 		movingCamera = true;
 	}
 
-	if (engine3D_input_getMouseUp(GLFW_MOUSE_BUTTON_1)) {
+	if (engine3D_input_getMouseUp(ENGINE3D_MOUSE_BUTTON_LEFT)) {
 		engine3D_input_setCursor(ENGINE3D_CURSOR_ENABLED);
 		movingCamera = false;
 	}
 
-	if (engine3D_input_getKey(GLFW_KEY_W)) {
+	if (engine3D_input_getKey(ENGINE3D_KEY_W)) {
 		engine3D_camera_move(engine3D_transform_camera, &engine3D_transform_camera->forward, movAmt);
 	}
-	if (engine3D_input_getKey(GLFW_KEY_S)) {
+	if (engine3D_input_getKey(ENGINE3D_KEY_S)) {
 		engine3D_camera_move(engine3D_transform_camera, &engine3D_transform_camera->forward, -movAmt);
 	}
-	if (engine3D_input_getKey(GLFW_KEY_A)) {
+	if (engine3D_input_getKey(ENGINE3D_KEY_A)) {
 		engine3D_vector3f_t vec;
 		engine3D_camera_left(engine3D_transform_camera, &vec);
 		engine3D_camera_move(engine3D_transform_camera, &vec, movAmt);
 	}
-	if (engine3D_input_getKey(GLFW_KEY_D)) {
+	if (engine3D_input_getKey(ENGINE3D_KEY_D)) {
 		engine3D_vector3f_t vec;
 		engine3D_camera_right(engine3D_transform_camera, &vec);
 		engine3D_camera_move(engine3D_transform_camera, &vec, movAmt);
