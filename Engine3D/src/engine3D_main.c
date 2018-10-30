@@ -69,7 +69,9 @@ static void run(void) {
 			game_update();
 
 			if (frameCounter >= engine3D_timer_second) {
+#ifdef DEBUG
 				printf("%d\n", frames);
+#endif
 				frames = 0;
 				frameCounter = 0;
 			}
