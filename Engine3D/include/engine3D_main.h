@@ -5,6 +5,7 @@ extern const int engine3D_width;
 extern const int engine3D_height;
 extern const char *const engine3D_title;
 extern const double engine3D_frameCap;
+extern int engine3D_fps;
 
 typedef void(*game_callback_t)(void);
 

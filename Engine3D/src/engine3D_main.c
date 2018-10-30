@@ -13,6 +13,8 @@ const int engine3D_height = 600;
 const char *const engine3D_title = "3D Engine";
 const double engine3D_frameCap = 5000.0;
 
+int engine3D_fps = 0;
+
 static bool isRunning = false;
 
 static game_callback_t game_init;
@@ -33,7 +35,6 @@ static void render(void) {
 static void run(void) {
 	isRunning = true;
 
-	int frames = 0;
 	double frameCounter = 0;
 
 	const double frameTime = 1.0 / engine3D_frameCap;
@@ -70,16 +71,16 @@ static void run(void) {
 
 			if (frameCounter >= engine3D_timer_second) {
 #ifdef DEBUG
-				printf("%d\n", frames);
+				printf("%d\n", engine3D_fps);
 #endif
-				frames = 0;
+				engine3D_fps = 0;
 				frameCounter = 0;
 			}
 		}
 
 		if (doRender) {
 			render();
-			frames++;
+			engine3D_fps++;
 		} else {
 			engine3D_time_sleep(0.001 * engine3D_timer_second);
 		}
