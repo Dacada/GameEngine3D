@@ -9,6 +9,8 @@ typedef struct engine3D_texture_t {
 	GLuint id;
 } engine3D_texture_t;
 
+engine3D_texture_t engine3D_texture_loadFromFile(const char *const filename);
+
 void engine3D_texture_bind(engine3D_texture_t *const texture);
 
 #endif /* ENGINE3D_TEXTURE_H */

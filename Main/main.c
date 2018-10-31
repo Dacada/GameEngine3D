@@ -32,13 +32,13 @@ static void init(void) {
 	transform.translation.z = 5;
 
 	color.x = 1; color.y = 1; color.z = 1;
-	engine3D_resourceLoader_loadTexture("test.png", &texture);
+	texture = engine3D_texture_loadFromFile("test.png");
 	material.texture = &texture;
 	material.color = &color;
 	material.specularIntensity = 1;
 	material.specularPower = 8;
 
-	//engine3D_resourceLoader_loadMesh("tetrahedron.obj", &mesh);
+	//engine3D_mesh_initFromFile("tetrahedron.obj", &mesh);
 	engine3D_mesh_init(&mesh);
 	float fieldDepth = 10;
 	float fieldWidth = 10;

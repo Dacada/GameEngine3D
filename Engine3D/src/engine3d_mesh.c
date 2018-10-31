@@ -1,5 +1,6 @@
 #include <engine3D_mesh.h>
 #include <engine3D_vertex.h>
+#include <engine3D_resourceLoader.h>
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -34,6 +35,11 @@ engine3D_mesh_t * engine3D_mesh_init(engine3D_mesh_t * const mesh) {
 	glGenBuffers(1, &mesh->ibo);
 	mesh->len_vbo = 0;
 	mesh->len_ibo = 0;
+	return mesh;
+}
+
+engine3D_mesh_t *engine3D_mesh_initFromFile(const char *const filename, engine3D_mesh_t *const mesh) {
+	engine3D_resourceLoader_loadMesh(filename, mesh);
 	return mesh;
 }
 

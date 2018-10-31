@@ -19,6 +19,8 @@ typedef struct engine3D_mesh_t {
 // Takes pointer to mesh struct, initializes it, returns same pointer
 engine3D_mesh_t *engine3D_mesh_init(engine3D_mesh_t *const mesh);
 
+engine3D_mesh_t *engine3D_mesh_initFromFile(const char *const filename, engine3D_mesh_t *const mesh);
+
 // Create vbo for the vertices
 engine3D_mesh_t *engine3D_mesh_addVertices(engine3D_mesh_t *const mesh, engine3D_vertex_t vertices[], size_t vertices_len, unsigned int indices[], size_t indices_len, bool doCalcNormals);
 
