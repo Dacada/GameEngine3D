@@ -41,4 +41,4 @@ void engine3D_shader_setUniformVec3f(const char *const uniform, const engine3D_v
 
 void engine3D_shader_setUniformMat4f(const char *const uniform, const engine3D_matrix4f_t *const value, const engine3D_shader_t *const shader);
 
-#endif
+#endif /* ENGINE3D_SHADER_H */
