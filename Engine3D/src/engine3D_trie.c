@@ -16,7 +16,7 @@ void engine3D_trie_init(engine3D_trie_t *const trie) {
 void engine3D_trie_add(engine3D_trie_t *const trie, const char *const key, int value) {
 	if (*key == '\0') {
 		if (trie->hasValue) {
-			engine3D_util_bail("attempt to add repeated key to trie");
+			engine3D_util_quit("attempt to add repeated key to trie");
 		}
 		else {
 			trie->hasValue = true;
@@ -55,7 +55,7 @@ int engine3D_trie_get(const engine3D_trie_t *const trie, const char *const key) 
 			return trie->value;
 		}
 		else {
-			engine3D_util_bail("attempt to get non existing key from trie");
+			engine3D_util_quit("attempt to get non existing key from trie");
 		}
 	}
 	else {
@@ -69,7 +69,7 @@ int engine3D_trie_get(const engine3D_trie_t *const trie, const char *const key) 
 		}
 
 		if (!found) {
-			engine3D_util_bail("attempt to get non existing key from trie");
+			engine3D_util_quit("attempt to get non existing key from trie");
 		}
 
 		return engine3D_trie_get(trie->children + i, key + 1);

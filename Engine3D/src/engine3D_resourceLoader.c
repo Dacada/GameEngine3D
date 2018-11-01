@@ -28,14 +28,14 @@ char *engine3D_resourceLoader_loadShader(const char *const filename, char *const
 	FILE *f = fopen(filepath, "r");
 	if (f == NULL) {
 		perror("fopen");
-		engine3D_util_bail("failed to load shader");
+		engine3D_util_quit("failed to load shader");
 	}
 
 	size_t s = fread(text, sizeof(char), size, f);
 	int err;
 	if ((err = ferror(f)) != 0) {
 		engine3D_util_errPrintf("fread: error %d", err);
-		engine3D_util_bail("failed to load shader");
+		engine3D_util_quit("failed to load shader");
 	}
 	text[s] = '\0'; // Ensure it's null terminated
 
@@ -106,11 +106,11 @@ static float readNextFloat(char **ptr) {
 
 	if (errno != 0) {
 		perror("strtof");
-		engine3D_util_bail("attempt to load invalid .obj file (error reading float)");
+		engine3D_util_quit("attempt to load invalid .obj file (error reading float)");
 	}
 
 	if (*ptr == tmp) {
-		engine3D_util_bail("attempt to load invalid .obj file (could not find float)");
+		engine3D_util_quit("attempt to load invalid .obj file (could not find float)");
 	}
 
 	*ptr = tmp;
@@ -124,11 +124,11 @@ static long readNextLong(char **ptr) {
 
 	if (errno != 0) {
 		perror("strtol");
-		engine3D_util_bail("attempt to load invalid .obj file (error reading long)");
+		engine3D_util_quit("attempt to load invalid .obj file (error reading long)");
 	}
 
 	if (*ptr == tmp) {
-		engine3D_util_bail("attempt to load invalid .obj file (could not find long)");
+		engine3D_util_quit("attempt to load invalid .obj file (could not find long)");
 	}
 
 	*ptr = tmp;
@@ -170,7 +170,7 @@ static void readFaces(char *input, int faces[3][3], size_t iv, size_t itv, size_
 				lastIndex = inv;
 			}
 			else {
-				engine3D_util_bail("attempt to load invalid .obj file (too many items in face tuple)");
+				engine3D_util_quit("attempt to load invalid .obj file (too many items in face tuple)");
 			}
 
 			if (n > 0) {
@@ -180,11 +180,11 @@ static void readFaces(char *input, int faces[3][3], size_t iv, size_t itv, size_
 				n = lastIndex - (n + 1);
 			}
 			else {
-				engine3D_util_bail("attempt to load invalid .obj file (invalid index: 0)");
+				engine3D_util_quit("attempt to load invalid .obj file (invalid index: 0)");
 			}
 
-			if (n > INT_MAX) engine3D_util_bail("attempt to load invalid .obj file (index too positive)");
-			if (n < 0) engine3D_util_bail("attempt to load invalid .obj file (index too negative)");
+			if (n > INT_MAX) engine3D_util_quit("attempt to load invalid .obj file (index too positive)");
+			if (n < 0) engine3D_util_quit("attempt to load invalid .obj file (index too negative)");
 
 			faces[j][i] = (int)n;
 		}
@@ -288,13 +288,13 @@ void engine3D_resourceLoader_loadMesh(const char *const filename, engine3D_mesh_
 
 	size_t filenameLen = strlen(filepath);
 	if (filenameLen < 4 || strncmp(filepath + filenameLen - 4, ".obj", 4) != 0) {
-		engine3D_util_bail("attempt to load unsupported mesh file format (file name doesn't end with '.obj'");
+		engine3D_util_quit("attempt to load unsupported mesh file format (file name doesn't end with '.obj'");
 	}
 
 	FILE *f = fopen(filepath, "r");
 	if (f == NULL) {
 		perror("fopen");
-		engine3D_util_bail("failed to load mesh file");
+		engine3D_util_quit("failed to load mesh file");
 	}
 
 	int ret;
@@ -305,7 +305,7 @@ void engine3D_resourceLoader_loadMesh(const char *const filename, engine3D_mesh_
 
 		current = getNextToken(current, token, 256);
 		if (current == NULL) {
-			engine3D_util_bail("attempt to load invalid .obj file (invalid token)");
+			engine3D_util_quit("attempt to load invalid .obj file (invalid token)");
 		}
 
 		if (strncmp(token, "#", 2) == 0 || strncmp(token, "\n", 2) == 0) {
@@ -408,13 +408,13 @@ void engine3D_resourceLoader_loadMesh(const char *const filename, engine3D_mesh_
 	}
 
 	if (ret == -2) {
-		engine3D_util_bail("attempt to load invalid .obj file (file's lines detected as too long)");
+		engine3D_util_quit("attempt to load invalid .obj file (file's lines detected as too long)");
 	}
 	else {
 		int err = ferror(f);
 		if (err != 0) {
 			engine3D_util_errPrintf("reading file: error %d", err);
-			engine3D_util_bail("failed to load mesh file");
+			engine3D_util_quit("failed to load mesh file");
 		}
 	}
 
@@ -445,13 +445,13 @@ void engine3D_resourceLoader_loadTexture(const char *const filename, engine3D_te
 	if (fif == FIF_UNKNOWN)
 		fif = FreeImage_GetFIFFromFilename(filepath);
 	if (fif == FIF_UNKNOWN)
-		engine3D_util_bail("attempt to load texture of unknown image type");
+		engine3D_util_quit("attempt to load texture of unknown image type");
 
 	if (FreeImage_FIFSupportsReading(fif))
 		dib = FreeImage_Load(fif, filepath, 0);
 
 	if (!dib)
-		engine3D_util_bail("failed to load image for texture");
+		engine3D_util_quit("failed to load image for texture");
 
 	FIBITMAP *dib32 = FreeImage_ConvertTo32Bits(dib);
 	FreeImage_Unload(dib);
@@ -460,7 +460,7 @@ void engine3D_resourceLoader_loadTexture(const char *const filename, engine3D_te
 	width = FreeImage_GetWidth(dib32);
 	height = FreeImage_GetHeight(dib32);
 	if (bits == 0 || width == 0 || height == 0)
-		engine3D_util_bail("failed to load image data for texture");
+		engine3D_util_quit("failed to load image data for texture");
 
 	glGenTextures(1, &texture->id);
 	glBindTexture(GL_TEXTURE_2D, texture->id);

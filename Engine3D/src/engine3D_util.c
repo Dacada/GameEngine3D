@@ -12,6 +12,12 @@ void engine3D_util_bail(const char *const message) {
 	abort();
 }
 
+void engine3D_util_quit(const char *const message) {
+	fputs(message, stderr);
+	fputc('\n', stderr);
+	exit(EXIT_FAILURE);
+}
+
 void engine3D_util_reportGlError(void) {
 	GLenum error = glGetError();
 
@@ -56,6 +62,16 @@ void *engine3D_util_safeMalloc(size_t size) {
 		abort();
 	}
 	return ptr;
+}
+
+void *engine3D_util_safeCalloc(size_t nmemb, size_t size) {
+	void *newPtr = calloc(nmemb, size);
+	if (newPtr == NULL)
+	{
+		perror("calloc");
+		abort();
+	}
+	return newPtr;
 }
 
 void *engine3D_util_safeRealloc(void *ptr, size_t size) {
