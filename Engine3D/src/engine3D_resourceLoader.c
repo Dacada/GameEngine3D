@@ -318,7 +318,7 @@ void engine3D_resourceLoader_loadMesh(const char *const filename, engine3D_mesh_
 			coords[2] = readNextFloat(&current);
 			while (!isspace(*current) && *current != '\0') current++;
 			if (*current != '\0')
-				engine3D_util_errPrintf("reading .obj file: ignoring optional w element of vertex", token);
+				engine3D_util_errPrintf("reading .obj file: ignoring optional w element of vertex");
 
 			if (vsIndex >= vsCapacity) {
 				vsCapacity *= 2;
@@ -335,7 +335,7 @@ void engine3D_resourceLoader_loadMesh(const char *const filename, engine3D_mesh_
 			coords[1] = readNextFloat(&current);
 			while (!isspace(*current) && *current != '\0') current++;
 			if (*current != '\0')
-				engine3D_util_errPrintf("reading .obj file: ignoring optional w element of texture", token);
+				engine3D_util_errPrintf("reading .obj file: ignoring optional w element of texture");
 
 			if (vtsIndex >= vtsCapacity) {
 				vtsCapacity *= 2;

@@ -26,7 +26,7 @@ static void addProgram(const char *const text, engine3D_shader_t * const shader,
 	if (status == GL_FALSE) {
 		char infoLog[1024];
 		glGetShaderInfoLog(shaderId, 1024, NULL, infoLog);
-		engine3D_util_errPrintf(infoLog);
+		fputs(infoLog, stderr);
 		engine3D_util_quit("shader compilation failed");
 	}
 
@@ -90,7 +90,7 @@ void engine3D_shader_compile(const engine3D_shader_t * const shader) {
 	if (status == GL_FALSE) {
 		char infoLog[1024];
 		glGetProgramInfoLog(shader->program, 1024, NULL, infoLog);
-		engine3D_util_errPrintf(infoLog);
+		fputs(infoLog, stderr);
 		engine3D_util_quit("shader linking failed");
 	}
 
@@ -100,7 +100,7 @@ void engine3D_shader_compile(const engine3D_shader_t * const shader) {
 	if (status == GL_FALSE) {
 		char infoLog[1024];
 		glGetProgramInfoLog(shader->program, 1024, NULL, infoLog);
-		engine3D_util_errPrintf(infoLog);
+		fputs(infoLog, stderr);
 		engine3D_util_quit("shader validation failed");
 	}
 }
