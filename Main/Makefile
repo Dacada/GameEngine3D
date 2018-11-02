@@ -11,7 +11,7 @@ all: CFLAGS += -O3
 all: | release
 all: release/main
 
-dbg: CFLAGS += -Og
+dbg: CFLAGS += -Og -DDEBUG -fsanitize=address -fsanitize=undefined -fsanitize=leak -fno-omit-frame-pointer
 dbg: | debug
 dbg: debug/main
 

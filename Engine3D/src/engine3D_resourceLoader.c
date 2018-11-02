@@ -281,7 +281,7 @@ void engine3D_resourceLoader_loadMesh(const char *const filename, engine3D_mesh_
 	engine3D_growingArray_init(&indices, sizeof(unsigned int), 4);
 	engine3D_growingArray_init(&vs, sizeof(engine3D_vector3f_t), 4);
 	engine3D_growingArray_init(&vts, sizeof(engine3D_vector2f_t), 4);
-	engine3D_growingArray_init(&vns, sizeof(engine3D_vector2f_t), 4);
+	engine3D_growingArray_init(&vns, sizeof(engine3D_vector3f_t), 4);
 
 	size_t filenameLen = strlen(filepath);
 	if (filenameLen < 4 || strncmp(filepath + filenameLen - 4, ".obj", 4) != 0) {
@@ -348,7 +348,7 @@ void engine3D_resourceLoader_loadMesh(const char *const filename, engine3D_mesh_
 		else if (strncmp(token, "f", 2) == 0) {
 			int faces[3][3];
 			readFaces(current, faces, engine3D_growingArray_length(&vs), engine3D_growingArray_length(&vts), engine3D_growingArray_length(&vns));
-			
+
 			for (int i = 0; i < 3; i++)
 			{
 				size_t seenIndex;

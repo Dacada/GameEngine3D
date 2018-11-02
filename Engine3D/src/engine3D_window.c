@@ -150,7 +150,7 @@ void engine3D_window_update(void) {
 }
 
 bool engine3D_window_closeRequested(void) {
-	return glfwWindowShouldClose(window) == 1;
+	return glfwWindowShouldClose(window);
 }
 
 void engine3D_window_getSize(int *const width, int *const height) {

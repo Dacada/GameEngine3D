@@ -40,6 +40,6 @@ release:
 	mkdir -p release
 
 debug/%.o: $(SRCDIR)/%.c
-	$(CC) -c -o $@ $< -DDEBUG $(CFLAGS)
+	$(CC) -c -o $@ $< $(CFLAGS)
 release/%.o: $(SRCDIR)/%.c
 	$(CC) -c -o $@ $< $(CFLAGS)
