@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\engine3D_basicShader.c" />
     <ClCompile Include="src\engine3d_camera.c" />
+    <ClCompile Include="src\engine3D_growingArray.c" />
     <ClCompile Include="src\engine3D_material.c" />
     <ClCompile Include="src\engine3d_mesh.c" />
     <ClCompile Include="src\engine3D_phongShader.c" />
@@ -41,6 +42,7 @@
   <ItemGroup>
     <ClInclude Include="include\engine3D_basicShader.h" />
     <ClInclude Include="include\engine3D_camera.h" />
+    <ClInclude Include="include\engine3D_growingArray.h" />
     <ClInclude Include="include\engine3D_material.h" />
     <ClInclude Include="include\engine3d_mesh.h" />
     <ClInclude Include="include\engine3D_phongShader.h" />

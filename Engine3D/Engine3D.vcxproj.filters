@@ -69,6 +69,9 @@
     <ClCompile Include="src\engine3D_phongShader.c">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
+    <ClCompile Include="src\engine3D_growingArray.c">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\engine3D_util.h">
@@ -123,6 +126,9 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="include\engine3D_phongShader.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="include\engine3D_growingArray.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
