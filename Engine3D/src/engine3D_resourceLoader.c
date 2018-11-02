@@ -1,5 +1,6 @@
 #include <engine3D_resourceLoader.h>
 #include <engine3D_util.h>
+#include <engine3D_growingArray.h>
 #include <engine3D_mesh.h>
 #include <engine3D_vertex.h>
 
@@ -275,16 +276,12 @@ void engine3D_resourceLoader_loadMesh(const char *const filename, engine3D_mesh_
 
 	initSeenIndex();
 
-	size_t verticesCapacity = 4, indicesCapacity = 4;
-	size_t verticesIndex = 0, indicesIndex = 0;
-	engine3D_vertex_t *vertices = engine3D_util_safeMalloc(sizeof(engine3D_vertex_t) * verticesCapacity);
-	unsigned int *indices = engine3D_util_safeMalloc(sizeof(unsigned int) * indicesCapacity);
-
-	size_t vsCapacity = 4, vtsCapacity = 4, vnsCapacity = 4;
-	size_t vsIndex = 0, vtsIndex = 0, vnsIndex = 0;
-	engine3D_vector3f_t *vs = engine3D_util_safeMalloc(sizeof(engine3D_vector3f_t) * vsCapacity);
-	engine3D_vector2f_t *vts = engine3D_util_safeMalloc(sizeof(engine3D_vector2f_t) * vsCapacity);
-	engine3D_vector3f_t *vns = engine3D_util_safeMalloc(sizeof(engine3D_vector3f_t) * vsCapacity);
+	engine3D_growingArray_t vertices, indices, vs, vts, vns;
+	engine3D_growingArray_init(&vertices, sizeof(engine3D_vertex_t), 4);
+	engine3D_growingArray_init(&indices, sizeof(unsigned int), 4);
+	engine3D_growingArray_init(&vs, sizeof(engine3D_vector3f_t), 4);
+	engine3D_growingArray_init(&vts, sizeof(engine3D_vector2f_t), 4);
+	engine3D_growingArray_init(&vns, sizeof(engine3D_vector2f_t), 4);
 
 	size_t filenameLen = strlen(filepath);
 	if (filenameLen < 4 || strncmp(filepath + filenameLen - 4, ".obj", 4) != 0) {
@@ -320,14 +317,10 @@ void engine3D_resourceLoader_loadMesh(const char *const filename, engine3D_mesh_
 			if (*current != '\0')
 				engine3D_util_errPrintf("reading .obj file: ignoring optional w element of vertex", token);
 
-			if (vsIndex >= vsCapacity) {
-				vsCapacity *= 2;
-				vs = engine3D_util_safeRealloc(vs, sizeof(engine3D_vector3f_t) * vsCapacity);
-			}
-			vs[vsIndex].x = coords[0];
-			vs[vsIndex].y = coords[1];
-			vs[vsIndex].z = coords[2];
-			vsIndex++;
+			engine3D_vector3f_t *currentVs = engine3D_growingArray_add(&vs);
+			currentVs->x = coords[0];
+			currentVs->y = coords[1];
+			currentVs->z = coords[2];
 		}
 		else if (strncmp(token, "vt", 3) == 0) {
 			float coords[2];
@@ -337,13 +330,9 @@ void engine3D_resourceLoader_loadMesh(const char *const filename, engine3D_mesh_
 			if (*current != '\0')
 				engine3D_util_errPrintf("reading .obj file: ignoring optional w element of texture", token);
 
-			if (vtsIndex >= vtsCapacity) {
-				vtsCapacity *= 2;
-				vts = engine3D_util_safeRealloc(vts, sizeof(engine3D_vector2f_t) * vtsCapacity);
-			}
-			vts[vtsIndex].x = coords[0];
-			vts[vtsIndex].y = coords[1];
-			vtsIndex++;
+			engine3D_vector2f_t *currentVts = engine3D_growingArray_add(&vts);
+			currentVts->x = coords[0];
+			currentVts->y = coords[1];
 		}
 		else if (strncmp(token, "vn", 3) == 0) {
 			float coords[3];
@@ -351,26 +340,15 @@ void engine3D_resourceLoader_loadMesh(const char *const filename, engine3D_mesh_
 			coords[1] = readNextFloat(&current);
 			coords[2] = readNextFloat(&current);
 
-			if (vnsIndex >= vnsCapacity) {
-				vnsCapacity *= 2;
-				vns = engine3D_util_safeRealloc(vns, sizeof(engine3D_vertex_t) * vnsCapacity);
-			}
-			vns[vnsIndex].x = coords[0];
-			vns[vnsIndex].y = coords[1];
-			vns[vnsIndex].z = coords[2];
-			vnsIndex++;
+			engine3D_vector3f_t *currentVns = engine3D_growingArray_add(&vns);
+			currentVns->x = coords[0];
+			currentVns->y = coords[1];
+			currentVns->z = coords[2];
 		}
 		else if (strncmp(token, "f", 2) == 0) {
 			int faces[3][3];
-			readFaces(current, faces, vsIndex, vtsIndex, vnsIndex);
-
-			if (indicesIndex + 2 >= indicesCapacity) {
-				while (indicesIndex + 2 >= indicesCapacity) {
-					indicesCapacity *= 2;
-				}
-				indices = engine3D_util_safeRealloc(indices, sizeof(unsigned int) * indicesCapacity);
-			}
-
+			readFaces(current, faces, engine3D_growingArray_length(&vs), engine3D_growingArray_length(&vts), engine3D_growingArray_length(&vns));
+			
 			for (int i = 0; i < 3; i++)
 			{
 				size_t seenIndex;
@@ -378,28 +356,27 @@ void engine3D_resourceLoader_loadMesh(const char *const filename, engine3D_mesh_
 				if (!hasBeenSeen) {
 					seenIndex = setSeenIndex(faces[i]);
 
-					if (verticesIndex + 1 >= verticesCapacity) {
-						verticesCapacity *= 2;
-						vertices = engine3D_util_safeRealloc(vertices, sizeof(engine3D_vertex_t) * verticesCapacity);
-					}
+					engine3D_vertex_t *currentVertex = engine3D_growingArray_add(&vertices);
 
-					vertices[verticesIndex].vec.x = vs[faces[i][0]].x;
-					vertices[verticesIndex].vec.y = vs[faces[i][0]].y;
-					vertices[verticesIndex].vec.z = vs[faces[i][0]].z;
+					engine3D_vector3f_t *vsArray = engine3D_growingArray_finish(&vs, false);
+					currentVertex->vec.x = vsArray[faces[i][0]].x;
+					currentVertex->vec.y = vsArray[faces[i][0]].y;
+					currentVertex->vec.z = vsArray[faces[i][0]].z;
 					if (faces[i][1] >= 0) {
-						vertices[verticesIndex].texCoord.x = vts[faces[i][1]].x;
-						vertices[verticesIndex].texCoord.y = vts[faces[i][1]].y;
+						engine3D_vector2f_t *vtsArray = engine3D_growingArray_finish(&vts, false);
+						currentVertex->texCoord.x = vtsArray[faces[i][1]].x;
+						currentVertex->texCoord.y = vtsArray[faces[i][1]].y;
 					}
 					if (faces[i][2] >= 0) {
-						vertices[verticesIndex].normal.x = vns[faces[i][2]].x;
-						vertices[verticesIndex].normal.y = vns[faces[i][2]].y;
-						vertices[verticesIndex].normal.z = vns[faces[i][2]].z;
+						engine3D_vector3f_t *vnsArray = engine3D_growingArray_finish(&vns, false);
+						currentVertex->normal.x = vnsArray[faces[i][2]].x;
+						currentVertex->normal.y = vnsArray[faces[i][2]].y;
+						currentVertex->normal.z = vnsArray[faces[i][2]].z;
 					}
-
-					verticesIndex++;
 				}
 
-				indices[indicesIndex++] = seenIndex;
+				unsigned int *currentIndex = engine3D_growingArray_add(&indices);
+				*currentIndex = seenIndex;
 			}
 		}
 		else {
@@ -421,13 +398,13 @@ void engine3D_resourceLoader_loadMesh(const char *const filename, engine3D_mesh_
 	fclose(f);
 
 	engine3D_mesh_init(mesh);
-	engine3D_mesh_addVertices(mesh, vertices, verticesIndex, indices, indicesIndex, false);
+	engine3D_mesh_addVertices(mesh, engine3D_growingArray_finish(&vertices, false), engine3D_growingArray_length(&vertices), engine3D_growingArray_finish(&indices, false), engine3D_growingArray_length(&indices), false);
 
-	free(vs);
-	free(vts);
-	free(vns);
-	free(vertices);
-	free(indices);
+	engine3D_growingArray_discard(&vs);
+	engine3D_growingArray_discard(&vts);
+	engine3D_growingArray_discard(&vns);
+	engine3D_growingArray_discard(&vertices);
+	engine3D_growingArray_discard(&indices);
 }
 
 void engine3D_resourceLoader_loadTexture(const char *const filename, engine3D_texture_t *const texture) {

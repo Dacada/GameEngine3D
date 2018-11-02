@@ -38,7 +38,8 @@ static void init(void) {
 	material.specularIntensity = 1;
 	material.specularPower = 8;
 
-	//engine3D_mesh_initFromFile("tetrahedron.obj", &mesh);
+	engine3D_mesh_t mesh2;
+	engine3D_mesh_initFromFile("tetrahedron.obj", &mesh2);
 	engine3D_mesh_init(&mesh);
 	float fieldDepth = 10;
 	float fieldWidth = 10;
