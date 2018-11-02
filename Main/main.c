@@ -54,7 +54,7 @@ static void init(void) {
 	engine3D_transform_width = (float)engine3D_width;
 	engine3D_transform_height = (float)engine3D_height;
 	engine3D_transform_fov = 70.0f;
-	engine3D_transform_camera = malloc(sizeof(engine3D_camera_t));
+	engine3D_transform_camera = engine3D_util_safeMalloc(sizeof(engine3D_camera_t));
 	engine3D_camera_init(engine3D_transform_camera);
 
 	engine3D_phongShader_ambientLight.x = 0.1f;
