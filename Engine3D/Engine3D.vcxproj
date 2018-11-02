@@ -30,10 +30,10 @@
     <ClCompile Include="src\engine3D_main.c" />
     <ClCompile Include="src\engine3D_resourceLoader.c" />
     <ClCompile Include="src\engine3D_shader.c" />
+    <ClCompile Include="src\engine3D_strToIntMap.c" />
     <ClCompile Include="src\engine3D_texture.c" />
     <ClCompile Include="src\engine3D_time.c" />
     <ClCompile Include="src\engine3D_transform.c" />
-    <ClCompile Include="src\engine3D_trie.c" />
     <ClCompile Include="src\engine3D_util.c" />
     <ClCompile Include="src\engine3D_vector.c" />
     <ClCompile Include="src\engine3D_vertex.c" />
@@ -54,11 +54,11 @@
     <ClInclude Include="include\engine3D_texture.h" />
     <ClInclude Include="include\engine3D_time.h" />
     <ClInclude Include="include\engine3D_transform.h" />
-    <ClInclude Include="include\engine3D_trie.h" />
     <ClInclude Include="include\engine3D_util.h" />
     <ClInclude Include="include\engine3D_vector.h" />
     <ClInclude Include="include\engine3D_vertex.h" />
     <ClInclude Include="include\engine3D_window.h" />
+    <ClInclude Include="include\engine3D_strToIntMap.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{A4835B0F-C3E6-4C24-B2ED-6D8B346F679C}</ProjectGuid>

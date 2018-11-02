@@ -2,7 +2,7 @@
 #define ENGINE3D_SHADER_H
 
 #include "engine3D_vector.h"
-#include "engine3D_trie.h"
+#include "engine3D_strToIntMap.h"
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -10,7 +10,7 @@
 
 typedef struct engine3D_shader_t {
 	GLuint program;
-	engine3D_trie_t *uniforms;
+	engine3D_strToIntMap_t *uniforms;
 } engine3D_shader_t;
 
 engine3D_shader_t *engine3D_shader_init(engine3D_shader_t *const shader);

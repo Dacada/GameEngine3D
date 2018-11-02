@@ -35,8 +35,8 @@ static void addProgram(const char *const text, engine3D_shader_t * const shader,
 
 
 engine3D_shader_t *engine3D_shader_init(engine3D_shader_t * const shader) {
-	shader->uniforms = engine3D_trie_new();
-	engine3D_trie_init(shader->uniforms);
+	shader->uniforms = engine3D_strToIntMap_new();
+	engine3D_strToIntMap_init(shader->uniforms);
 
 	shader->program = glCreateProgram();
 	if (shader->program == 0)
@@ -116,25 +116,25 @@ void engine3D_shader_addUniform(const char *const uniform, const engine3D_shader
 		engine3D_util_bail("could not find uniform location");
 	}
 
-	engine3D_trie_add(shader->uniforms, uniform, uniformLocation);
+	engine3D_strToIntMap_add(shader->uniforms, uniform, uniformLocation);
 }
 
 void engine3D_shader_setUniformi(const char * const uniform, const int value, const engine3D_shader_t *const shader) {
-	int location = engine3D_trie_get(shader->uniforms, uniform);
+	int location = engine3D_strToIntMap_get(shader->uniforms, uniform);
 	glUniform1i(location, value);
 }
 
 void engine3D_shader_setUniformf(const char * const uniform, const float value, const engine3D_shader_t *const shader) {
-	int location = engine3D_trie_get(shader->uniforms, uniform);
+	int location = engine3D_strToIntMap_get(shader->uniforms, uniform);
 	glUniform1f(location, value);
 }
 
 void engine3D_shader_setUniformVec3f(const char *const uniform, const engine3D_vector3f_t *const value, const engine3D_shader_t *const shader) {
-	int location = engine3D_trie_get(shader->uniforms, uniform);
+	int location = engine3D_strToIntMap_get(shader->uniforms, uniform);
 	glUniform3f(location, value->x, value->y, value->z);
 }
 
 void engine3D_shader_setUniformMat4f(const char *const uniform, const engine3D_matrix4f_t *const value, const engine3D_shader_t *const shader) {
-	int location = engine3D_trie_get(shader->uniforms, uniform);
+	int location = engine3D_strToIntMap_get(shader->uniforms, uniform);
 	glUniformMatrix4fv(location, 1, GL_TRUE, (float*)value->mat);
 }
