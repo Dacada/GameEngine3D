@@ -54,6 +54,31 @@ int engine3D_util_errPrintf(const char *format, ...) {
 	return ret;
 }
 
+int engine3D_util_debugPrintf(const char *format, ...) {
+#ifdef DEBUG
+	va_list args;
+	va_start(args, format);
+	int ret = vfprintf(stderr, format, args);
+	ret += fprintf(stderr, "\n");
+	va_end(args);
+	return ret;
+#else
+	return 0;
+#endif
+}
+
+int engine3D_util_errPrint(const char *string) {
+	return fputs(string, stderr);
+}
+
+int engine3D_util_debugPrint(const char *string) {
+#ifdef DEBUG
+	return fputs(string, stderr);
+#else
+	return 0;
+#endif
+}
+
 void *engine3D_util_safeMalloc(size_t size) {
 	void *ptr = malloc(size);
 	if (ptr == NULL)

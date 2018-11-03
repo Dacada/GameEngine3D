@@ -20,9 +20,14 @@ void engine3D_util_reportGlError(void);
 
 #ifdef __GNUC__
 int engine3D_util_errPrintf(const char *format, ...) __attribute__((format(printf, 1, 2)));;
+int engine3D_util_debugPrintf(const char *format, ...) __attribute__((format(printf, 1, 2)));;
 #else
 int engine3D_util_errPrintf(const char *format, ...);
+int engine3D_util_debugPrintf(const char *format, ...);
 #endif
+
+int engine3D_util_errPrint(const char *string);
+int engine3D_util_debugPrint(const char *string);
 
 #ifdef __GNUC__
 void *engine3D_util_safeMalloc(size_t size) __attribute__((malloc, alloc_size(1)));

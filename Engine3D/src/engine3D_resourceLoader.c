@@ -315,7 +315,7 @@ void engine3D_resourceLoader_loadMesh(const char *const filename, engine3D_mesh_
 			coords[2] = readNextFloat(&current);
 			while (!isspace(*current) && *current != '\0') current++;
 			if (*current != '\0')
-				engine3D_util_errPrintf("reading .obj file: ignoring optional w element of vertex");
+				engine3D_util_debugPrintf("reading .obj file: ignoring optional w element of vertex");
 
 			engine3D_vector3f_t *currentVs = engine3D_growingArray_add(&vs);
 			currentVs->x = coords[0];
@@ -328,7 +328,7 @@ void engine3D_resourceLoader_loadMesh(const char *const filename, engine3D_mesh_
 			coords[1] = readNextFloat(&current);
 			while (!isspace(*current) && *current != '\0') current++;
 			if (*current != '\0')
-				engine3D_util_errPrintf("reading .obj file: ignoring optional w element of texture");
+				engine3D_util_debugPrintf("reading .obj file: ignoring optional w element of texture");
 
 			engine3D_vector2f_t *currentVts = engine3D_growingArray_add(&vts);
 			currentVts->x = coords[0];
@@ -380,7 +380,7 @@ void engine3D_resourceLoader_loadMesh(const char *const filename, engine3D_mesh_
 			}
 		}
 		else {
-			engine3D_util_errPrintf("reading .obj file: ignoring token: %s", token);
+			engine3D_util_debugPrintf("reading .obj file: ignoring token: %s", token);
 		}
 	}
 
