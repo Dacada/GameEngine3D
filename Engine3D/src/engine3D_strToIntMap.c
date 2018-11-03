@@ -8,7 +8,7 @@ static size_t djb2_hash_str(const char *str) {
 	size_t hash = 5381;
 	int c;
 
-	while (c = *str++)
+	while ((c = *str++))
 		hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
 
 	return hash;
@@ -28,7 +28,7 @@ void engine3D_strToIntMap_add(engine3D_strToIntMap_t *const map, const char *con
 	size_t hash = djb2_hash_str(key) % ENGINE3D_STRTOINTMAP_HASHTABLE_ELEMENTS;
 	engine3D_growingArray_t *bucketsArray = map->buckets[hash];
 	if (bucketsArray == NULL) {
-		bucketsArray = malloc(sizeof(engine3D_growingArray_t));
+		map->buckets[hash] = bucketsArray = malloc(sizeof(engine3D_growingArray_t));
 		engine3D_growingArray_init(bucketsArray, sizeof(engine3D_strToIntMapBucket_t), 1);
 	}
 #ifdef DEBUG

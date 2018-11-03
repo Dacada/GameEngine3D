@@ -41,7 +41,7 @@ public:
 		free(map);
 	}
 
-	TEST_METHOD(GrowingArrayTest2) {
+	TEST_METHOD(StrToIntMapTest2) {
 		engine3D_strToIntMap_t *map = engine3D_strToIntMap_new();
 		engine3D_strToIntMap_init(map);
 		engine3D_strToIntMap_add(map, "aat", 1);
