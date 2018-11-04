@@ -22,7 +22,7 @@ engine3D_strToIntMap_t *engine3D_strToIntMap_new(void);
 
 void engine3D_strToIntMap_init(engine3D_strToIntMap_t *const map);
 
-void engine3D_strToIntMap_add(engine3D_strToIntMap_t *const map, const char *const key, int value);
+void engine3D_strToIntMap_add(engine3D_strToIntMap_t *const map, const char *const key, const int value);
 
 int engine3D_strToIntMap_get(const engine3D_strToIntMap_t *const map, const char *const key);
 

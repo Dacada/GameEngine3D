@@ -37,7 +37,7 @@ void engine3D_transform_getProjectedTransformation(const engine3D_transform_t *c
 
 	engine3D_transform_getTransformation(transform, transformationMatrix);
 	engine3D_matrix4f_setProjection(&projectionMatrix, engine3D_transform_zNear, engine3D_transform_zFar, engine3D_transform_width, engine3D_transform_height, engine3D_transform_fov);
-	engine3D_matrix4f_setCamera(&cameraRotationMatrix, &engine3D_transform_camera->forward, &engine3D_transform_camera->up);
+	engine3D_matrix4f_setCamera(&cameraRotationMatrix, engine3D_transform_camera->forward, engine3D_transform_camera->up);
 	engine3D_matrix4f_setTranslation(&cameraTranslationMatrix, -engine3D_transform_camera->pos.x, -engine3D_transform_camera->pos.y, -engine3D_transform_camera->pos.z);
 
 	engine3D_matrix4f_mul(&cameraTranslationMatrix, transformationMatrix, &tmp1);

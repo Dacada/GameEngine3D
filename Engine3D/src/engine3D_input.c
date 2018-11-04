@@ -84,7 +84,7 @@ void engine3D_input_setMousePosition(const engine3D_vector2f_t *const position) 
 	glfwSetCursorPos(engine3D_input_window, position->x, position->y);
 }
 
-void engine3D_input_setCursor(engine3D_input_cursorMode mode) {
+void engine3D_input_setCursor(const engine3D_input_cursorMode mode) {
 	switch (mode)
 	{
 	case ENGINE3D_CURSOR_ENABLED:

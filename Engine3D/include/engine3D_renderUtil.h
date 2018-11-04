@@ -7,9 +7,9 @@
 
 void engine3D_renderUtil_clearScreen(void);
 
-void engine3D_renderUtil_setTextures(bool enabled);
+void engine3D_renderUtil_setTextures(const bool enabled);
 
-void engine3D_renderUtils_setClearColor(const engine3D_vector3f_t *const color);
+void engine3D_renderUtils_setClearColor(const engine3D_vector3f_t color);
 
 void engine3D_renderUtil_initGraphics(void);
 

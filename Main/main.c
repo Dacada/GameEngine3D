@@ -34,7 +34,7 @@ static void init(void) {
 	color.x = 1; color.y = 1; color.z = 1;
 	texture = engine3D_texture_loadFromFile("test.png");
 	material.texture = &texture;
-	material.color = &color;
+	material.color = color;
 	material.specularIntensity = 1;
 	material.specularPower = 8;
 
@@ -140,26 +140,26 @@ static void cameraInput(float delta) {
 	}
 
 	if (engine3D_input_getKey(ENGINE3D_KEY_W)) {
-		engine3D_camera_move(engine3D_transform_camera, &engine3D_transform_camera->forward, movAmt);
+		engine3D_camera_move(engine3D_transform_camera, engine3D_transform_camera->forward, movAmt);
 	}
 	if (engine3D_input_getKey(ENGINE3D_KEY_S)) {
-		engine3D_camera_move(engine3D_transform_camera, &engine3D_transform_camera->forward, -movAmt);
+		engine3D_camera_move(engine3D_transform_camera, engine3D_transform_camera->forward, -movAmt);
 	}
 	if (engine3D_input_getKey(ENGINE3D_KEY_A)) {
 		engine3D_vector3f_t vec;
 		engine3D_camera_left(engine3D_transform_camera, &vec);
-		engine3D_camera_move(engine3D_transform_camera, &vec, movAmt);
+		engine3D_camera_move(engine3D_transform_camera, vec, movAmt);
 	}
 	if (engine3D_input_getKey(ENGINE3D_KEY_D)) {
 		engine3D_vector3f_t vec;
 		engine3D_camera_right(engine3D_transform_camera, &vec);
-		engine3D_camera_move(engine3D_transform_camera, &vec, movAmt);
+		engine3D_camera_move(engine3D_transform_camera, vec, movAmt);
 	}
 
 	if (movingCamera) {
 		engine3D_vector2f_t pos, deltaPos;
 		engine3D_input_getMousePosition(&pos);
-		engine3D_vector2f_sub(&pos, &centerPosition, &deltaPos);
+		deltaPos = engine3D_vector2f_sub(pos, centerPosition);
 
 		if (deltaPos.x != 0)
 		{
@@ -207,10 +207,7 @@ static void update(void) {
 }
 
 static void render(void) {
-	engine3D_vector3f_t v1, v2;
-	engine3D_vector3f_divf(&engine3D_transform_camera->pos, 2048, &v1);
-	engine3D_vector3f_abs(&v1, &v2);
-	engine3D_renderUtils_setClearColor(&v2);
+	engine3D_renderUtils_setClearColor(engine3D_vector3f_abs(engine3D_vector3f_divf(engine3D_transform_camera->pos, 2048)));
 
 	engine3D_shader_bind((engine3D_shader_t *)&shader);
 

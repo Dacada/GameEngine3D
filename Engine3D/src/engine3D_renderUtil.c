@@ -11,15 +11,15 @@ void engine3D_renderUtil_clearScreen(void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void engine3D_renderUtil_setTextures(bool enabled) {
+void engine3D_renderUtil_setTextures(const bool enabled) {
 	if (enabled)
 		glEnable(GL_TEXTURE_2D);
 	else
 		glDisable(GL_TEXTURE_2D);
 }
 
-void engine3D_renderUtils_setClearColor(const engine3D_vector3f_t *const color) {
-	glClearColor(color->x, color->y, color->z, 1);
+void engine3D_renderUtils_setClearColor(const engine3D_vector3f_t color) {
+	glClearColor(color.x, color.y, color.z, 1);
 }
 
 void engine3D_renderUtil_initGraphics(void) {

@@ -79,7 +79,7 @@ int engine3D_util_debugPrint(const char *string) {
 #endif
 }
 
-void *engine3D_util_safeMalloc(size_t size) {
+void *engine3D_util_safeMalloc(const size_t size) {
 	void *ptr = malloc(size);
 	if (ptr == NULL)
 	{
@@ -89,7 +89,7 @@ void *engine3D_util_safeMalloc(size_t size) {
 	return ptr;
 }
 
-void *engine3D_util_safeCalloc(size_t nmemb, size_t size) {
+void *engine3D_util_safeCalloc(const size_t nmemb, const size_t size) {
 	void *newPtr = calloc(nmemb, size);
 	if (newPtr == NULL)
 	{
@@ -99,7 +99,7 @@ void *engine3D_util_safeCalloc(size_t nmemb, size_t size) {
 	return newPtr;
 }
 
-void *engine3D_util_safeRealloc(void *ptr, size_t size) {
+void *engine3D_util_safeRealloc(void *ptr, const size_t size) {
 	void *newPtr = realloc(ptr, size);
 	if (newPtr == NULL)
 	{

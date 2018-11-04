@@ -37,7 +37,7 @@ void engine3D_shader_setUniformi(const char *const uniform, const int value, con
 
 void engine3D_shader_setUniformf(const char *const uniform, const float value, const engine3D_shader_t *const shader);
 
-void engine3D_shader_setUniformVec3f(const char *const uniform, const engine3D_vector3f_t *const value, const engine3D_shader_t *const shader);
+void engine3D_shader_setUniformVec3f(const char *const uniform, const engine3D_vector3f_t value, const engine3D_shader_t *const shader);
 
 void engine3D_shader_setUniformMat4f(const char *const uniform, const engine3D_matrix4f_t *const value, const engine3D_shader_t *const shader);
 

@@ -17,7 +17,7 @@ public:
 		engine3D_vector2f_t v;
 		v.x = 3;
 		v.y = 4;
-		float r = engine3D_vector2f_length(&v);
+		float r = engine3D_vector2f_length(v);
 		Assert::AreEqual(5.0f, r);
 	}
 
@@ -27,7 +27,7 @@ public:
 		v1.y = 2;
 		v2.x = 4;
 		v2.y = 8;
-		float r = engine3D_vector2f_dot(&v1, &v2);
+		float r = engine3D_vector2f_dot(v1, v2);
 		Assert::AreEqual(20.0f, r);
 	}
 
@@ -44,7 +44,7 @@ public:
 		engine3D_vector2f_t v, r;
 		v.x = 1;
 		v.y = 0;
-		engine3D_vector2f_rotateDeg(&v, 45, &r);
+		r = engine3D_vector2f_rotateDeg(v, 45);
 		Assert::AreEqual(0.707f, r.x, 0.001f);
 		Assert::AreEqual(0.707f, r.y, 0.001f);
 	}
@@ -55,7 +55,7 @@ public:
 		v1.y = 5;
 		v2.x = 8;
 		v2.y = 2;
-		engine3D_vector2f_add(&v1, &v2, &r);
+		r = engine3D_vector2f_add(v1, v2);
 		Assert::AreEqual(12.0f, r.x);
 		Assert::AreEqual(7.0f, r.y);
 	}
@@ -64,7 +64,7 @@ public:
 		engine3D_vector2f_t v, r;
 		v.x = 4;
 		v.y = 5;
-		engine3D_vector2f_addf(&v, 3, &r);
+		r = engine3D_vector2f_addf(v, 3);
 		Assert::AreEqual(7.0f, r.x);
 		Assert::AreEqual(8.0f, r.y);
 	}
@@ -75,7 +75,7 @@ public:
 		v1.y = 5;
 		v2.x = 8;
 		v2.y = 2;
-		engine3D_vector2f_sub(&v1, &v2, &r);
+		r = engine3D_vector2f_sub(v1, v2);
 		Assert::AreEqual(-4.0f, r.x);
 		Assert::AreEqual(3.0f, r.y);
 	}
@@ -84,7 +84,7 @@ public:
 		engine3D_vector2f_t v, r;
 		v.x = 4;
 		v.y = 5;
-		engine3D_vector2f_subf(&v, 3, &r);
+		r = engine3D_vector2f_subf(v, 3);
 		Assert::AreEqual(1.0f, r.x);
 		Assert::AreEqual(2.0f, r.y);
 	}
@@ -95,7 +95,7 @@ public:
 		v1.y = 5;
 		v2.x = 8;
 		v2.y = 2;
-		engine3D_vector2f_mul(&v1, &v2, &r);
+		r = engine3D_vector2f_mul(v1, v2);
 		Assert::AreEqual(32.0f, r.x);
 		Assert::AreEqual(10.0f, r.y);
 	}
@@ -104,7 +104,7 @@ public:
 		engine3D_vector2f_t v, r;
 		v.x = 4;
 		v.y = 5;
-		engine3D_vector2f_mulf(&v, 3, &r);
+		r = engine3D_vector2f_mulf(v, 3);
 		Assert::AreEqual(12.0f, r.x);
 		Assert::AreEqual(15.0f, r.y);
 	}
@@ -115,7 +115,7 @@ public:
 		v1.y = 5;
 		v2.x = 8;
 		v2.y = 2;
-		engine3D_vector2f_div(&v1, &v2, &r);
+		r = engine3D_vector2f_div(v1, v2);
 		Assert::AreEqual(0.5f, r.x);
 		Assert::AreEqual(2.5f, r.y);
 	}
@@ -124,7 +124,7 @@ public:
 		engine3D_vector2f_t v, r;
 		v.x = 4;
 		v.y = 5;
-		engine3D_vector2f_divf(&v, 3, &r);
+		r = engine3D_vector2f_divf(v, 3);
 		Assert::AreEqual(1.3f, r.x, 0.1f);
 		Assert::AreEqual(1.6f, r.y, 0.1f);
 	}
@@ -139,7 +139,7 @@ public:
 		v2.x = 4;
 		v2.y = 8;
 		v2.z = 1;
-		float r = engine3D_vector3f_dot(&v1, &v2);
+		float r = engine3D_vector3f_dot(v1, v2);
 		Assert::AreEqual(15.0f, r);
 	}
 
@@ -166,7 +166,7 @@ public:
 		v2.x = 4;
 		v2.y = 9;
 		v2.z = 2;
-		engine3D_vector3f_cross(&v1, &v2, &r);
+		r = engine3D_vector3f_cross(v1, v2);
 		Assert::AreEqual(-15.0f, r.x);
 		Assert::AreEqual(-2.0f, r.y);
 		Assert::AreEqual(39.0f, r.z);
@@ -180,7 +180,7 @@ public:
 		v2.x = 8;
 		v2.y = 2;
 		v2.z = 1;
-		engine3D_vector3f_add(&v1, &v2, &r);
+		r = engine3D_vector3f_add(v1, v2);
 		Assert::AreEqual(12.0f, r.x);
 		Assert::AreEqual(7.0f, r.y);
 		Assert::AreEqual(8.0f, r.z);
@@ -191,7 +191,7 @@ public:
 		v.x = 4;
 		v.y = 5;
 		v.z = 7;
-		engine3D_vector3f_addf(&v, 3, &r);
+		r = engine3D_vector3f_addf(v, 3);
 		Assert::AreEqual(7.0f, r.x);
 		Assert::AreEqual(8.0f, r.y);
 		Assert::AreEqual(10.0f, r.z);
@@ -205,7 +205,7 @@ public:
 		v2.x = 8;
 		v2.y = 2;
 		v2.z = 1;
-		engine3D_vector3f_sub(&v1, &v2, &r);
+		r = engine3D_vector3f_sub(v1, v2);
 		Assert::AreEqual(-4.0f, r.x);
 		Assert::AreEqual(3.0f, r.y);
 		Assert::AreEqual(6.0f, r.z);
@@ -216,7 +216,7 @@ public:
 		v.x = 4;
 		v.y = 5;
 		v.z = 7;
-		engine3D_vector3f_subf(&v, 3, &r);
+		r = engine3D_vector3f_subf(v, 3);
 		Assert::AreEqual(1.0f, r.x);
 		Assert::AreEqual(2.0f, r.y);
 		Assert::AreEqual(4.0f, r.z);
@@ -230,7 +230,7 @@ public:
 		v2.x = 8;
 		v2.y = 2;
 		v2.z = 1;
-		engine3D_vector3f_mul(&v1, &v2, &r);
+		r = engine3D_vector3f_mul(v1, v2);
 		Assert::AreEqual(32.0f, r.x);
 		Assert::AreEqual(10.0f, r.y);
 		Assert::AreEqual(7.0f, r.z);
@@ -241,7 +241,7 @@ public:
 		v.x = 4;
 		v.y = 5;
 		v.z = 7;
-		engine3D_vector3f_mulf(&v, 3, &r);
+		r = engine3D_vector3f_mulf(v, 3);
 		Assert::AreEqual(12.0f, r.x);
 		Assert::AreEqual(15.0f, r.y);
 		Assert::AreEqual(21.0f, r.z);
@@ -255,7 +255,7 @@ public:
 		v2.x = 8;
 		v2.y = 2;
 		v2.z = 1;
-		engine3D_vector3f_div(&v1, &v2, &r);
+		r = engine3D_vector3f_div(v1, v2);
 		Assert::AreEqual(0.5f, r.x, 0.1f);
 		Assert::AreEqual(2.5f, r.y, 0.1f);
 		Assert::AreEqual(7.0f, r.z, 0.1f);
@@ -266,7 +266,7 @@ public:
 		v.x = 4;
 		v.y = 5;
 		v.z = 7;
-		engine3D_vector3f_divf(&v, 3, &r);
+		r = engine3D_vector3f_divf(v, 3);
 		Assert::AreEqual(1.3f, r.x, 0.1f);
 		Assert::AreEqual(1.6f, r.y, 0.1f);
 		Assert::AreEqual(2.3f, r.z, 0.1f);
@@ -408,7 +408,7 @@ public:
 		v1.z = 7;		 v2.z = 1;
 		v1.w = 6;
 
-		engine3D_quaternion_mulv(&v1, &v2, &r);
+		engine3D_quaternion_mulv(&v1, v2, &r);
 
 		Assert::AreEqual(28.0f, r.x);
 		Assert::AreEqual(82.0f, r.y);

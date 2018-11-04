@@ -173,7 +173,7 @@ void engine3D_input_getMousePosition(engine3D_vector2f_t *const position);
 
 void engine3D_input_setMousePosition(const engine3D_vector2f_t *const position);
 
-void engine3D_input_setCursor(engine3D_input_cursorMode mode);
+void engine3D_input_setCursor(const engine3D_input_cursorMode mode);
 
 void _engine3D_input_keyCallback(const GLFWwindow *const window, const int key, const int scancode, const int action, const int mods);
 

@@ -6,7 +6,7 @@
 
 typedef struct engine3D_material_t {
 	engine3D_texture_t *texture;
-	engine3D_vector3f_t *color;
+	engine3D_vector3f_t color;
 	float specularIntensity;
 	float specularPower;
 } engine3D_material_t;

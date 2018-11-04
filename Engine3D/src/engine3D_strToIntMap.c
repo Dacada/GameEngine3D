@@ -24,7 +24,7 @@ void engine3D_strToIntMap_init(engine3D_strToIntMap_t *const map) {
 	}
 }
 
-void engine3D_strToIntMap_add(engine3D_strToIntMap_t *const map, const char *const key, int value) {
+void engine3D_strToIntMap_add(engine3D_strToIntMap_t *const map, const char *const key, const int value) {
 	size_t hash = djb2_hash_str(key) % ENGINE3D_STRTOINTMAP_HASHTABLE_ELEMENTS;
 	engine3D_growingArray_t *bucketsArray = map->buckets[hash];
 	if (bucketsArray == NULL) {

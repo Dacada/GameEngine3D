@@ -15,14 +15,13 @@ static void calcNormals(engine3D_vertex_t vertices[], size_t vertices_len, unsig
 		int i2 = indices[i + 2];
 
 		engine3D_vector3f_t v1, v2, normal;
-		engine3D_vector3f_sub(&vertices[i1].vec, &vertices[i0].vec, &v1);
-		engine3D_vector3f_sub(&vertices[i2].vec, &vertices[i0].vec, &v2);
-		engine3D_vector3f_cross(&v1, &v2, &normal);
-		engine3D_vector3f_normalize(&normal);
+		v1 = engine3D_vector3f_sub(vertices[i1].vec, vertices[i0].vec);
+		v2 = engine3D_vector3f_sub(vertices[i2].vec, vertices[i0].vec);
+		normal = engine3D_vector3f_normalized(engine3D_vector3f_cross(v1, v2));
 
-		engine3D_vector3f_add(&vertices[i0].normal, &normal, &vertices[i0].normal);
-		engine3D_vector3f_add(&vertices[i1].normal, &normal, &vertices[i1].normal);
-		engine3D_vector3f_add(&vertices[i2].normal, &normal, &vertices[i2].normal);
+		vertices[i0].normal = engine3D_vector3f_add(vertices[i0].normal, normal);
+		vertices[i1].normal = engine3D_vector3f_add(vertices[i1].normal, normal);
+		vertices[i2].normal = engine3D_vector3f_add(vertices[i2].normal, normal);
 	}
 
 	for (size_t i = 0; i < vertices_len; i++) {
@@ -43,7 +42,7 @@ engine3D_mesh_t *engine3D_mesh_initFromFile(const char *const filename, engine3D
 	return mesh;
 }
 
-engine3D_mesh_t * engine3D_mesh_addVertices(engine3D_mesh_t * const mesh, engine3D_vertex_t vertices[], size_t vertices_len, unsigned int indices[], size_t indices_len, bool doCalcNormals) {
+engine3D_mesh_t * engine3D_mesh_addVertices(engine3D_mesh_t * const mesh, engine3D_vertex_t vertices[], size_t vertices_len, unsigned int indices[], const size_t indices_len, const bool doCalcNormals) {
 	if (doCalcNormals)
 		calcNormals(vertices, vertices_len, indices, indices_len);
 

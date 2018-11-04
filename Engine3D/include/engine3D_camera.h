@@ -13,7 +13,7 @@ void engine3D_camera_init(engine3D_camera_t *const camera);
 
 void engine3D_camera_normalize(engine3D_camera_t *const camera);
 
-void engine3D_camera_move(engine3D_camera_t *const camera, const engine3D_vector3f_t *const dir, const float amnt);
+void engine3D_camera_move(engine3D_camera_t *const camera, const engine3D_vector3f_t dir, const float amnt);
 
 void engine3D_camera_rotateX(engine3D_camera_t *const camera, const float angle);
 

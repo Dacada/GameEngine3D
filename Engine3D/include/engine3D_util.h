@@ -30,13 +30,13 @@ int engine3D_util_errPrint(const char *string);
 int engine3D_util_debugPrint(const char *string);
 
 #ifdef __GNUC__
-void *engine3D_util_safeMalloc(size_t size) __attribute__((malloc, alloc_size(1)));
-void *engine3D_util_safeCalloc(size_t nmemb, size_t size) __attribute__((malloc, alloc_size(1, 2)));
-void *engine3D_util_safeRealloc(void *ptr, size_t size) __attribute__((alloc_size(2)));
+void *engine3D_util_safeMalloc(const size_t size) __attribute__((malloc, alloc_size(1)));
+void *engine3D_util_safeCalloc(const size_t nmemb, const size_t size) __attribute__((malloc, alloc_size(1, 2)));
+void *engine3D_util_safeRealloc(void *ptr, const size_t size) __attribute__((alloc_size(2)));
 #else
-void *engine3D_util_safeMalloc(size_t size);
-void *engine3D_util_safeCalloc(size_t nmemb, size_t size);
-void *engine3D_util_safeRealloc(void *ptr, size_t size);
+void *engine3D_util_safeMalloc(const size_t size);
+void *engine3D_util_safeCalloc(const size_t nmemb, const size_t size);
+void *engine3D_util_safeRealloc(void *ptr, const size_t size);
 #endif
 
 #endif /* ENGINE3D_UTIL_H */

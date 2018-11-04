@@ -142,8 +142,6 @@ engine3D_phongShader_t *engine3D_phongShader_init(engine3D_phongShader_t *const 
 }
 
 void engine3D_phongShader_updateUniforms(engine3D_phongShader_t * const shader, const engine3D_matrix4f_t *const worldMatrix, const engine3D_matrix4f_t *projectedMatrix, const engine3D_material_t *const material) {
-	(void)worldMatrix;
-
 	if (material->texture != NULL)
 		engine3D_texture_bind(material->texture);
 	else
@@ -153,7 +151,7 @@ void engine3D_phongShader_updateUniforms(engine3D_phongShader_t * const shader, 
 	engine3D_shader_setUniformMat4f("transformProjected", projectedMatrix, (engine3D_shader_t*)shader);
 	engine3D_shader_setUniformVec3f("baseColor", material->color, (engine3D_shader_t*)shader);
 
-	engine3D_shader_setUniformVec3f("ambientLight", &engine3D_phongShader_ambientLight, (engine3D_shader_t*)shader);
+	engine3D_shader_setUniformVec3f("ambientLight", engine3D_phongShader_ambientLight, (engine3D_shader_t*)shader);
 	engine3D_phongShader_setUniformDirectionalLight("directionalLight", &engine3D_phongShader_directionalLight, shader);
 
 	for (size_t i = 0; i < engine3D_phongShader_numberOfPointLights; i++) {
@@ -170,7 +168,7 @@ void engine3D_phongShader_updateUniforms(engine3D_phongShader_t * const shader, 
 
 	engine3D_shader_setUniformf("specularIntensity", material->specularIntensity, (engine3D_shader_t*)shader);
 	engine3D_shader_setUniformf("specularPower", material->specularPower, (engine3D_shader_t*)shader);
-	engine3D_shader_setUniformVec3f("eyePos", &engine3D_transform_camera->pos, (engine3D_shader_t*)shader);
+	engine3D_shader_setUniformVec3f("eyePos", engine3D_transform_camera->pos, (engine3D_shader_t*)shader);
 }
 
 void engine3D_phongShader_setUniformBaseLight(const char *const uniform, const engine3D_phongShader_baseLight_t *const value, const engine3D_phongShader_t *const shader) {
@@ -178,7 +176,7 @@ void engine3D_phongShader_setUniformBaseLight(const char *const uniform, const e
 
 	strncpy(name, uniform, 2048);
 	strncat(name, ".color", 2048);
-	engine3D_shader_setUniformVec3f(name, &value->color, (engine3D_shader_t*)shader);
+	engine3D_shader_setUniformVec3f(name, value->color, (engine3D_shader_t*)shader);
 
 	strncpy(name, uniform, 2048);
 	strncat(name, ".intensity", 2048);
@@ -194,7 +192,7 @@ void engine3D_phongShader_setUniformDirectionalLight(const char *const uniform, 
 
 	strncpy(name, uniform, 2048);
 	strncat(name, ".direction", 2048);
-	engine3D_shader_setUniformVec3f(name, &value->direction, (engine3D_shader_t*)shader);
+	engine3D_shader_setUniformVec3f(name, value->direction, (engine3D_shader_t*)shader);
 }
 
 void engine3D_phongShader_setUniformPointLight(const char *const uniform, const engine3D_phongShader_pointLight_t *const value, const engine3D_phongShader_t *const shader) {
@@ -218,7 +216,7 @@ void engine3D_phongShader_setUniformPointLight(const char *const uniform, const 
 
 	strncpy(name, uniform, 2048);
 	strncat(name, ".position", 2048);
-	engine3D_shader_setUniformVec3f(name, &value->position, (engine3D_shader_t*)shader);
+	engine3D_shader_setUniformVec3f(name, value->position, (engine3D_shader_t*)shader);
 
 	strncpy(name, uniform, 2048);
 	strncat(name, ".range", 2048);
@@ -234,7 +232,7 @@ void engine3D_phongShader_setUniformSpotLight(const char *const uniform, const e
 
 	strncpy(name, uniform, 2048);
 	strncat(name, ".direction", 2048);
-	engine3D_shader_setUniformVec3f(name, &value->direction, (engine3D_shader_t*)shader);
+	engine3D_shader_setUniformVec3f(name, value->direction, (engine3D_shader_t*)shader);
 
 	strncpy(name, uniform, 2048);
 	strncat(name, ".cutoff", 2048);

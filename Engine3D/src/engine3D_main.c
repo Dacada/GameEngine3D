@@ -108,18 +108,18 @@ void engine3D_stop(void) {
 	isRunning = false;
 }
 
-void engine3D_setGame_init(game_callback_t fun) {
+void engine3D_setGame_init(const game_callback_t fun) {
 	game_init = fun;
 }
 
-void engine3D_setGame_input(game_callback_t fun) {
+void engine3D_setGame_input(const game_callback_t fun) {
 	game_input = fun;
 }
 
-void engine3D_setGame_update(game_callback_t fun) {
+void engine3D_setGame_update(const game_callback_t fun) {
 	game_update = fun;
 }
 
-void engine3D_setGame_render(game_callback_t fun) {
+void engine3D_setGame_render(const game_callback_t fun) {
 	game_render = fun;
 }

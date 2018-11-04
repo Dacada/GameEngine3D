@@ -5,123 +5,150 @@
 
 #define TO_RADIANS(angle) ((angle) / 180 * (float)M_PI)
 
-float engine3D_vector2f_length(const engine3D_vector2f_t * const v) {
-	return sqrtf(v->x * v->x + v->y * v->y);
+float engine3D_vector2f_length(const engine3D_vector2f_t v) {
+	return sqrtf(v.x * v.x + v.y * v.y);
 }
 
-float engine3D_vector2f_dot(const engine3D_vector2f_t * const v1, const engine3D_vector2f_t * const v2) {
-	return v1->x * v2->x + v1->y * v2->y;
+float engine3D_vector2f_dot(const engine3D_vector2f_t v1, const engine3D_vector2f_t v2) {
+	return v1.x * v2.x + v1.y * v2.y;
 }
 
-engine3D_vector2f_t * engine3D_vector2f_normalize(engine3D_vector2f_t * const v) {
-	float length = engine3D_vector2f_length(v);
+engine3D_vector2f_t *engine3D_vector2f_normalize(engine3D_vector2f_t * const v) {
+	float length = engine3D_vector2f_length(*v);
 	v->x /= length;
 	v->y /= length;
 	return v;
 }
 
-engine3D_vector2f_t * engine3D_vector2f_rotateRad(const engine3D_vector2f_t * const v, float angle, engine3D_vector2f_t *const result) {
+engine3D_vector2f_t engine3D_vector2f_normalized(const engine3D_vector2f_t v) {
+	engine3D_vector2f_t result;
+	float length = engine3D_vector2f_length(v);
+	result.x = v.x / length;
+	result.y = v.y / length;
+	return result;
+}
+
+engine3D_vector2f_t engine3D_vector2f_rotateRad(const engine3D_vector2f_t v, const float angle) {
 	float c = cosf(angle);
 	float s = sinf(angle);
 
-	result->x = v->x * c - v->y * s;
-	result->y = v->x * s + v->y * c;
+	engine3D_vector2f_t result;
+
+	result.x = v.x * c - v.y * s;
+	result.y = v.x * s + v.y * c;
 
 	return result;
 }
 
-engine3D_vector2f_t * engine3D_vector2f_rotateDeg(const engine3D_vector2f_t * const v, float angle, engine3D_vector2f_t *const result) {
-	float rad = TO_RADIANS(angle);
-	return engine3D_vector2f_rotateRad(v, rad, result);
+engine3D_vector2f_t engine3D_vector2f_rotateDeg(const engine3D_vector2f_t v, const float angle) {
+	return engine3D_vector2f_rotateRad(v, TO_RADIANS(angle));
 }
 
-engine3D_vector2f_t * engine3D_vector2f_add(const engine3D_vector2f_t * const v1, const engine3D_vector2f_t * const v2, engine3D_vector2f_t * const result) {
-	result->x = v1->x + v2->x;
-	result->y = v1->y + v2->y;
+engine3D_vector2f_t engine3D_vector2f_add(const engine3D_vector2f_t v1, const engine3D_vector2f_t v2) {
+	engine3D_vector2f_t result;
+	result.x = v1.x + v2.x;
+	result.y = v1.y + v2.y;
 	return result;
 }
 
-engine3D_vector2f_t * engine3D_vector2f_addf(const engine3D_vector2f_t * const v, float f, engine3D_vector2f_t * const result) {
-	result->x = v->x + f;
-	result->y = v->y + f;
+engine3D_vector2f_t engine3D_vector2f_addf(const engine3D_vector2f_t v, const float f) {
+	engine3D_vector2f_t result;
+	result.x = v.x + f;
+	result.y = v.y + f;
 	return result;
 }
 
-engine3D_vector2f_t * engine3D_vector2f_sub(const engine3D_vector2f_t * const v1, const engine3D_vector2f_t * const v2, engine3D_vector2f_t * const result) {
-	result->x = v1->x - v2->x;
-	result->y = v1->y - v2->y;
+engine3D_vector2f_t engine3D_vector2f_sub(const engine3D_vector2f_t v1, const engine3D_vector2f_t v2) {
+	engine3D_vector2f_t result;
+	result.x = v1.x - v2.x;
+	result.y = v1.y - v2.y;
 	return result;
 }
 
-engine3D_vector2f_t * engine3D_vector2f_subf(const engine3D_vector2f_t * const v, float f, engine3D_vector2f_t * const result) {
-	result->x = v->x - f;
-	result->y = v->y - f;
+engine3D_vector2f_t engine3D_vector2f_subf(const engine3D_vector2f_t v, const float f) {
+	engine3D_vector2f_t result;
+	result.x = v.x - f;
+	result.y = v.y - f;
 	return result;
 }
 
-engine3D_vector2f_t * engine3D_vector2f_mul(const engine3D_vector2f_t * const v1, const engine3D_vector2f_t * const v2, engine3D_vector2f_t * const result) {
-	result->x = v1->x * v2->x;
-	result->y = v1->y * v2->y;
+engine3D_vector2f_t engine3D_vector2f_mul(const engine3D_vector2f_t v1, const engine3D_vector2f_t v2) {
+	engine3D_vector2f_t result;
+	result.x = v1.x * v2.x;
+	result.y = v1.y * v2.y;
 	return result;
 }
 
-engine3D_vector2f_t * engine3D_vector2f_mulf(const engine3D_vector2f_t * const v, float f, engine3D_vector2f_t * const result) {
-	result->x = v->x * f;
-	result->y = v->y * f;
+engine3D_vector2f_t engine3D_vector2f_mulf(const engine3D_vector2f_t v, const float f) {
+	engine3D_vector2f_t result;
+	result.x = v.x * f;
+	result.y = v.y * f;
 	return result;
 }
 
-engine3D_vector2f_t * engine3D_vector2f_div(const engine3D_vector2f_t * const v1, const engine3D_vector2f_t * const v2, engine3D_vector2f_t * const result) {
-	result->x = v1->x / v2->x;
-	result->y = v1->y / v2->y;
+engine3D_vector2f_t engine3D_vector2f_div(const engine3D_vector2f_t v1, const engine3D_vector2f_t v2) {
+	engine3D_vector2f_t result;
+	result.x = v1.x / v2.x;
+	result.y = v1.y / v2.y;
 	return result;
 }
 
-engine3D_vector2f_t * engine3D_vector2f_divf(const engine3D_vector2f_t * const v, float f, engine3D_vector2f_t * const result) {
-	result->x = v->x / f;
-	result->y = v->y / f;
+engine3D_vector2f_t engine3D_vector2f_divf(const engine3D_vector2f_t v, const float f) {
+	engine3D_vector2f_t result;
+	result.x = v.x / f;
+	result.y = v.y / f;
 	return result;
 }
 
-int engine3D_vector2f_fprintf(FILE *stream, const engine3D_vector2f_t *const v) {
-	return fprintf(stream, "vector2d<%f,%f>\n", v->x, v->y);
+int engine3D_vector2f_fprintf(FILE *stream, const engine3D_vector2f_t v) {
+	return fprintf(stream, "vector2d<%f,%f>\n", v.x, v.y);
 }
 
 
 
-float engine3D_vector3f_length(const engine3D_vector3f_t * const v) {
-	return sqrtf(v->x * v->x + v->y * v->y + v->z * v->z);
+float engine3D_vector3f_length(const engine3D_vector3f_t v) {
+	return sqrtf(v.x * v.x + v.y * v.y + v.z * v.z);
 }
 
-float engine3D_vector3f_dot(const engine3D_vector3f_t * const v1, const engine3D_vector3f_t * const v2) {
-	return v1->x * v2->x + v1->y * v2->y + v1->z * v2->z;
+float engine3D_vector3f_dot(const engine3D_vector3f_t v1, const engine3D_vector3f_t v2) {
+	return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
 }
 
-engine3D_vector3f_t *engine3D_vector3f_cross(const engine3D_vector3f_t * const v1, const engine3D_vector3f_t * const v2, engine3D_vector3f_t * const result) {
-	result->x = v1->y * v2->z - v1->z * v2->y;
-	result->y = v1->z * v2->x - v1->x * v2->z;
-	result->z = v1->x * v2->y - v1->y * v2->x;
-
+engine3D_vector3f_t engine3D_vector3f_cross(const engine3D_vector3f_t v1, const engine3D_vector3f_t v2) {
+	engine3D_vector3f_t result;
+	result.x = v1.y * v2.z - v1.z * v2.y;
+	result.y = v1.z * v2.x - v1.x * v2.z;
+	result.z = v1.x * v2.y - v1.y * v2.x;
 	return result;
 }
 
-engine3D_vector3f_t * engine3D_vector3f_normalize(engine3D_vector3f_t * const v) {
-	float length = engine3D_vector3f_length(v);
+engine3D_vector3f_t *engine3D_vector3f_normalize(engine3D_vector3f_t * const v) {
+	float length = engine3D_vector3f_length(*v);
 	v->x /= length;
 	v->y /= length;
 	v->z /= length;
 	return v;
 }
 
-engine3D_vector3f_t * engine3D_vector3f_rotateRad(const engine3D_vector3f_t * const v, float angle, const engine3D_vector3f_t *const axis, engine3D_vector3f_t *const result) {
+engine3D_vector3f_t engine3D_vector3f_normalized(const engine3D_vector3f_t v) {
+	engine3D_vector3f_t result;
+	float length = engine3D_vector3f_length(v);
+	result.x = v.x / length;
+	result.y = v.y / length;
+	result.z = v.z / length;
+	return result;
+}
+
+engine3D_vector3f_t engine3D_vector3f_rotateRad(const engine3D_vector3f_t v, const float angle, const engine3D_vector3f_t axis) {
+	engine3D_vector3f_t result;
 	engine3D_quaternion_t rotation, rotationConj, w, tmp;
 
 	float sinHalfAngle = sinf(angle / 2);
 	float cosHalfAngle = cosf(angle / 2);
 
-	rotation.x = axis->x * sinHalfAngle;
-	rotation.y = axis->y * sinHalfAngle;
-	rotation.z = axis->z * sinHalfAngle;
+	rotation.x = axis.x * sinHalfAngle;
+	rotation.y = axis.y * sinHalfAngle;
+	rotation.z = axis.z * sinHalfAngle;
 	rotation.w = cosHalfAngle;
 
 	engine3D_quaternion_conjugate(&rotation, &rotationConj);
@@ -129,84 +156,91 @@ engine3D_vector3f_t * engine3D_vector3f_rotateRad(const engine3D_vector3f_t * co
 	engine3D_quaternion_mulv(&rotation, v, &tmp);
 	engine3D_quaternion_mul(&tmp, &rotationConj, &w);
 
-	result->x = w.x;
-	result->y = w.y;
-	result->z = w.z;
+	result.x = w.x;
+	result.y = w.y;
+	result.z = w.z;
 
 	return result;
 }
 
-engine3D_vector3f_t * engine3D_vector3f_rotateDeg(const engine3D_vector3f_t * const v, float angle, const engine3D_vector3f_t *const axis, engine3D_vector3f_t *const result)
-{
-	float rad = TO_RADIANS(angle);
-	return engine3D_vector3f_rotateRad(v, rad, axis, result);
+engine3D_vector3f_t engine3D_vector3f_rotateDeg(const engine3D_vector3f_t v, const float angle, const engine3D_vector3f_t axis) {
+	return engine3D_vector3f_rotateRad(v, TO_RADIANS(angle), axis);
 }
 
-engine3D_vector3f_t * engine3D_vector3f_add(const engine3D_vector3f_t * const v1, const engine3D_vector3f_t * const v2, engine3D_vector3f_t * const result) {
-	result->x = v1->x + v2->x;
-	result->y = v1->y + v2->y;
-	result->z = v1->z + v2->z;
+engine3D_vector3f_t engine3D_vector3f_add(const engine3D_vector3f_t v1, const engine3D_vector3f_t v2) {
+	engine3D_vector3f_t result;
+	result.x = v1.x + v2.x;
+	result.y = v1.y + v2.y;
+	result.z = v1.z + v2.z;
 	return result;
 }
 
-engine3D_vector3f_t * engine3D_vector3f_addf(const engine3D_vector3f_t * const v, float f, engine3D_vector3f_t * const result) {
-	result->x = v->x + f;
-	result->y = v->y + f;
-	result->z = v->z + f;
+engine3D_vector3f_t engine3D_vector3f_addf(const engine3D_vector3f_t v, const float f) {
+	engine3D_vector3f_t result;
+	result.x = v.x + f;
+	result.y = v.y + f;
+	result.z = v.z + f;
 	return result;
 }
 
-engine3D_vector3f_t * engine3D_vector3f_sub(const engine3D_vector3f_t * const v1, const engine3D_vector3f_t * const v2, engine3D_vector3f_t * const result) {
-	result->x = v1->x - v2->x;
-	result->y = v1->y - v2->y;
-	result->z = v1->z - v2->z;
+engine3D_vector3f_t engine3D_vector3f_sub(const engine3D_vector3f_t v1, const engine3D_vector3f_t v2) {
+	engine3D_vector3f_t result;
+	result.x = v1.x - v2.x;
+	result.y = v1.y - v2.y;
+	result.z = v1.z - v2.z;
 	return result;
 }
 
-engine3D_vector3f_t * engine3D_vector3f_subf(const engine3D_vector3f_t * const v, float f, engine3D_vector3f_t * const result) {
-	result->x = v->x - f;
-	result->y = v->y - f;
-	result->z = v->z - f;
+engine3D_vector3f_t engine3D_vector3f_subf(const engine3D_vector3f_t v, const float f) {
+	engine3D_vector3f_t result;
+	result.x = v.x - f;
+	result.y = v.y - f;
+	result.z = v.z - f;
 	return result;
 }
 
-engine3D_vector3f_t * engine3D_vector3f_mul(const engine3D_vector3f_t * const v1, const engine3D_vector3f_t * const v2, engine3D_vector3f_t * const result) {
-	result->x = v1->x * v2->x;
-	result->y = v1->y * v2->y;
-	result->z = v1->z * v2->z;
+engine3D_vector3f_t engine3D_vector3f_mul(const engine3D_vector3f_t v1, const engine3D_vector3f_t v2) {
+	engine3D_vector3f_t result;
+	result.x = v1.x * v2.x;
+	result.y = v1.y * v2.y;
+	result.z = v1.z * v2.z;
 	return result;
 }
 
-engine3D_vector3f_t * engine3D_vector3f_mulf(const engine3D_vector3f_t * const v, float f, engine3D_vector3f_t * const result) {
-	result->x = v->x * f;
-	result->y = v->y * f;
-	result->z = v->z * f;
+engine3D_vector3f_t engine3D_vector3f_mulf(const engine3D_vector3f_t v, const float f) {
+	engine3D_vector3f_t result;
+	result.x = v.x * f;
+	result.y = v.y * f;
+	result.z = v.z * f;
 	return result;
 }
 
-engine3D_vector3f_t * engine3D_vector3f_div(const engine3D_vector3f_t * const v1, const engine3D_vector3f_t * const v2, engine3D_vector3f_t * const result) {
-	result->x = v1->x / v2->x;
-	result->y = v1->y / v2->y;
-	result->z = v1->z / v2->z;
+engine3D_vector3f_t engine3D_vector3f_div(const engine3D_vector3f_t v1, const engine3D_vector3f_t v2) {
+	engine3D_vector3f_t result;
+	result.x = v1.x / v2.x;
+	result.y = v1.y / v2.y;
+	result.z = v1.z / v2.z;
 	return result;
 }
 
-engine3D_vector3f_t * engine3D_vector3f_divf(const engine3D_vector3f_t * const v, float f, engine3D_vector3f_t * const result) {
-	result->x = v->x / f;
-	result->y = v->y / f;
-	result->z = v->z / f;
+engine3D_vector3f_t engine3D_vector3f_divf(const engine3D_vector3f_t v, const float f) {
+	engine3D_vector3f_t result;
+	result.x = v.x / f;
+	result.y = v.y / f;
+	result.z = v.z / f;
 	return result;
 }
 
-engine3D_vector3f_t * engine3D_vector3f_abs(const engine3D_vector3f_t * const v, engine3D_vector3f_t * const result) {
-	result->x = fabsf(v->x);
-	result->y = fabsf(v->y);
-	result->z = fabsf(v->z);
+engine3D_vector3f_t engine3D_vector3f_abs(const engine3D_vector3f_t v) {
+	engine3D_vector3f_t result;
+	result.x = fabsf(v.x);
+	result.y = fabsf(v.y);
+	result.z = fabsf(v.z);
 	return result;
 }
 
-int engine3D_vector3f_fprintf(FILE * stream, const engine3D_vector3f_t *const v) {
-	return fprintf(stream, "vector2d<%f,%f,%f>\n", v->x, v->y, v->z);
+int engine3D_vector3f_fprintf(FILE * stream, const engine3D_vector3f_t v) {
+	return fprintf(stream, "vector2d<%f,%f,%f>\n", v.x, v.y, v.z);
 }
 
 
@@ -278,18 +312,12 @@ void engine3D_matrix4f_setProjection(engine3D_matrix4f_t * const matrix, float z
 	matrix->mat[3][3] = 0;
 }
 
-void engine3D_matrix4f_setCamera(engine3D_matrix4f_t *const matrix, const engine3D_vector3f_t *const forward, const engine3D_vector3f_t *const up) {
-	engine3D_vector3f_t f, r, u, tmp;
+void engine3D_matrix4f_setCamera(engine3D_matrix4f_t *const matrix, const engine3D_vector3f_t forward, const engine3D_vector3f_t up) {
+	engine3D_vector3f_t f = engine3D_vector3f_normalized(forward);
+	engine3D_vector3f_t r = engine3D_vector3f_normalized(up);
 
-	memcpy(&f, forward, sizeof(engine3D_vector3f_t));
-	engine3D_vector3f_normalize(&f);
-
-	memcpy(&r, up, sizeof(engine3D_vector3f_t));
-	engine3D_vector3f_normalize(&r);
-	engine3D_vector3f_cross(&r, &f, &tmp);
-	memcpy(&r, &tmp, sizeof(engine3D_vector3f_t));
-
-	engine3D_vector3f_cross(&f, &r, &u);
+	r = engine3D_vector3f_cross(r, f);
+	engine3D_vector3f_t u = engine3D_vector3f_cross(f, r);
 
 	engine3D_matrix4f_setIdentity(matrix);
 	matrix->mat[0][0] = r.x;
@@ -346,10 +374,10 @@ engine3D_quaternion_t * engine3D_quaternion_mul(const engine3D_quaternion_t * co
 	return r;
 }
 
-engine3D_quaternion_t * engine3D_quaternion_mulv(const engine3D_quaternion_t * const v1, const engine3D_vector3f_t * const v2, engine3D_quaternion_t * const r) {
-	r->w = -v1->x * v2->x - v1->y * v2->y - v1->z * v2->z;
-	r->x =  v1->w * v2->x + v1->y * v2->z - v1->z * v2->y;
-	r->y =  v1->w * v2->y + v1->z * v2->x - v1->x * v2->z;
-	r->z =  v1->w * v2->z + v1->x * v2->y - v1->y * v2->x;
+engine3D_quaternion_t * engine3D_quaternion_mulv(const engine3D_quaternion_t * const v1, const engine3D_vector3f_t v2, engine3D_quaternion_t * const r) {
+	r->w = -v1->x * v2.x - v1->y * v2.y - v1->z * v2.z;
+	r->x =  v1->w * v2.x + v1->y * v2.z - v1->z * v2.y;
+	r->y =  v1->w * v2.y + v1->z * v2.x - v1->x * v2.z;
+	r->z =  v1->w * v2.z + v1->x * v2.y - v1->y * v2.x;
 	return r;
 }
