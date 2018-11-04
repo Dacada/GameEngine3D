@@ -174,7 +174,6 @@ static void cameraInput(float delta) {
 }
 
 static void input(void) {
-
 	float t = (float)engine3D_time_getDelta();
 
 	generalInput(t);

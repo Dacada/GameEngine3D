@@ -1,6 +1,7 @@
 #include <engine3D_phongShader.h>
 #include <engine3D_shader.h>
 #include <engine3D_renderUtil.h>
+#include <engine3D_util.h>
 #include <engine3D_transform.h>
 
 #include <string.h>
@@ -32,8 +33,11 @@ engine3D_phongShader_t *engine3D_phongShader_init(engine3D_phongShader_t *const 
 	engine3D_shader_addUniform("specularPower", (engine3D_shader_t*)shader);
 	engine3D_shader_addUniform("eyePos", (engine3D_shader_t*)shader);
 
+	char *str = engine3D_util_safeCalloc(128, sizeof(char));
+	char *base = engine3D_util_safeCalloc(64, sizeof(char));
+
 	for (size_t i = 0; i < ENGINE3D_PHONGSHADER_MAXPOINTLIGHTS; i++) {
-		char str[128], base[64];
+
 		sprintf(base, "pointLights[%lu]", i);
 
 		strncpy(str, base, 128);
@@ -80,7 +84,6 @@ engine3D_phongShader_t *engine3D_phongShader_init(engine3D_phongShader_t *const 
 	}
 
 	for (size_t i = 0; i < ENGINE3D_PHONGSHADER_MAXPOINTLIGHTS; i++) {
-		char str[128], base[64];
 		sprintf(base, "spotLights[%lu]", i);
 
 		strncpy(str, base, 128);
@@ -138,6 +141,9 @@ engine3D_phongShader_t *engine3D_phongShader_init(engine3D_phongShader_t *const 
 		engine3D_shader_addUniform(str, (engine3D_shader_t*)shader);
 	}
 
+	free(str);
+	free(base);
+
 	return shader;
 }
 
@@ -154,17 +160,19 @@ void engine3D_phongShader_updateUniforms(engine3D_phongShader_t * const shader, 
 	engine3D_shader_setUniformVec3f("ambientLight", engine3D_phongShader_ambientLight, (engine3D_shader_t*)shader);
 	engine3D_phongShader_setUniformDirectionalLight("directionalLight", &engine3D_phongShader_directionalLight, shader);
 
+	char *base = engine3D_util_safeCalloc(64, sizeof(char));
+
 	for (size_t i = 0; i < engine3D_phongShader_numberOfPointLights; i++) {
-		char base[64];
 		sprintf(base, "pointLights[%lu]", i);
 		engine3D_phongShader_setUniformPointLight(base, &engine3D_phongShader_pointLights[i], shader);
 	}
 
 	for (size_t i = 0; i < engine3D_phongShader_numberOfSpotLights; i++) {
-		char base[64];
 		sprintf(base, "spotLights[%lu]", i);
 		engine3D_phongShader_setUniformSpotLight(base, &engine3D_phongShader_spotLights[i], shader);
 	}
+
+	free(base);
 
 	engine3D_shader_setUniformf("specularIntensity", material->specularIntensity, (engine3D_shader_t*)shader);
 	engine3D_shader_setUniformf("specularPower", material->specularPower, (engine3D_shader_t*)shader);
@@ -172,7 +180,7 @@ void engine3D_phongShader_updateUniforms(engine3D_phongShader_t * const shader, 
 }
 
 void engine3D_phongShader_setUniformBaseLight(const char *const uniform, const engine3D_phongShader_baseLight_t *const value, const engine3D_phongShader_t *const shader) {
-	char name[2048];
+	char *name = engine3D_util_safeCalloc(2048, sizeof(char));
 
 	strncpy(name, uniform, 2048);
 	strncat(name, ".color", 2048);
@@ -181,10 +189,12 @@ void engine3D_phongShader_setUniformBaseLight(const char *const uniform, const e
 	strncpy(name, uniform, 2048);
 	strncat(name, ".intensity", 2048);
 	engine3D_shader_setUniformf(name, value->intensity, (engine3D_shader_t*)shader);
+
+	free(name);
 }
 
 void engine3D_phongShader_setUniformDirectionalLight(const char *const uniform, const engine3D_phongShader_directionalLight_t *const value, const engine3D_phongShader_t *const shader) {
-	char name[2048];
+	char *name = engine3D_util_safeCalloc(2048, sizeof(char));
 
 	strncpy(name, uniform, 2048);
 	strncat(name, ".base", 2048);
@@ -193,10 +203,12 @@ void engine3D_phongShader_setUniformDirectionalLight(const char *const uniform, 
 	strncpy(name, uniform, 2048);
 	strncat(name, ".direction", 2048);
 	engine3D_shader_setUniformVec3f(name, value->direction, (engine3D_shader_t*)shader);
+
+	free(name);
 }
 
 void engine3D_phongShader_setUniformPointLight(const char *const uniform, const engine3D_phongShader_pointLight_t *const value, const engine3D_phongShader_t *const shader) {
-	char name[2048];
+	char *name = engine3D_util_safeCalloc(2048, sizeof(char));
 
 	strncpy(name, uniform, 2048);
 	strncat(name, ".base", 2048);
@@ -221,10 +233,12 @@ void engine3D_phongShader_setUniformPointLight(const char *const uniform, const 
 	strncpy(name, uniform, 2048);
 	strncat(name, ".range", 2048);
 	engine3D_shader_setUniformf(name, value->range, (engine3D_shader_t*)shader);
+
+	free(name);
 }
 
 void engine3D_phongShader_setUniformSpotLight(const char *const uniform, const engine3D_phongShader_spotLight_t *const value, const engine3D_phongShader_t *const shader) {
-	char name[2048];
+	char *name = engine3D_util_safeCalloc(2048, sizeof(char));
 
 	strncpy(name, uniform, 2048);
 	strncat(name, ".pointLight", 2048);
@@ -237,4 +251,6 @@ void engine3D_phongShader_setUniformSpotLight(const char *const uniform, const e
 	strncpy(name, uniform, 2048);
 	strncat(name, ".cutoff", 2048);
 	engine3D_shader_setUniformf(name, value->cutoff, (engine3D_shader_t*)shader);
+
+	free(name);
 }

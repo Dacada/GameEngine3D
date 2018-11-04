@@ -21,7 +21,7 @@ void engine3D_resourceLoader_setResPath(const char *path) {
 }
 
 char *engine3D_resourceLoader_loadShader(const char *const filename, char *const text, size_t size) {
-	char filepath[256];
+	char *filepath = engine3D_util_safeCalloc(256, sizeof(char));
 	strncpy(filepath, resourcesPath, 256);
 	strncat(filepath, "shaders/", 256);
 	strncat(filepath, filename, 128);
@@ -31,6 +31,8 @@ char *engine3D_resourceLoader_loadShader(const char *const filename, char *const
 		perror("fopen");
 		engine3D_util_quit("failed to load shader");
 	}
+
+	free(filepath);
 
 	size_t s = fread(text, sizeof(char), size, f);
 	int err;
@@ -269,7 +271,7 @@ size_t setSeenIndex(int face[3]) {
 }
 
 void engine3D_resourceLoader_loadMesh(const char *const filename, engine3D_mesh_t *const mesh) {
-	char filepath[256];
+	char *filepath = engine3D_util_safeCalloc(256, sizeof(char));
 	strncpy(filepath, resourcesPath, 256);
 	strncat(filepath, "models/", 256);
 	strncat(filepath, filename, 128);
@@ -294,11 +296,13 @@ void engine3D_resourceLoader_loadMesh(const char *const filename, engine3D_mesh_
 		engine3D_util_quit("failed to load mesh file");
 	}
 
+	free(filepath);
+
 	int ret;
-	char lineBuff[1024];
+	char *lineBuff = engine3D_util_safeCalloc(1024, sizeof(char));
+	char *token = engine3D_util_safeCalloc(256, sizeof(char));
 	while ((ret = readLine(f, lineBuff, 1024)) == 0) {
 		char *current = lineBuff;
-		char token[256];
 
 		current = getNextToken(current, token, 256);
 		if (current == NULL) {
@@ -384,6 +388,9 @@ void engine3D_resourceLoader_loadMesh(const char *const filename, engine3D_mesh_
 		}
 	}
 
+	free(lineBuff);
+	free(token);
+
 	if (ret == -2) {
 		engine3D_util_quit("attempt to load invalid .obj file (file's lines detected as too long)");
 	}
@@ -408,7 +415,7 @@ void engine3D_resourceLoader_loadMesh(const char *const filename, engine3D_mesh_
 }
 
 void engine3D_resourceLoader_loadTexture(const char *const filename, engine3D_texture_t *const texture) {
-	char filepath[256];
+	char *filepath = engine3D_util_safeCalloc(256, sizeof(char));
 	strncpy(filepath, resourcesPath, 256);
 	strncat(filepath, "textures/", 256);
 	strncat(filepath, filename, 128);
@@ -426,6 +433,8 @@ void engine3D_resourceLoader_loadTexture(const char *const filename, engine3D_te
 
 	if (FreeImage_FIFSupportsReading(fif))
 		dib = FreeImage_Load(fif, filepath, 0);
+
+	free(filepath);
 
 	if (!dib)
 		engine3D_util_quit("failed to load image for texture");

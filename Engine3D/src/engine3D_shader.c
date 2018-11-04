@@ -24,9 +24,10 @@ static void addProgram(const char *const text, engine3D_shader_t * const shader,
 	GLint status;
 	glGetShaderiv(shaderId, GL_COMPILE_STATUS, &status);
 	if (status == GL_FALSE) {
-		char infoLog[1024];
+		char *infoLog = engine3D_util_safeCalloc(1024, sizeof(char));
 		glGetShaderInfoLog(shaderId, 1024, NULL, infoLog);
 		fputs(infoLog, stderr);
+		free(infoLog);
 		engine3D_util_quit("shader compilation failed");
 	}
 
@@ -61,26 +62,27 @@ engine3D_shader_t *engine3D_shader_addFragmentShader(const char *const text, eng
 	return shader;
 }
 
+char shaderText[65536];
+
 engine3D_shader_t *engine3D_shader_addVertexShaderFromFile(const char *const text, engine3D_shader_t * const shader) {
-	char shaderText[65536];
 	engine3D_resourceLoader_loadShader(text, shaderText, 65536);
 	addProgram(shaderText, shader, GL_VERTEX_SHADER);
 	return shader;
 }
 
 engine3D_shader_t *engine3D_shader_addGeometryShaderFromFile(const char *const text, engine3D_shader_t * const shader) {
-	char shaderText[65536];
 	engine3D_resourceLoader_loadShader(text, shaderText, 65536);
 	addProgram(shaderText, shader, GL_GEOMETRY_SHADER);
 	return shader;
 }
 
 engine3D_shader_t *engine3D_shader_addFragmentShaderFromFile(const char *const text, engine3D_shader_t * const shader) {
-	char shaderText[65536];
 	engine3D_resourceLoader_loadShader(text, shaderText, 65536);
 	addProgram(shaderText, shader, GL_FRAGMENT_SHADER);
 	return shader;
 }
+
+char infoLog[1024];
 
 void engine3D_shader_compile(const engine3D_shader_t * const shader) {
 	glLinkProgram(shader->program);
@@ -88,7 +90,6 @@ void engine3D_shader_compile(const engine3D_shader_t * const shader) {
 	GLint status;
 	glGetProgramiv(shader->program, GL_LINK_STATUS, &status);
 	if (status == GL_FALSE) {
-		char infoLog[1024];
 		glGetProgramInfoLog(shader->program, 1024, NULL, infoLog);
 		fputs(infoLog, stderr);
 		engine3D_util_quit("shader linking failed");
@@ -98,7 +99,6 @@ void engine3D_shader_compile(const engine3D_shader_t * const shader) {
 
 	glGetProgramiv(shader->program, GL_LINK_STATUS, &status);
 	if (status == GL_FALSE) {
-		char infoLog[1024];
 		glGetProgramInfoLog(shader->program, 1024, NULL, infoLog);
 		fputs(infoLog, stderr);
 		engine3D_util_quit("shader validation failed");
