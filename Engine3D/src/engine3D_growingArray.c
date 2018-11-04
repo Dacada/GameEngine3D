@@ -3,11 +3,12 @@
 
 #include <stdbool.h>
 
-void engine3D_growingArray_init(engine3D_growingArray_t *const array, const size_t elementSize, const size_t initialCapacity) {
+engine3D_growingArray_t *engine3D_growingArray_init(engine3D_growingArray_t *const array, const size_t elementSize, const size_t initialCapacity) {
 	array->capacity = initialCapacity;
 	array->elementSize = elementSize;
 	array->index = 0;
 	array->array = engine3D_util_safeMalloc(elementSize * initialCapacity);
+	return array;
 }
 
 void engine3D_growingArray_ensureGrowth(engine3D_growingArray_t *const array, const size_t growth) {

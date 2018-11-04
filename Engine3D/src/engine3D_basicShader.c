@@ -16,7 +16,7 @@ engine3D_basicShader_t *engine3D_basicShader_init(engine3D_basicShader_t *const 
 	return shader;
 }
 
-void engine3D_basicShader_updateUniforms(engine3D_basicShader_t * const shader, const engine3D_matrix4f_t *const worldMatrix, const engine3D_matrix4f_t *projectedMatrix, const engine3D_material_t *const material) {
+engine3D_basicShader_t *engine3D_basicShader_updateUniforms(engine3D_basicShader_t * const shader, const engine3D_matrix4f_t *const worldMatrix, const engine3D_matrix4f_t *projectedMatrix, const engine3D_material_t *const material) {
 	(void)worldMatrix;
 
 	if (material->texture != NULL)
@@ -26,4 +26,6 @@ void engine3D_basicShader_updateUniforms(engine3D_basicShader_t * const shader, 
 
 	engine3D_shader_setUniformMat4f("transform", projectedMatrix, (engine3D_shader_t*)shader);
 	engine3D_shader_setUniformVec3f("color", material->color, (engine3D_shader_t*)shader);
+
+	return shader;
 }

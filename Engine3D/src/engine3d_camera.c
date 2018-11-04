@@ -6,7 +6,7 @@
 
 static const engine3D_vector3f_t yAxis = { 0, 1, 0 };
 
-void engine3D_camera_init(engine3D_camera_t *const camera) {
+engine3D_camera_t *engine3D_camera_init(engine3D_camera_t *const camera) {
 	camera->pos.x = 0;
 	camera->pos.y = 0;
 	camera->pos.z = 0;
@@ -17,6 +17,7 @@ void engine3D_camera_init(engine3D_camera_t *const camera) {
 	camera->up.y = 2;
 	camera->up.z = 0;
 	engine3D_camera_normalize(camera);
+	return camera;
 }
 
 void engine3D_camera_normalize(engine3D_camera_t *const camera) {

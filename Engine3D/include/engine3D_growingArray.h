@@ -12,7 +12,7 @@ typedef struct engine3D_growingArray_t {
 } engine3D_growingArray_t;
 
 // Initialize array to a given capacity
-void engine3D_growingArray_init(engine3D_growingArray_t *const array, const size_t elementSize, const size_t initialCapacity);
+engine3D_growingArray_t *engine3D_growingArray_init(engine3D_growingArray_t *const array, const size_t elementSize, const size_t initialCapacity);
 
 // Ensure array has enough capacity for calling add growth number of times
 void engine3D_growingArray_ensureGrowth(engine3D_growingArray_t *const array, const size_t growth);

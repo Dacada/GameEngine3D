@@ -18,10 +18,11 @@ engine3D_strToIntMap_t *engine3D_strToIntMap_new(void) {
 	return engine3D_util_safeMalloc(sizeof(engine3D_strToIntMap_t));
 }
 
-void engine3D_strToIntMap_init(engine3D_strToIntMap_t *const map) {
+engine3D_strToIntMap_t *engine3D_strToIntMap_init(engine3D_strToIntMap_t *const map) {
 	for (size_t i = 0; i < ENGINE3D_STRTOINTMAP_HASHTABLE_ELEMENTS; i++) {
 		map->buckets[i] = NULL;
 	}
+	return map;
 }
 
 void engine3D_strToIntMap_add(engine3D_strToIntMap_t *const map, const char *const key, const int value) {
